@@ -1,0 +1,35 @@
+# The following will not be included in the images deployed to production
+
+# Git metadata
+.git
+
+# Runtime files
+*/*/*/runtime/*
+*/*/runtime/*
+
+# Tmp files
+/tmp/
+
+# User data
+.files
+
+# Development-only
+dna/db/migration-results/*/data.sql
+dna/db/migration-base/*/data.sql
+dna/db/migration-base/*/schema.sql
+dna/db/migration-base/*/media
+
+# Sensitive information
+/deploy/config/secrets.php
+.env
+.*.env
+/deployments
+
+# Components not deployed via Docker
+/ui/angular-frontend/
+/ui/angular-frontend-dna/
+
+# Local components
+.idea
+/tools/code-generator/
+/stack/localdb/

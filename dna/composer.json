@@ -1,0 +1,120 @@
+{
+    "name": "_PUBLISHER_/_PROJECT_-dna",
+    "description": "_PUBLISHER_/_PROJECT_ DNA",
+    "keywords": ["yii", "web", "application", "dna"],
+    "homepage": "http://www.example.com/",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "_NAME_",
+            "email": "_EMAIL_@example.com"
+        },
+        {
+            "name": "Open Source Community"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/neam/yii-permalinkable-items-core"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/neam/yii-relational-graph-db"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/neam/yii-i18n-tools"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/motin/p3media"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/motin/fluentpdo.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/motin/nested-set-behavior.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/codemix/hybridauthmanager"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/neam/wrest"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/motin/gii-template-collection"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/motin/giic"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/Gapminder/PHP-po-parser"
+        },
+        {
+            "type": "composer",
+            "url": "http://packages.phundament.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "comments-about-certain-required-deps": {
+        "crisu83/yii-rights": "Used for RWebUser in user component only"
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "phundament/jquery-file-upload": "@dev",
+        "phundament/p3media": "dev-gcms as 0.17.3",
+        "schmunk42/web-user-behavior": "0.1.*",
+        "neam/yii-i18n-columns": "dev-develop",
+        "neam/yii-i18n-attribute-messages": "dev-develop",
+        "neam/yii-i18n-tools": "dev-develop",
+        "neam/yii-restricted-access": "dev-develop",
+        "neam/yii-workflow-core": "dev-develop",
+        "neam/yii-workflow-task-list": "dev-develop",
+        "neam/yii-workflow-progress-tracking": "dev-develop",
+        "neam/yii-qa-state": "dev-feature/performance-enhancements",
+        "neam/yii-relational-graph-db": "@dev",
+        "neam/yii-relations-ui-core": "@dev",
+        "neam/yii-permalinkable-items-core": "@dev",
+        "neam/yii-streamlog": "dev-develop@dev",
+        "motin/yii-owner-behavior": "*@dev",
+        "yiiext/nested-set-behavior": "dev-allow-save-and-delete-option@dev",
+        "lichtner/fluentpdo": "dev-error-handler@dev",
+        "propel/propel": "~2.0@dev",
+        "monolog/monolog": ">=1.17.1",
+        "ircmaxell/random-lib": "v1.0.0",
+        "phpnode/yiipassword": ">=1.0.3",
+        "phpoffice/phpexcel": "1.7.9",
+        "phpoffice/phpword": "dev-master#744d3f53d42ee31cd1f29daefd1c7c8cd87161d0",
+        "phpoffice/phppowerpoint": "dev-master",
+        "sepia/po-parser": "dev-master",
+        "neam/php-po2json": "dev-develop",
+        "weavora/wrest": "dev-set-create-and-update-attributes-in-behavior",
+        "codemix/hybridauthmanager": "dev-master",
+        "schmunk42/relation": "1.*",
+        "mikehaertl/translatable": "~1.1.0",
+        "nordsoftware/yii-emailer": "1.2.*",
+        "nordsoftware/yii-utils": "@dev",
+        "crisu83/yii-formatter": "@dev",
+        "crisu83/yii-sentry": "dev-master as 1.3.0",
+        "alchemy/zippy": "*",
+        "twilio/sdk": "~3.12.8",
+        "2amigos/resource-manager": "dev-master",
+        "yiisoft/yii": "1.1.16 as dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "propel\\": "generated-classes/propel/",
+            "generators\\": "generators/"
+        }
+    },
+    "scripts": {}
+}

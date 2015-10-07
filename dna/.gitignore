@@ -1,0 +1,13 @@
+.idea
+/vendor/
+
+/tests/codeception.yml
+/tests/codeception/*.yml
+/tests/codeception/_data/dump.sql
+/tests/codeception/*/*Guy.php
+
+/db/*.*path
+/db/*.sql*
+
+*.mwb.bak
+.DS_Store

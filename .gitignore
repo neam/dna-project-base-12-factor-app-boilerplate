@@ -1,0 +1,28 @@
+# The following will not be tracked by Git
+
+/vendor/
+/node_modules/
+/bower_components/
+
+nbproject
+.DS_Store
+.idea/workspace.xml
+!/.idea/codeStyleSettings.xml
+npm-debug.log
+
+# Git metadata
+.git
+
+# Tmp files
+/tmp/
+
+# Data
+.files
+
+# Sensitive information
+/deploy/config/secrets.php
+.env
+.*.env
+/deployments
+composer.github.token
+

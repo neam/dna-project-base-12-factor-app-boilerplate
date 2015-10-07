@@ -1,0 +1,551 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "1fe8a74fa833d2d9e48fe046f378ebc1",
+    "packages": [
+        {
+            "name": "motin/yii-consoletools",
+            "version": "dev-awaiting-prs",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/motin/yii-consoletools.git",
+                "reference": "d7abeb3f025075d2155695b6f0edee1f13a6c501"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/motin/yii-consoletools/zipball/d7abeb3f025075d2155695b6f0edee1f13a6c501",
+                "reference": "d7abeb3f025075d2155695b6f0edee1f13a6c501",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "commands/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Christoffer Niska",
+                    "email": "christoffer.niska@gmail.com",
+                    "homepage": "http://www.cniska.net/"
+                },
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "A collection of tools for developing console commands for Yii.",
+            "keywords": [
+                "console",
+                "tools",
+                "yii"
+            ],
+            "time": "2015-10-05 22:48:18"
+        },
+        {
+            "name": "neam/docker-stack",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/docker-stack.git",
+                "reference": "4d32ffa120fac88f14a416ec3632ef5d5707efcb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/docker-stack/zipball/4d32ffa120fac88f14a416ec3632ef5d5707efcb",
+                "reference": "4d32ffa120fac88f14a416ec3632ef5d5707efcb",
+                "shasum": ""
+            },
+            "bin": [
+                "cli/docker-stack"
+            ],
+            "type": "library",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se",
+                    "homepage": "http://www.neam.se"
+                },
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://diemeisterei.de"
+                },
+                {
+                    "name": "Docker PHP Toolkit Contributors",
+                    "homepage": "https://github.com/neam/docker-stack/graphs/contributors"
+                },
+                {
+                    "name": "Open Source Community"
+                }
+            ],
+            "description": "Toolkit for maintaining a Docker-based \"one-process-per-container\" stack for 12-factor web apps.",
+            "homepage": "https://github.com/neam/docker-stack",
+            "keywords": [
+                "docker",
+                "local-dev",
+                "nginx",
+                "php",
+                "php-fpm"
+            ],
+            "support": {
+                "source": "https://github.com/neam/docker-stack/tree/develop",
+                "issues": "https://github.com/neam/docker-stack/issues"
+            },
+            "time": "2015-10-07 08:04:09"
+        },
+        {
+            "name": "neam/php-app-config",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/php-app-config.git",
+                "reference": "4dd0fff6325652ca6fe2dc84bded0d32b18cc117"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/php-app-config/zipball/4dd0fff6325652ca6fe2dc84bded0d32b18cc117",
+                "reference": "4dd0fff6325652ca6fe2dc84bded0d32b18cc117",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "vlucas/phpdotenv": "v1.0.8"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "helpers/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se",
+                    "homepage": "http://www.neam.se"
+                }
+            ],
+            "description": "A PHP framework-agnostic approach to make the current [config](http://12factor.net/config) available to PHP applications and shell-scripts.",
+            "homepage": "https://github.com/neam/php-app-config",
+            "keywords": [
+                "12factor",
+                "config",
+                "php"
+            ],
+            "time": "2015-04-27 06:29:57"
+        },
+        {
+            "name": "neam/yii-dna-deployment",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-dna-deployment.git",
+                "reference": "625e96f357809f6b2a393ee06722e34d774444c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-dna-deployment/zipball/625e96f357809f6b2a393ee06722e34d774444c5",
+                "reference": "625e96f357809f6b2a393ee06722e34d774444c5",
+                "shasum": ""
+            },
+            "require": {
+                "neam/docker-stack": "*@dev",
+                "neam/php-app-config": "*@dev",
+                "neam/yii-dna-pre-release-testing": "*@dev",
+                "neam/yii-dna-test-framework": "*@dev",
+                "php": ">=5.3.0"
+            },
+            "bin": [
+                "deploy/build.sh",
+                "deploy/generate-config.sh",
+                "deploy/show-prepared.sh",
+                "util/prepare-new-db.sh",
+                "util/setup-db.sh",
+                "util/setup-rackspace-cloud-db.sh",
+                "util/tutum-shell.sh",
+                "util/upload-current-media-as-public-files.sh",
+                "dokku-legacy/configure-s3cmd.sh",
+                "dokku-legacy/install-s3cmd.sh",
+                "dokku-legacy/app-buildstep-hook.sh",
+                "dokku-legacy/configure-persistent-p3media.sh",
+                "dokku-legacy/dokku-reset-db.sh",
+                "dokku-legacy/dokku-run-tests.sh",
+                "dokku-legacy/root-project-buildstep-hook.sh",
+                "dokku-legacy/update-buildpacks-file-revision.sh"
+            ],
+            "type": "library",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se",
+                    "homepage": "http://www.neam.se"
+                }
+            ],
+            "description": ".",
+            "homepage": "https://github.com/neam/yii-dna-deployment",
+            "keywords": [
+                "docker",
+                "local-dev",
+                "php",
+                "vagrant",
+                "vm"
+            ],
+            "support": {
+                "source": "https://github.com/neam/yii-dna-deployment/tree/develop",
+                "issues": "https://github.com/neam/yii-dna-deployment/issues"
+            },
+            "time": "2015-09-07 11:02:06"
+        },
+        {
+            "name": "neam/yii-dna-pre-release-testing",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-dna-pre-release-testing.git",
+                "reference": "d6a75edc471b5dd217e11b978d11746cf417cc7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-dna-pre-release-testing/zipball/d6a75edc471b5dd217e11b978d11746cf417cc7f",
+                "reference": "d6a75edc471b5dd217e11b978d11746cf417cc7f",
+                "shasum": ""
+            },
+            "require": {
+                "motin/yii-consoletools": "dev-awaiting-prs",
+                "neam/php-app-config": "dev-develop",
+                "php": ">=5.3.0",
+                "sumwai/yii-fixture-helper": "@dev",
+                "yiiext/migrate-command": "dev-master#35f315b as 0.7.2.1",
+                "yiisoft/yii": "~1.1.15"
+            },
+            "bin": [
+                "console/yii-dna-pre-release-testing-console",
+                "shell-scripts/fetch-user-generated-data.sh",
+                "shell-scripts/post-release-user-generated-schema-to-clean-db-schema-routine.sh",
+                "shell-scripts/reset-db.sh",
+                "shell-scripts/reset-user-generated-files.sh",
+                "shell-scripts/update-current-schema-dumps.sh",
+                "shell-scripts/upload-user-data-backup.sh",
+                "shell-scripts/yiic-migrate.sh"
+            ],
+            "type": "library",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se",
+                    "homepage": "http://www.neam.se"
+                }
+            ],
+            "description": "Yii DNA Pre-Release Testing",
+            "homepage": "https://github.com/neam/yii-dna-pre-release-testing",
+            "keywords": [
+                "db",
+                "dna",
+                "php",
+                "versioning",
+                "yii"
+            ],
+            "support": {
+                "source": "https://github.com/neam/yii-dna-pre-release-testing/tree/develop",
+                "issues": "https://github.com/neam/yii-dna-pre-release-testing/issues"
+            },
+            "time": "2015-09-29 10:35:54"
+        },
+        {
+            "name": "neam/yii-dna-test-framework",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-dna-test-framework.git",
+                "reference": "e7e643bffe08a7e9f56b762a08ff887ca213f558"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-dna-test-framework/zipball/e7e643bffe08a7e9f56b762a08ff887ca213f558",
+                "reference": "e7e643bffe08a7e9f56b762a08ff887ca213f558",
+                "shasum": ""
+            },
+            "require": {
+                "neam/php-app-config": "dev-develop",
+                "neam/yii-dna-pre-release-testing": "dev-develop",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "captbaritone/mailcatcher-codeception-module": "dev-master",
+                "codeception/codeception": "2.0.*@dev",
+                "neam/codeception-saucelabs-metadata": "dev-develop"
+            },
+            "type": "library",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se",
+                    "homepage": "http://www.neam.se"
+                }
+            ],
+            "homepage": "https://github.com/neam/yii-dna-test-framework",
+            "keywords": [
+                "codeception",
+                "php",
+                "test-framework",
+                "tests",
+                "yii"
+            ],
+            "support": {
+                "source": "https://github.com/neam/yii-dna-test-framework/tree/develop",
+                "issues": "https://github.com/neam/yii-dna-test-framework/issues"
+            },
+            "time": "2015-03-19 09:00:13"
+        },
+        {
+            "name": "sumwai/yii-fixture-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/motin/yii-fixture-helper.git",
+                "reference": "57fa2d2c8184aa62b9d0257f28120a5aec8ca9e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/motin/yii-fixture-helper/zipball/57fa2d2c8184aa62b9d0257f28120a5aec8ca9e3",
+                "reference": "57fa2d2c8184aa62b9d0257f28120a5aec8ca9e3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "."
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Sum-Wai Low"
+                }
+            ],
+            "description": "FixtureHelper is a command application lets you work with your fixtures outside testing.",
+            "time": "2014-03-19 14:30:02"
+        },
+        {
+            "name": "vlucas/phpdotenv",
+            "version": "v1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vlucas/phpdotenv.git",
+                "reference": "e783b688cf5bc29a4ffd1b79c92eb4dd2a2e2237"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/e783b688cf5bc29a4ffd1b79c92eb4dd2a2e2237",
+                "reference": "e783b688cf5bc29a4ffd1b79c92eb4dd2a2e2237",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dotenv": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Vance Lucas",
+                    "email": "vance@vancelucas.com",
+                    "homepage": "http://www.vancelucas.com"
+                }
+            ],
+            "description": "Loads environment variables from `.env` to `getenv()`, `$_ENV` and `$_SERVER` automagically.",
+            "homepage": "http://github.com/vlucas/phpdotenv",
+            "keywords": [
+                "dotenv",
+                "env",
+                "environment"
+            ],
+            "time": "2014-10-14 15:06:44"
+        },
+        {
+            "name": "yiiext/migrate-command",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiiext/migrate-command.git",
+                "reference": "9191b9b6624620c3c6a41f0867e06f22e2c77004"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiiext/migrate-command/zipball/9191b9b6624620c3c6a41f0867e06f22e2c77004",
+                "reference": "9191b9b6624620c3c6a41f0867e06f22e2c77004",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.0",
+                "yiisoft/yii": "1.1.*"
+            },
+            "type": "yii-extension",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
+                }
+            ],
+            "description": "This is an enhanced version of the Yii Database Migration Tool that adds module support and many more usefull features.",
+            "homepage": "https://github.com/yiiext/migrate-command",
+            "keywords": [
+                "database-migration",
+                "extension",
+                "yii"
+            ],
+            "time": "2014-12-01 16:44:09"
+        },
+        {
+            "name": "yiisoft/yii",
+            "version": "1.1.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii.git",
+                "reference": "bca0420b6799b0b2a7966aa90bcd15cb4aa73563"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii/zipball/bca0420b6799b0b2a7966aa90bcd15cb4aa73563",
+                "reference": "bca0420b6799b0b2a7966aa90bcd15cb4aa73563",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.0"
+            },
+            "bin": [
+                "framework/yiic"
+            ],
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "framework/YiiBase.php",
+                    "framework/yii.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Qiang Xue",
+                    "email": "qiang.xue@gmail.com",
+                    "homepage": "http://www.yiiframework.com/",
+                    "role": "Founder and project lead"
+                },
+                {
+                    "name": "Alexander Makarov",
+                    "email": "sam@rmcreative.ru",
+                    "homepage": "http://rmcreative.ru/",
+                    "role": "Core framework development"
+                },
+                {
+                    "name": "Maurizio Domba",
+                    "homepage": "http://mdomba.info/",
+                    "role": "Core framework development"
+                },
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc",
+                    "homepage": "http://cebe.cc/",
+                    "role": "Core framework development"
+                },
+                {
+                    "name": "Wei Zhuo",
+                    "email": "weizhuo@gmail.com",
+                    "role": "Project site maintenance and development"
+                },
+                {
+                    "name": "Sebastián Thierer",
+                    "email": "sebas@artfos.com",
+                    "role": "Component development"
+                },
+                {
+                    "name": "Jeffrey Winesett",
+                    "email": "jefftulsa@gmail.com",
+                    "role": "Documentation and marketing"
+                },
+                {
+                    "name": "Timur Ruziev",
+                    "email": "resurtm@gmail.com",
+                    "homepage": "http://resurtm.com/",
+                    "role": "Core framework development"
+                },
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com",
+                    "role": "Core framework development"
+                }
+            ],
+            "description": "Yii Web Programming Framework",
+            "homepage": "http://www.yiiframework.com/",
+            "keywords": [
+                "framework",
+                "yii"
+            ],
+            "time": "2014-12-21 19:30:17"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "neam/docker-stack": 20,
+        "neam/yii-dna-pre-release-testing": 20,
+        "neam/yii-dna-deployment": 20,
+        "neam/yii-dna-test-framework": 20,
+        "neam/php-app-config": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.4.0"
+    },
+    "platform-dev": []
+}

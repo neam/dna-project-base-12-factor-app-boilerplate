@@ -1,0 +1,80 @@
+{
+    "name": "_PUBLISHER_/_PROJECT_-app",
+    "description": "A 12-factor-app in project '_PROJECT_' by _PUBLISHER_",
+    "homepage": "http://www.example.com/",
+    "type": "project",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "_NAME_",
+            "email": "_EMAIL_@example.com"
+        },
+        {
+            "name": "Open Source Community"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:neam/docker-stack.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:neam/yii-dna-pre-release-testing.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:neam/yii-dna-deployment.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:neam/yii-dna-test-framework.git"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "neam/docker-stack": "dev-develop",
+        "neam/yii-dna-pre-release-testing": "dev-develop",
+        "neam/yii-dna-deployment": "dev-develop",
+        "neam/yii-dna-test-framework": "dev-develop",
+        "neam/php-app-config": "dev-develop"
+    },
+    "require-dev": {
+    },
+    "extra": {
+        "server": {
+            "framework": "yii-dna",
+            "php-config": [
+                "upload_max_filesize=200M",
+                "post_max_size=200M",
+                "memory_limit=128M",
+                "max_execution_time=300",
+                "xdebug.default_enable=${XDEBUG_DEFAULT_ENABLE}",
+                "error_reporting=E_ALL",
+                "html_errors=on",
+                "display_errors=${DISPLAY_PHP_ERRORS}",
+                "short_open_tag=on"
+            ],
+            "document-root": "health-checks",
+            "index-document": "index.php",
+            "php-service": "phpha",
+            "memcached-key-prefix": "healthchecks",
+            "nginx-includes": [
+                "stack/nginx/include/location-defaults.conf"
+            ],
+            "nginx-locations": [
+                {
+                    "location": "/api/",
+                    "document-root": "external-apis/rest-api/www",
+                    "php-service": "phpha",
+                    "memcached-key-prefix": "api",
+                    "nginx-includes": [
+                        "stack/nginx/include/location-defaults.conf"
+                    ]
+                }
+            ]
+        }
+    },
+    "scripts": {}
+}

@@ -1,0 +1,3251 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "fc0025abd0b772e724b61181b60cefc3",
+    "packages": [
+        {
+            "name": "2amigos/resource-manager",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/resource-manager.git",
+                "reference": "6a31226527c6bc6213faaad9bf31732952bbe8bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/resource-manager/zipball/6a31226527c6bc6213faaad9bf31732952bbe8bd",
+                "reference": "6a31226527c6bc6213faaad9bf31732952bbe8bd",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "2.*",
+                "yiisoft/yii": "*"
+            },
+            "type": "yii-extension",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Timur Ruziev",
+                    "email": "resurtm@gmail.com",
+                    "homepage": "http://resurtm.com/",
+                    "role": "Core framework development"
+                },
+                {
+                    "name": "Alexander Kochetov",
+                    "email": "creocoder@gmail.com"
+                }
+            ],
+            "description": "Resource manager eases your project resources management.",
+            "homepage": "https://github.com/2amigos/resource-manager",
+            "keywords": [
+                "amazon",
+                "aws",
+                "component",
+                "extension",
+                "resource",
+                "s3",
+                "yii"
+            ],
+            "time": "2014-02-19 15:16:55"
+        },
+        {
+            "name": "alchemy/zippy",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alchemy-fr/Zippy.git",
+                "reference": "16285231eb37587c6c32b86fa483c35853cd7515"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alchemy-fr/Zippy/zipball/16285231eb37587c6c32b86fa483c35853cd7515",
+                "reference": "16285231eb37587c6c32b86fa483c35853cd7515",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/collections": "~1.0",
+                "guzzle/guzzle": "~3.0",
+                "php": ">=5.3.3",
+                "pimple/pimple": "~1.0",
+                "symfony/filesystem": "~2.0",
+                "symfony/process": "~2.0"
+            },
+            "require-dev": {
+                "ext-zip": "*",
+                "phpunit/phpunit": "~3.7",
+                "sami/sami": "dev-master@dev",
+                "symfony/finder": "~2.0"
+            },
+            "suggest": {
+                "ext-zip": "To use the ZipExtensionAdapter"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Alchemy": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alchemy",
+                    "email": "dev.team@alchemy.fr",
+                    "homepage": "http://www.alchemy.fr/"
+                }
+            ],
+            "description": "Zippy, the archive manager companion",
+            "keywords": [
+                "bzip",
+                "compression",
+                "tar",
+                "zip"
+            ],
+            "time": "2014-12-10 15:03:17"
+        },
+        {
+            "name": "aws/aws-sdk-php",
+            "version": "2.8.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "92642ca4906e6681a1301971cf41500d7c68581c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/92642ca4906e6681a1301971cf41500d7c68581c",
+                "reference": "92642ca4906e6681a1301971cf41500d7c68581c",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/guzzle": "~3.7",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "doctrine/cache": "~1.0",
+                "ext-openssl": "*",
+                "monolog/monolog": "~1.4",
+                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit-mock-objects": "2.3.1",
+                "symfony/yaml": "~2.1"
+            },
+            "suggest": {
+                "doctrine/cache": "Adds support for caching of credentials and responses",
+                "ext-apc": "Allows service description opcode caching, request and response caching, and credentials caching",
+                "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
+                "monolog/monolog": "Adds support for logging HTTP requests and responses",
+                "symfony/yaml": "Eases the ability to write manifests for creating jobs in AWS Import/Export"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Aws": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "AWS SDK for PHP - Use Amazon Web Services in your PHP project",
+            "homepage": "http://aws.amazon.com/sdkforphp",
+            "keywords": [
+                "amazon",
+                "aws",
+                "cloud",
+                "dynamodb",
+                "ec2",
+                "glacier",
+                "s3",
+                "sdk"
+            ],
+            "time": "2015-09-17 00:17:24"
+        },
+        {
+            "name": "bwoester/yii-event-interceptor",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bwoester/yii-event-interceptor.git",
+                "reference": "8a6230417eaf88da0dfb15aa79b669c413fe74b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bwoester/yii-event-interceptor/zipball/8a6230417eaf88da0dfb15aa79b669c413fe74b2",
+                "reference": "8a6230417eaf88da0dfb15aa79b669c413fe74b2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Wöster",
+                    "email": "benjamin.woester@gmail.com"
+                }
+            ],
+            "description": "A component, that allows to intercept events raised by observed components.",
+            "homepage": "https://github.com/bwoester/yii-event-interceptor",
+            "keywords": [
+                "component",
+                "event",
+                "intercept",
+                "yii"
+            ],
+            "time": "2015-01-02 11:58:39"
+        },
+        {
+            "name": "bwoester/yii-static-events-component",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bwoester/yii-static-events-component.git",
+                "reference": "61cee7825aec4e70b3107fb9ab23770db54c7253"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bwoester/yii-static-events-component/zipball/61cee7825aec4e70b3107fb9ab23770db54c7253",
+                "reference": "61cee7825aec4e70b3107fb9ab23770db54c7253",
+                "shasum": ""
+            },
+            "require": {
+                "bwoester/yii-event-interceptor": "1.0.*",
+                "php": ">=5.1.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Wöster",
+                    "email": "benjamin.woester@gmail.com"
+                }
+            ],
+            "description": "Attach events on class base.",
+            "homepage": "https://github.com/bwoester/yii-static-events-component",
+            "keywords": [
+                "component",
+                "event",
+                "static",
+                "yii"
+            ],
+            "time": "2013-10-20 23:31:06"
+        },
+        {
+            "name": "clevertech/yiibooster",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/clevertech/YiiBooster.git",
+                "reference": "fff83e2ea250a9f9ef66305fab02b83474422da5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/clevertech/YiiBooster/archive/fff83e2ea250a9f9ef66305fab02b83474422da5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "yii-extension",
+            "description": "YiiBooster",
+            "homepage": "https://github.com/clevertech/YiiBooster"
+        },
+        {
+            "name": "codemix/hybridauthmanager",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codemix/hybridauthmanager.git",
+                "reference": "8d1c51b083d8bae2541b51a92eb2141e335f517b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codemix/hybridauthmanager/zipball/8d1c51b083d8bae2541b51a92eb2141e335f517b",
+                "reference": "8d1c51b083d8bae2541b51a92eb2141e335f517b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Härtl",
+                    "email": "haertl.mike@gmail.com"
+                }
+            ],
+            "description": "An AuthManager for Yii that stores the hierarchy in a flat PHP file and the assignmens in DB",
+            "keywords": [
+                "RBAC",
+                "authorization"
+            ],
+            "support": {
+                "source": "https://github.com/codemix/hybridauthmanager/tree/master",
+                "issues": "https://github.com/codemix/hybridauthmanager/issues"
+            },
+            "time": "2013-08-22 19:12:29"
+        },
+        {
+            "name": "crisu83/yii-formatter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Crisu83/yii-formatter.git",
+                "reference": "30b743dbb3edddc4d6457a9b6046510f4a515f95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Crisu83/yii-formatter/zipball/30b743dbb3edddc4d6457a9b6046510f4a515f95",
+                "reference": "30b743dbb3edddc4d6457a9b6046510f4a515f95",
+                "shasum": ""
+            },
+            "type": "yii-extension",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Christoffer Niska",
+                    "email": "christoffer.niska@gmail.com",
+                    "homepage": "http://www.cniska.net/"
+                }
+            ],
+            "description": "A collection of formatters for the Yii PHP framework.",
+            "keywords": [
+                "formatter"
+            ],
+            "time": "2013-05-22 13:05:40"
+        },
+        {
+            "name": "crisu83/yii-sentry",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/crisu83/yii-sentry.git",
+                "reference": "c43499e427bd803206a1970944605db03f079697"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/crisu83/yii-sentry/zipball/c43499e427bd803206a1970944605db03f079697",
+                "reference": "c43499e427bd803206a1970944605db03f079697",
+                "shasum": ""
+            },
+            "require": {
+                "raven/raven": "0.8.*"
+            },
+            "require-dev": {
+                "yiisoft/yii": ">=1.1.14"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "components/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Christoffer Niska",
+                    "email": "christoffer.niska@gmail.com",
+                    "homepage": "http://www.cniska.net/"
+                }
+            ],
+            "description": "Sentry for the Yii PHP framework.",
+            "keywords": [
+                "error",
+                "exception",
+                "log",
+                "sentry",
+                "yii"
+            ],
+            "time": "2014-08-18 16:13:25"
+        },
+        {
+            "name": "doctrine/collections",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/collections.git",
+                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
+                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Common\\Collections\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Collections Abstraction library",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "array",
+                "collections",
+                "iterator"
+            ],
+            "time": "2015-04-14 22:21:58"
+        },
+        {
+            "name": "guzzle/guzzle",
+            "version": "v3.9.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle3.git",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.3",
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "replace": {
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
+                "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-error-response": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-md5": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version"
+            },
+            "require-dev": {
+                "doctrine/cache": "~1.3",
+                "monolog/monolog": "~1.0",
+                "phpunit/phpunit": "3.7.*",
+                "psr/log": "~1.0",
+                "symfony/class-loader": "~2.1",
+                "zendframework/zend-cache": "2.*,<2.3",
+                "zendframework/zend-log": "2.*,<2.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle": "src/",
+                    "Guzzle\\Tests": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
+                }
+            ],
+            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2015-03-18 18:23:50"
+        },
+        {
+            "name": "ircmaxell/random-lib",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ircmaxell/RandomLib.git",
+                "reference": "0eaad991c1756842f26dfbcbc6effcabb5003d0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ircmaxell/RandomLib/zipball/0eaad991c1756842f26dfbcbc6effcabb5003d0a",
+                "reference": "0eaad991c1756842f26dfbcbc6effcabb5003d0a",
+                "shasum": ""
+            },
+            "require": {
+                "ircmaxell/security-lib": "1.0.*@dev",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "1.1.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "RandomLib": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anthony Ferrara",
+                    "email": "ircmaxell@ircmaxell.com",
+                    "homepage": "http://blog.ircmaxell.com"
+                }
+            ],
+            "description": "A Library For Generating Secure Random Numbers",
+            "homepage": "https://github.com/ircmaxell/PHP-RandomLib",
+            "keywords": [
+                "cryptography",
+                "random",
+                "random-numbers",
+                "random-strings"
+            ],
+            "time": "2013-07-30 17:40:57"
+        },
+        {
+            "name": "ircmaxell/security-lib",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ircmaxell/SecurityLib.git",
+                "reference": "80934de3c482dcafb46b5756e59ebece082b6dc7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ircmaxell/SecurityLib/zipball/80934de3c482dcafb46b5756e59ebece082b6dc7",
+                "reference": "80934de3c482dcafb46b5756e59ebece082b6dc7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "1.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SecurityLib": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anthony Ferrara",
+                    "email": "ircmaxell@ircmaxell.com",
+                    "homepage": "http://blog.ircmaxell.com"
+                }
+            ],
+            "description": "A Base Security Library",
+            "homepage": "https://github.com/ircmaxell/PHP-SecurityLib",
+            "time": "2013-04-30 18:00:34"
+        },
+        {
+            "name": "lichtner/fluentpdo",
+            "version": "dev-error-handler",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/motin/fluentpdo.git",
+                "reference": "55fb5d4f05c3705ecb018085702983133cf108c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/motin/fluentpdo/zipball/55fb5d4f05c3705ecb018085702983133cf108c9",
+                "reference": "55fb5d4f05c3705ecb018085702983133cf108c9",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "FluentPDO/FluentPDO.php"
+                ]
+            },
+            "license": [
+                "Apache-2.0",
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Marek Lichtner",
+                    "homepage": "http://licht.sk/"
+                }
+            ],
+            "description": "FluentPDO is small PHP library for rapid query building. Killer feature is smart join builder which generates joins automatically.",
+            "homepage": "http://fluentpdo.com/",
+            "keywords": [
+                "database",
+                "dbal",
+                "pdo"
+            ],
+            "support": {
+                "source": "https://github.com/motin/fluentpdo/tree/error-handler"
+            },
+            "time": "2015-03-13 19:39:24"
+        },
+        {
+            "name": "mikehaertl/translatable",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikehaertl/translatable.git",
+                "reference": "0d59a7f975b8c51c02ef07b597cd1063a552df6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikehaertl/translatable/zipball/0d59a7f975b8c51c02ef07b597cd1063a552df6f",
+                "reference": "0d59a7f975b8c51c02ef07b597cd1063a552df6f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "type": "yii-extension",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Haertl",
+                    "email": "haertl.mike@gmail.com"
+                }
+            ],
+            "description": "translatable is a Yii extension to transparently translate ActiveRecord attributes.",
+            "homepage": "https://github.com/mikehaertl/translatable",
+            "keywords": [
+                "i18n",
+                "translation",
+                "yii"
+            ],
+            "time": "2013-10-26 10:04:31"
+        },
+        {
+            "name": "monolog/monolog",
+            "version": "1.17.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "0524c87587ab85bc4c2d6f5b41253ccb930a5422"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/0524c87587ab85bc4c2d6f5b41253ccb930a5422",
+                "reference": "0524c87587ab85bc4c2d6f5b41253ccb930a5422",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "psr/log": "~1.0"
+            },
+            "provide": {
+                "psr/log-implementation": "1.0.0"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "^2.4.9",
+                "doctrine/couchdb": "~1.0@dev",
+                "graylog2/gelf-php": "~1.0",
+                "php-console/php-console": "^3.1.3",
+                "phpunit/phpunit": "~4.5",
+                "phpunit/phpunit-mock-objects": "2.3.0",
+                "raven/raven": "~0.11",
+                "ruflin/elastica": ">=0.90 <3.0",
+                "swiftmailer/swiftmailer": "~5.3",
+                "videlalvaro/php-amqplib": "~2.4"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+                "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+                "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+                "ext-mongo": "Allow sending log messages to a MongoDB server",
+                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "php-console/php-console": "Allow sending log messages to Google Chrome",
+                "raven/raven": "Allow sending log messages to a Sentry server",
+                "rollbar/rollbar": "Allow sending log messages to Rollbar",
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
+                "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.16.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Monolog\\": "src/Monolog"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                }
+            ],
+            "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+            "homepage": "http://github.com/Seldaek/monolog",
+            "keywords": [
+                "log",
+                "logging",
+                "psr-3"
+            ],
+            "time": "2015-08-31 09:17:37"
+        },
+        {
+            "name": "motin/yii-owner-behavior",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/motin/yii-owner-behavior.git",
+                "reference": "85c33a96a61e005fc957bb7182ffe3ade8a5dc33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/motin/yii-owner-behavior/zipball/85c33a96a61e005fc957bb7182ffe3ade8a5dc33",
+                "reference": "85c33a96a61e005fc957bb7182ffe3ade8a5dc33",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "."
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                },
+                {
+                    "name": "thyseus",
+                    "email": "thyseus@gmail.com"
+                }
+            ],
+            "description": "Behavior to automate setting the \"owned by user\" attribute to the currently logged in user id upon creation of a record.",
+            "time": "2013-11-20 23:43:48"
+        },
+        {
+            "name": "neam/php-po2json",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/php-po2json.git",
+                "reference": "e693dd87c53ae628902d7d12b6992e05d8cf2592"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/php-po2json/zipball/e693dd87c53ae628902d7d12b6992e05d8cf2592",
+                "reference": "e693dd87c53ae628902d7d12b6992e05d8cf2592",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "sepia/po-parser": "dev-master"
+            },
+            "require-dev": {
+                "codeception/codeception": "~1.8.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "."
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "Convert PO files to JSON strings. The result is Jed-compatible. Based on, and using same test fixtures as https://github.com/mikeedwards/po2json",
+            "homepage": "https://github.com/neam/php-po2json",
+            "keywords": [
+                "i18n",
+                "php",
+                "translation"
+            ],
+            "time": "2014-03-26 13:38:12"
+        },
+        {
+            "name": "neam/yii-i18n-attribute-messages",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-i18n-attribute-messages.git",
+                "reference": "e806bf6f58ba335d3139cca971ec200ec6600033"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-i18n-attribute-messages/zipball/e806bf6f58ba335d3139cca971ec200ec6600033",
+                "reference": "e806bf6f58ba335d3139cca971ec200ec6600033",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "behaviors/",
+                    "components/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "Transparent attribute translation for ActiveRecords, leveraging Yii's built-in translation features for translated field contents.",
+            "homepage": "https://github.com/neam/yii-i18n-attribute-messages",
+            "keywords": [
+                "i18n",
+                "translation",
+                "yii"
+            ],
+            "time": "2015-02-24 23:26:03"
+        },
+        {
+            "name": "neam/yii-i18n-columns",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-i18n-columns.git",
+                "reference": "563cd3213ad625fa3b99f1f038bb433c530df3dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-i18n-columns/zipball/563cd3213ad625fa3b99f1f038bb433c530df3dc",
+                "reference": "563cd3213ad625fa3b99f1f038bb433c530df3dc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "behaviors/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                },
+                {
+                    "name": "Andrej Bubis",
+                    "email": "firstrow@gmail.com"
+                }
+            ],
+            "description": "Transparent attribute translation for ActiveRecords, without requiring lookup tables for translated field contents.",
+            "homepage": "https://github.com/neam/yii-i18n-columns",
+            "keywords": [
+                "i18n",
+                "translation",
+                "yii"
+            ],
+            "time": "2015-03-07 12:42:14"
+        },
+        {
+            "name": "neam/yii-i18n-tools",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-i18n-tools.git",
+                "reference": "21f9075c661c507e5f4c0658f47ab69a2f64fab3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-i18n-tools/zipball/21f9075c661c507e5f4c0658f47ab69a2f64fab3",
+                "reference": "21f9075c661c507e5f4c0658f47ab69a2f64fab3",
+                "shasum": ""
+            },
+            "require": {
+                "neam/php-po2json": "dev-develop",
+                "neam/yii-i18n-attribute-messages": "dev-develop",
+                "neam/yii-i18n-columns": "dev-develop",
+                "php": ">=5.4.0",
+                "schmunk42/php-inflector": ">=0.1.0",
+                "sepia/po-parser": "dev-master",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "components/",
+                    "helpers/",
+                    "traits/"
+                ]
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "todo",
+            "homepage": "https://github.com/neam/yii-i18n-tools",
+            "keywords": [
+                "yii"
+            ],
+            "support": {
+                "source": "https://github.com/neam/yii-i18n-tools/tree/develop",
+                "issues": "https://github.com/neam/yii-i18n-tools/issues"
+            },
+            "time": "2015-04-30 07:10:20"
+        },
+        {
+            "name": "neam/yii-permalinkable-items-core",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-permalinkable-items-core.git",
+                "reference": "12290ea8259db7d4ef4e7172497e6acb177b3ebe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-permalinkable-items-core/zipball/12290ea8259db7d4ef4e7172497e6acb177b3ebe",
+                "reference": "12290ea8259db7d4ef4e7172497e6acb177b3ebe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "psr-4": {
+                    "neam\\yii_permalinkable_items_core\\": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "Core helper extension to implement routes that makes items permalinkable.",
+            "homepage": "https://github.com/neam/yii-permalinkable-items-core",
+            "keywords": [
+                "yii"
+            ],
+            "support": {
+                "source": "https://github.com/neam/yii-permalinkable-items-core/tree/develop",
+                "issues": "https://github.com/neam/yii-permalinkable-items-core/issues"
+            },
+            "time": "2015-04-29 10:30:13"
+        },
+        {
+            "name": "neam/yii-qa-state",
+            "version": "dev-feature/performance-enhancements",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-qa-state.git",
+                "reference": "3568a70395d0d8bdb94850c448b9a1d767341d0d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-qa-state/zipball/3568a70395d0d8bdb94850c448b9a1d767341d0d",
+                "reference": "3568a70395d0d8bdb94850c448b9a1d767341d0d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "behaviors/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "Transparent attribute translation for ActiveRecords, without requiring lookup tables for translated field contents.",
+            "homepage": "https://github.com/neam/yii-qa-state",
+            "keywords": [
+                "qa",
+                "quality assurance",
+                "workflow",
+                "yii"
+            ],
+            "time": "2014-12-12 11:19:00"
+        },
+        {
+            "name": "neam/yii-relational-graph-db",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-relational-graph-db.git",
+                "reference": "5d5dad7942777c1aca0b6076650917b0fcb330ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-relational-graph-db/zipball/5d5dad7942777c1aca0b6076650917b0fcb330ad",
+                "reference": "5d5dad7942777c1aca0b6076650917b0fcb330ad",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "behaviors/",
+                    "traits/"
+                ]
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "Ability to relate any items within a relational database with each other, using the concept of nodes and edges.",
+            "homepage": "https://github.com/neam/yii-relational-graph-db",
+            "keywords": [
+                "yii"
+            ],
+            "support": {
+                "source": "https://github.com/neam/yii-relational-graph-db/tree/develop",
+                "issues": "https://github.com/neam/yii-relational-graph-db/issues"
+            },
+            "time": "2015-08-13 11:32:41"
+        },
+        {
+            "name": "neam/yii-relations-ui-core",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-relations-ui-core.git",
+                "reference": "b856c15e7d8f112f8776bf102190221e1f0f7ec8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-relations-ui-core/zipball/b856c15e7d8f112f8776bf102190221e1f0f7ec8",
+                "reference": "b856c15e7d8f112f8776bf102190221e1f0f7ec8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "psr-4": {
+                    "neam\\yii_relations_ui_core\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "To simplify editing relations in a Yii 1 app (Core part of https://github.com/neam/yii-relations-ui)",
+            "homepage": "https://github.com/neam/yii-relations-ui-core",
+            "keywords": [
+                "yii"
+            ],
+            "time": "2015-02-24 15:53:26"
+        },
+        {
+            "name": "neam/yii-restricted-access",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-restricted-access.git",
+                "reference": "dec5d192e9ce9afcaade1ccc3bb1ed6bcf7fa602"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-restricted-access/zipball/dec5d192e9ce9afcaade1ccc3bb1ed6bcf7fa602",
+                "reference": "dec5d192e9ce9afcaade1ccc3bb1ed6bcf7fa602",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "helpers/",
+                    "behaviors/",
+                    "modules/restrictedAccess/widgets/",
+                    "traits/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "todo",
+            "homepage": "https://github.com/neam/yii-restricted-access",
+            "keywords": [
+                "yii"
+            ],
+            "time": "2015-06-29 20:34:34"
+        },
+        {
+            "name": "neam/yii-streamlog",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-streamlog.git",
+                "reference": "b680c0f8b01e343eabe3328f89b88836b96b00aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-streamlog/zipball/b680c0f8b01e343eabe3328f89b88836b96b00aa",
+                "reference": "b680c0f8b01e343eabe3328f89b88836b96b00aa",
+                "shasum": ""
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "psr-4": {
+                    "neam\\yii_streamlog\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Open Source Community"
+                },
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se",
+                    "homepage": "http://neamlabs.com"
+                }
+            ],
+            "description": "Send Yii 1 logs to stdout/stderr - created to be used with the php-fpm/nginx Docker stack available at http://github.com/neam/docker-stack",
+            "homepage": "https://github.com/neam/yii-streamlog",
+            "keywords": [
+                "docker",
+                "log",
+                "php-fpm",
+                "stack",
+                "stderr",
+                "stdout",
+                "yii"
+            ],
+            "time": "2015-03-11 23:18:08"
+        },
+        {
+            "name": "neam/yii-workflow-core",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-workflow-core.git",
+                "reference": "97c81fae5cc16d53cd392a5ad4b227afa6d7cf4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-workflow-core/zipball/97c81fae5cc16d53cd392a5ad4b227afa6d7cf4b",
+                "reference": "97c81fae5cc16d53cd392a5ad4b227afa6d7cf4b",
+                "shasum": ""
+            },
+            "require": {
+                "neam/yii-i18n-tools": "dev-develop",
+                "php": ">=5.4.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "traits/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "todo",
+            "homepage": "https://github.com/neam/yii-workflow-core",
+            "keywords": [
+                "yii"
+            ],
+            "time": "2015-09-28 03:45:55"
+        },
+        {
+            "name": "neam/yii-workflow-progress-tracking",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-workflow-progress-tracking.git",
+                "reference": "fd512731efb021976eb2e9ee1739285634cfb49d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-workflow-progress-tracking/zipball/fd512731efb021976eb2e9ee1739285634cfb49d",
+                "reference": "fd512731efb021976eb2e9ee1739285634cfb49d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "todo",
+            "homepage": "https://github.com/neam/yii-workflow-progress-tracking",
+            "keywords": [
+                "yii"
+            ],
+            "time": "2014-08-12 11:49:11"
+        },
+        {
+            "name": "neam/yii-workflow-task-list",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/yii-workflow-task-list.git",
+                "reference": "ce7e4b24c104cefe513a7344e230449e0ede5fb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/yii-workflow-task-list/zipball/ce7e4b24c104cefe513a7344e230449e0ede5fb1",
+                "reference": "ce7e4b24c104cefe513a7344e230449e0ede5fb1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "components/",
+                    "widgets/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fredrik Wollsén",
+                    "email": "fredrik@neam.se"
+                }
+            ],
+            "description": "todo",
+            "homepage": "https://github.com/neam/yii-workflow-task-list",
+            "keywords": [
+                "yii"
+            ],
+            "time": "2014-09-04 07:15:16"
+        },
+        {
+            "name": "nordsoftware/yii-emailer",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nordsoftware/yii-emailer.git",
+                "reference": "b19d23233415b199fe11caddde745d439c5a36be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nordsoftware/yii-emailer/zipball/b19d23233415b199fe11caddde745d439c5a36be",
+                "reference": "b19d23233415b199fe11caddde745d439c5a36be",
+                "shasum": ""
+            },
+            "require": {
+                "crisu83/yii-formatter": "dev-master",
+                "nordsoftware/yii-utils": "dev-master",
+                "swiftmailer/swiftmailer": "4.3.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Christoffer Niska",
+                    "email": "christoffer.niska@nordsoftware.com"
+                },
+                {
+                    "name": "Kenneth Söderlund",
+                    "email": "kenneth.soderlund@nordsoftware.com"
+                }
+            ],
+            "description": "Extension for creating and sending emails for the Yii PHP framework.",
+            "time": "2014-04-09 07:47:30"
+        },
+        {
+            "name": "nordsoftware/yii-utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nordsoftware/yii-utils.git",
+                "reference": "c9eb69f53d2f3ba0acab169ab5bb9e7a2881cc13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nordsoftware/yii-utils/zipball/c9eb69f53d2f3ba0acab169ab5bb9e7a2881cc13",
+                "reference": "c9eb69f53d2f3ba0acab169ab5bb9e7a2881cc13",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Christoffer Niska",
+                    "email": "christoffer.niska@nordsoftware.com"
+                }
+            ],
+            "description": "Utility classes for the Yii PHP framework.",
+            "time": "2013-06-18 14:27:35"
+        },
+        {
+            "name": "phpnode/yiipassword",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpnode/yiipassword.git",
+                "reference": "6be5c8fcb12d79e0ceceba66d69cf7024e981b34"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpnode/yiipassword/zipball/6be5c8fcb12d79e0ceceba66d69cf7024e981b34",
+                "reference": "6be5c8fcb12d79e0ceceba66d69cf7024e981b34",
+                "shasum": ""
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "psr-0": {
+                    "YiiPassword": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Charles Pick",
+                    "email": "charles.pick@gmail.com",
+                    "homepage": "https://github.com/phpnode",
+                    "role": "Base version developer"
+                },
+                {
+                    "name": "Christoffer Niska",
+                    "email": "ChristofferNiska@gmail.com",
+                    "homepage": "http://crisu83.me"
+                }
+            ],
+            "description": "Password strategies for the Yii PHP framework.",
+            "keywords": [
+                "bcrypt",
+                "password"
+            ],
+            "time": "2014-06-04 11:26:28"
+        },
+        {
+            "name": "phpoffice/common",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/Common.git",
+                "reference": "8b8ae85e7d10d5a5ffd36a4a6ba964fd3b55a76f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/Common/zipball/8b8ae85e7d10d5a5ffd36a4a6ba964fd3b55a76f",
+                "reference": "8b8ae85e7d10d5a5ffd36a4a6ba964fd3b55a76f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phploc/phploc": "2.*",
+                "phpmd/phpmd": "2.*",
+                "phpunit/phpunit": "3.7.*",
+                "sebastian/phpcpd": "2.*",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpOffice\\Common\\": "src/Common/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://rootslabs.net"
+                }
+            ],
+            "description": "PHPOffice Common",
+            "homepage": "http://phpoffice.github.io",
+            "keywords": [
+                "common",
+                "component",
+                "office",
+                "php"
+            ],
+            "time": "2015-07-01 14:41:21"
+        },
+        {
+            "name": "phpoffice/phpexcel",
+            "version": "1.7.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPExcel.git",
+                "reference": "7a7634fba664249a04fc771df677a9b9f755d7ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPExcel/zipball/7a7634fba664249a04fc771df677a9b9f755d7ec",
+                "reference": "7a7634fba664249a04fc771df677a9b9f755d7ec",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Maarten Balliauw",
+                    "homepage": "http://blog.maartenballiauw.be"
+                },
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://blog.rootslabs.net"
+                },
+                {
+                    "name": "Erik Tilt"
+                }
+            ],
+            "description": "PHPExcel - OpenXML - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
+            "homepage": "http://phpexcel.codeplex.com",
+            "keywords": [
+                "OpenXML",
+                "excel",
+                "php",
+                "spreadsheet",
+                "xls",
+                "xlsx"
+            ],
+            "time": "2013-05-24 11:57:42"
+        },
+        {
+            "name": "phpoffice/phppowerpoint",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPPowerPoint.git",
+                "reference": "7d30b8cd49cf41f517b041c07af5a1dffaf3d3bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPPowerPoint/zipball/7d30b8cd49cf41f517b041c07af5a1dffaf3d3bb",
+                "reference": "7d30b8cd49cf41f517b041c07af5a1dffaf3d3bb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "ext-zip": "*",
+                "php": ">=5.3.0",
+                "phpoffice/common": "0.1.*"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phploc/phploc": "2.*",
+                "phpmd/phpmd": "2.*",
+                "phpunit/phpunit": "3.7.*",
+                "sebastian/phpcpd": "2.*",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "suggest": {
+                "ext-gd2": "Required to add images"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpOffice\\PhpPowerpoint\\": "src/PhpPowerpoint/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Ivan Lanin",
+                    "homepage": "http://ivan.lanin.org"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://rootslabs.net"
+                }
+            ],
+            "description": "PHPPowerPoint - Read, Create and Write Presentations documents in PHP",
+            "homepage": "http://phpoffice.github.io",
+            "keywords": [
+                "LibreOffice",
+                "PowerPoint",
+                "odp",
+                "php",
+                "ppt",
+                "pptx",
+                "presentations"
+            ],
+            "time": "2015-07-07 09:13:43"
+        },
+        {
+            "name": "phpoffice/phpword",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHPOffice/PHPWord.git",
+                "reference": "744d3f53d42ee31cd1f29daefd1c7c8cd87161d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHPOffice/PHPWord/zipball/38cb04d322007dd522cbdd8ba3cd50ab67ced0db",
+                "reference": "744d3f53d42ee31cd1f29daefd1c7c8cd87161d0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "dompdf/dompdf": "0.6.*",
+                "mpdf/mpdf": "5.*",
+                "phpdocumentor/phpdocumentor": "2.*",
+                "phploc/phploc": "2.*",
+                "phpmd/phpmd": "2.*",
+                "phpunit/phpunit": "3.7.*",
+                "sebastian/phpcpd": "2.*",
+                "squizlabs/php_codesniffer": "1.*",
+                "tecnick.com/tcpdf": "6.*"
+            },
+            "suggest": {
+                "dompdf/dompdf": "Used to write PDF",
+                "ext-gd2": "Used to add images",
+                "ext-xmlwriter": "Used to write DOCX and ODT",
+                "ext-xsl": "Used to apply XSL style sheet to main document part of OOXML template",
+                "ext-zip": "Used to write DOCX and ODT"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpOffice\\PhpWord\\": "src/PhpWord"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Baker"
+                },
+                {
+                    "name": "Franck Lefevre",
+                    "homepage": "http://blog.rootslabs.net"
+                },
+                {
+                    "name": "Gabriel Bull",
+                    "email": "me@gabrielbull.com",
+                    "homepage": "http://gabrielbull.com/"
+                },
+                {
+                    "name": "Ivan Lanin",
+                    "homepage": "http://ivan.lanin.org"
+                },
+                {
+                    "name": "Roman Syroeshko",
+                    "homepage": "http://ru.linkedin.com/pub/roman-syroeshko/34/a53/994/"
+                }
+            ],
+            "description": "PHPWord - A pure PHP library for reading and writing word processing documents (DOCX, ODT, RTF, HTML, PDF)",
+            "homepage": "http://phpoffice.github.io",
+            "keywords": [
+                "ISO IEC 29500",
+                "OOXML",
+                "Office Open XML",
+                "OpenDocument",
+                "OpenXML",
+                "PhpOffice",
+                "PhpWord",
+                "Rich Text Format",
+                "WordprocessingML",
+                "doc",
+                "docx",
+                "html",
+                "odt",
+                "office",
+                "pdf",
+                "php",
+                "reader",
+                "rtf",
+                "template",
+                "template processor",
+                "word",
+                "writer"
+            ],
+            "time": "2015-08-30 14:30:44"
+        },
+        {
+            "name": "phundament/jquery-file-upload",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmunk42/jQuery-File-Upload.git",
+                "reference": "5e08d974a080a931dda654086a1391e75cbda99f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/schmunk42/jQuery-File-Upload/archive/5e08d974a080a931dda654086a1391e75cbda99f.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library",
+            "homepage": "https://github.com/schmunk42/jQuery-File-Upload",
+            "time": "2011-10-05 23:27:49"
+        },
+        {
+            "name": "phundament/p3extensions",
+            "version": "0.20.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmunk42/p3extensions.git",
+                "reference": "0.20.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmunk42/p3extensions/zipball/0.20.0",
+                "reference": "0.20.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "phundament/jquery-file-upload": "@dev",
+                "yiisoft/yii": ">=1.1.12,<2.0"
+            },
+            "type": "library",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://www.usrbin.de"
+                }
+            ],
+            "description": "Phundament 3 Core Extensions",
+            "homepage": "https://github.com/schmunk42/p3extensions",
+            "keywords": [
+                "components",
+                "phundament"
+            ],
+            "support": {
+                "source": "https://github.com/schmunk42/p3extensions/tree/0.20.0",
+                "issues": "https://github.com/schmunk42/p3extensions/issues"
+            },
+            "time": "2015-04-29 07:31:18"
+        },
+        {
+            "name": "phundament/p3media",
+            "version": "dev-gcms",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/motin/p3media.git",
+                "reference": "b896502538a64a67d83eba784d55f1974aa251a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/motin/p3media/zipball/b896502538a64a67d83eba784d55f1974aa251a2",
+                "reference": "b896502538a64a67d83eba784d55f1974aa251a2",
+                "shasum": ""
+            },
+            "require": {
+                "bwoester/yii-static-events-component": "~1.0.2",
+                "clevertech/yiibooster": ">=1.0,<3.0",
+                "mikehaertl/translatable": "1.*",
+                "php": ">=5.3.0",
+                "phundament/p3extensions": ">=0.17.0",
+                "sammaye/auditrail2": "1.*",
+                "schmunk42/access": "@stable",
+                "schmunk42/adjacency-list-behavior": "@stable",
+                "schmunk42/php-inflector": ">=0.1.0",
+                "schmunk42/relation": "1.*",
+                "yiiext/status-behavior": "0.7.*",
+                "yiisoft/yii": "1.1.*"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "models/",
+                    "components/"
+                ]
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://www.usrbin.de"
+                }
+            ],
+            "description": "Yii media file manager module with ckeditor integration",
+            "homepage": "https://github.com/schmunk42/p3media",
+            "keywords": [
+                "extension",
+                "file",
+                "manager",
+                "module",
+                "yii"
+            ],
+            "support": {
+                "source": "https://github.com/motin/p3media/tree/gcms"
+            },
+            "time": "2015-03-11 13:47:00"
+        },
+        {
+            "name": "pimple/pimple",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silexphp/Pimple.git",
+                "reference": "2019c145fe393923f3441b23f29bbdfaa5c58c4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/2019c145fe393923f3441b23f29bbdfaa5c58c4d",
+                "reference": "2019c145fe393923f3441b23f29bbdfaa5c58c4d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Pimple": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Pimple is a simple Dependency Injection Container for PHP 5.3",
+            "homepage": "http://pimple.sensiolabs.org",
+            "keywords": [
+                "container",
+                "dependency injection"
+            ],
+            "time": "2013-11-22 08:30:29"
+        },
+        {
+            "name": "propel/propel",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/propelorm/Propel2.git",
+                "reference": "f22de18745f531c545bd906b46aeb476175c16ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/propelorm/Propel2/zipball/f22de18745f531c545bd906b46aeb476175c16ee",
+                "reference": "f22de18745f531c545bd906b46aeb476175c16ee",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "psr/log": "~1.0",
+                "symfony/config": "~2.3",
+                "symfony/console": "~2.3",
+                "symfony/filesystem": "~2.3",
+                "symfony/finder": "~2.3",
+                "symfony/validator": "~2.3",
+                "symfony/yaml": "~2.3"
+            },
+            "require-dev": {
+                "behat/behat": "~2.4",
+                "monolog/monolog": "~1.3",
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "monolog/monolog": "The recommended logging library to use with Propel."
+            },
+            "bin": [
+                "bin/propel"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Propel": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com"
+                }
+            ],
+            "description": "Propel2 is an open-source Object-Relational Mapping (ORM) for PHP 5.4",
+            "homepage": "http://www.propelorm.org/",
+            "keywords": [
+                "Active Record",
+                "orm",
+                "persistence"
+            ],
+            "time": "2015-10-02 15:28:15"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Psr\\Log\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "raven/raven",
+            "version": "0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/getsentry/raven-php.git",
+                "reference": "d4b741736125f2b892e07903cd40450b53479290"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/getsentry/raven-php/zipball/d4b741736125f2b892e07903cd40450b53479290",
+                "reference": "d4b741736125f2b892e07903cd40450b53479290",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "bin": [
+                "bin/raven"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Raven_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "David Cramer",
+                    "email": "dcramer@gmail.com"
+                }
+            ],
+            "description": "A PHP client for Sentry (http://getsentry.com)",
+            "homepage": "http://getsentry.com",
+            "keywords": [
+                "log",
+                "logging"
+            ],
+            "time": "2013-12-03 10:27:59"
+        },
+        {
+            "name": "sammaye/auditrail2",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sammaye/audittrail.git",
+                "reference": "f75cf7c98f33e717421759f559be67383cfd6250"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sammaye/audittrail/zipball/f75cf7c98f33e717421759f559be67383cfd6250",
+                "reference": "f75cf7c98f33e717421759f559be67383cfd6250",
+                "shasum": ""
+            },
+            "type": "yii-extension",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sammaye",
+                    "homepage": "http://sammaye.wordpress.com"
+                }
+            ],
+            "description": "A reload of the popular audit trail extension",
+            "keywords": [
+                "Audit",
+                "phundament",
+                "trail",
+                "yii"
+            ],
+            "time": "2013-09-18 08:00:49"
+        },
+        {
+            "name": "schmunk42/access",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmunk42/yii-access.git",
+                "reference": "6011a5a42db19d73ee6967874e33c5620a4218fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmunk42/yii-access/zipball/6011a5a42db19d73ee6967874e33c5620a4218fc",
+                "reference": "6011a5a42db19d73ee6967874e33c5620a4218fc",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "behaviors/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://www.usrbin.de"
+                }
+            ],
+            "description": "Yii Framework Active Record access check implementation",
+            "time": "2014-04-17 09:20:23"
+        },
+        {
+            "name": "schmunk42/adjacency-list-behavior",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmunk42/yii-adjacency-list-behavior.git",
+                "reference": "88b740e03781b82ca759759353a6a6e799764ff3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmunk42/yii-adjacency-list-behavior/zipball/88b740e03781b82ca759759353a6a6e799764ff3",
+                "reference": "88b740e03781b82ca759759353a6a6e799764ff3",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://www.usrbin.de"
+                }
+            ],
+            "description": "Yii Framework Active Record Behavior for tree structures",
+            "time": "2013-09-28 01:08:04"
+        },
+        {
+            "name": "schmunk42/php-inflector",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmunk42/php-inflector.git",
+                "reference": "fa88d5a537bb64f67ee661ae9e6057f2dad3efb4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmunk42/php-inflector/zipball/fa88d5a537bb64f67ee661ae9e6057f2dad3efb4",
+                "reference": "fa88d5a537bb64f67ee661ae9e6057f2dad3efb4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "PhInflector.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://www.usrbin.de"
+                }
+            ],
+            "description": "Standalone PHP 5.2 Inflector backport from Yii 2.0",
+            "homepage": "https://github.com/schmunk42/php-inflector",
+            "keywords": [
+                "inflector",
+                "yii"
+            ],
+            "time": "2014-09-30 11:25:27"
+        },
+        {
+            "name": "schmunk42/relation",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmunk42/yii-relation.git",
+                "reference": "47de80e28fdf5984abe6234fb66d1da83b1e651a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmunk42/yii-relation/zipball/47de80e28fdf5984abe6234fb66d1da83b1e651a",
+                "reference": "47de80e28fdf5984abe6234fb66d1da83b1e651a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "yiisoft/yii": "1.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "behaviors/",
+                    "widgets/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://www.usrbin.de"
+                }
+            ],
+            "description": "Yii Framework components for active record relations",
+            "keywords": [
+                "active",
+                "record",
+                "relations",
+                "yii"
+            ],
+            "time": "2014-06-23 20:58:19"
+        },
+        {
+            "name": "schmunk42/web-user-behavior",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmunk42/web-user-behavior.git",
+                "reference": "0.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmunk42/web-user-behavior/zipball/0.1.1",
+                "reference": "0.1.1",
+                "shasum": ""
+            },
+            "type": "yii-extension",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://www.usrbin.de"
+                }
+            ],
+            "description": "Yii Behavior, which implments features from WebUser from mishamx/yii-user",
+            "homepage": "https://github.com/schmunk42/web-user-behavior",
+            "keywords": [
+                "behavior",
+                "webuser",
+                "yii",
+                "yii-rights",
+                "yii-user"
+            ],
+            "support": {
+                "source": "https://github.com/schmunk42/web-user-behavior/tree/0.1.1",
+                "issues": "https://github.com/schmunk42/web-user-behavior/issues"
+            },
+            "time": "2013-03-10 23:22:14"
+        },
+        {
+            "name": "sepia/po-parser",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gapminder/PHP-po-parser.git",
+                "reference": "16d1def1f1a2550d3ee8720d7d63474450c43ab4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gapminder/PHP-po-parser/zipball/16d1def1f1a2550d3ee8720d7d63474450c43ab4",
+                "reference": "16d1def1f1a2550d3ee8720d7d63474450c43ab4",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "squizlabs/php_codesniffer": "1.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Sepia": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raúl Ferràs",
+                    "email": "raul.ferras@gmail.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "PO file parser for PHP.",
+            "homepage": "https://github.com/raulferras/PHP-po-parser",
+            "keywords": [
+                "gettext",
+                "i10n",
+                "i18n",
+                "po"
+            ],
+            "support": {
+                "issues": "https://github.com/raulferras/PHP-po-parser/issues",
+                "source": "https://github.com/Gapminder/PHP-po-parser/tree/master"
+            },
+            "time": "2014-03-17 04:07:41"
+        },
+        {
+            "name": "swiftmailer/swiftmailer",
+            "version": "v4.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "a73b60218b75352d8474b52d0a0aa94c0286fa67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/a73b60218b75352d8474b52d0a0aa94c0286fa67",
+                "reference": "a73b60218b75352d8474b52d0a0aa94c0286fa67",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.3-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lib/swift_required.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Chris Corbyn"
+                }
+            ],
+            "description": "Swiftmailer, free feature-rich PHP mailer",
+            "homepage": "http://swiftmailer.org",
+            "keywords": [
+                "mail",
+                "mailer"
+            ],
+            "time": "2013-01-08 15:50:34"
+        },
+        {
+            "name": "symfony/config",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/config.git",
+                "reference": "9698fdf0a750d6887d5e7729d5cf099765b20e61"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/config/zipball/9698fdf0a750d6887d5e7729d5cf099765b20e61",
+                "reference": "9698fdf0a750d6887d5e7729d5cf099765b20e61",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9",
+                "symfony/filesystem": "~2.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Config\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Config Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-21 15:02:29"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/console.git",
+                "reference": "06cb17c013a82f94a3d840682b49425cd00a2161"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/console/zipball/06cb17c013a82f94a3d840682b49425cd00a2161",
+                "reference": "06cb17c013a82f94a3d840682b49425cd00a2161",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/event-dispatcher": "~2.1",
+                "symfony/phpunit-bridge": "~2.7",
+                "symfony/process": "~2.1"
+            },
+            "suggest": {
+                "psr/log": "For using the console logger",
+                "symfony/event-dispatcher": "",
+                "symfony/process": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Console\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-25 08:32:23"
+        },
+        {
+            "name": "symfony/event-dispatcher",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/event-dispatcher.git",
+                "reference": "ae4dcc2a8d3de98bd794167a3ccda1311597c5d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/ae4dcc2a8d3de98bd794167a3ccda1311597c5d9",
+                "reference": "ae4dcc2a8d3de98bd794167a3ccda1311597c5d9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/config": "~2.0,>=2.0.5",
+                "symfony/dependency-injection": "~2.6",
+                "symfony/expression-language": "~2.6",
+                "symfony/phpunit-bridge": "~2.7",
+                "symfony/stopwatch": "~2.3"
+            },
+            "suggest": {
+                "symfony/dependency-injection": "",
+                "symfony/http-kernel": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\EventDispatcher\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony EventDispatcher Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-22 13:49:29"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "a17f8a17c20e8614c15b8e116e2f4bcde102cfab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/a17f8a17c20e8614c15b8e116e2f4bcde102cfab",
+                "reference": "a17f8a17c20e8614c15b8e116e2f4bcde102cfab",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-09 17:42:36"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/finder.git",
+                "reference": "8262ab605973afbb3ef74b945daabf086f58366f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/8262ab605973afbb3ef74b945daabf086f58366f",
+                "reference": "8262ab605973afbb3ef74b945daabf086f58366f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Finder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Finder Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-19 19:59:23"
+        },
+        {
+            "name": "symfony/process",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/process.git",
+                "reference": "b27c8e317922cd3cdd3600850273cf6b82b2e8e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/process/zipball/b27c8e317922cd3cdd3600850273cf6b82b2e8e9",
+                "reference": "b27c8e317922cd3cdd3600850273cf6b82b2e8e9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Process\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Process Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-19 19:59:23"
+        },
+        {
+            "name": "symfony/translation",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/translation.git",
+                "reference": "485877661835e188cd78345c6d4eef1290d17571"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/485877661835e188cd78345c6d4eef1290d17571",
+                "reference": "485877661835e188cd78345c6d4eef1290d17571",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "conflict": {
+                "symfony/config": "<2.7"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/config": "~2.7",
+                "symfony/intl": "~2.4",
+                "symfony/phpunit-bridge": "~2.7",
+                "symfony/yaml": "~2.2"
+            },
+            "suggest": {
+                "psr/log": "To use logging capability in translator",
+                "symfony/config": "",
+                "symfony/yaml": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Translation\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Translation Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-06 08:36:38"
+        },
+        {
+            "name": "symfony/validator",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/validator.git",
+                "reference": "b359dc71e253ce6eb69eefbd5088032241e7a66f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/b359dc71e253ce6eb69eefbd5088032241e7a66f",
+                "reference": "b359dc71e253ce6eb69eefbd5088032241e7a66f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9",
+                "symfony/translation": "~2.4"
+            },
+            "require-dev": {
+                "doctrine/annotations": "~1.0",
+                "doctrine/cache": "~1.0",
+                "egulias/email-validator": "~1.2,>=1.2.1",
+                "symfony/config": "~2.2",
+                "symfony/expression-language": "~2.4",
+                "symfony/http-foundation": "~2.1",
+                "symfony/intl": "~2.4",
+                "symfony/phpunit-bridge": "~2.7",
+                "symfony/property-access": "~2.3",
+                "symfony/yaml": "~2.0,>=2.0.5"
+            },
+            "suggest": {
+                "doctrine/annotations": "For using the annotation mapping. You will also need doctrine/cache.",
+                "doctrine/cache": "For using the default cached annotation reader and metadata cache.",
+                "egulias/email-validator": "Strict (RFC compliant) email validation",
+                "symfony/config": "",
+                "symfony/expression-language": "For using the 2.4 Expression validator",
+                "symfony/http-foundation": "",
+                "symfony/intl": "",
+                "symfony/property-access": "For using the 2.4 Validator API",
+                "symfony/yaml": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Validator\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Validator Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-23 11:13:27"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
+                "reference": "31cb2ad0155c95b88ee55fe12bc7ff92232c1770",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-09-14 14:14:09"
+        },
+        {
+            "name": "twilio/sdk",
+            "version": "3.12.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twilio/twilio-php.git",
+                "reference": "9d8bb7dad58dc52fc4cbc1f0e905950ad839ca73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/9d8bb7dad58dc52fc4cbc1f0e905950ad839ca73",
+                "reference": "9d8bb7dad58dc52fc4cbc1f0e905950ad839ca73",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "mockery/mockery": ">=0.7.2",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Services_Twilio": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Burke",
+                    "email": "kevin@twilio.com"
+                },
+                {
+                    "name": "Kyle Conroy",
+                    "email": "kyle+pear@twilio.com"
+                }
+            ],
+            "description": "A PHP wrapper for Twilio's API",
+            "homepage": "http://github.com/twilio/twilio-php",
+            "keywords": [
+                "api",
+                "sms",
+                "twilio"
+            ],
+            "time": "2014-12-04 19:17:59"
+        },
+        {
+            "name": "weavora/wrest",
+            "version": "dev-set-create-and-update-attributes-in-behavior",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neam/wrest.git",
+                "reference": "88d5ce20f0849efc3ef4bb42a680081134121525"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neam/wrest/zipball/88d5ce20f0849efc3ef4bb42a680081134121525",
+                "reference": "88d5ce20f0849efc3ef4bb42a680081134121525",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0",
+                "yiisoft/yii": ">=1.1.0"
+            },
+            "type": "yii-extension",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Weavora Team",
+                    "email": "hello@weavora.com"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/weavora/wrest/graphs/contributors"
+                }
+            ],
+            "description": "Yii extension to create REST CRUD interfaces (get, list, update, create, delete actions) for your app",
+            "homepage": "https://github.com/weavora/wrest",
+            "keywords": [
+                "api",
+                "rest",
+                "yii"
+            ],
+            "support": {
+                "source": "https://github.com/neam/wrest/tree/set-create-and-update-attributes-in-behavior"
+            },
+            "time": "2015-08-03 13:23:37"
+        },
+        {
+            "name": "yiiext/nested-set-behavior",
+            "version": "dev-allow-save-and-delete-option",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/motin/nested-set-behavior.git",
+                "reference": "952eeddb68c7c5893518ccba2b6792a4c7c27089"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/motin/nested-set-behavior/zipball/952eeddb68c7c5893518ccba2b6792a4c7c27089",
+                "reference": "952eeddb68c7c5893518ccba2b6792a4c7c27089",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.0"
+            },
+            "type": "yii-extension",
+            "autoload": {
+                "classmap": [
+                    "NestedSetBehavior.php"
+                ]
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Kochetov",
+                    "email": "creocoder@gmail.com"
+                }
+            ],
+            "description": "AR models behavior that allows to work with nested sets tree.",
+            "homepage": "https://github.com/yiiext/nested-set-behavior",
+            "keywords": [
+                "extension",
+                "nested set",
+                "yii"
+            ],
+            "support": {
+                "source": "https://github.com/motin/nested-set-behavior/tree/allow-save-and-delete-option"
+            },
+            "time": "2015-05-19 08:52:25"
+        },
+        {
+            "name": "yiiext/status-behavior",
+            "version": "0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiiext/status-behavior.git",
+                "reference": "5b12828e6077a96db7e43dba5d94b888f7c5f5e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/yiiext/status-behavior/archive/5b12828e6077a96db7e43dba5d94b888f7c5f5e5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "yii-extension",
+            "description": "Provides methods and named scopes to work with model statuses.",
+            "homepage": "https://github.com/yiiext/status-behavior"
+        },
+        {
+            "name": "yiisoft/yii",
+            "version": "1.1.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii.git",
+                "reference": "bca0420b6799b0b2a7966aa90bcd15cb4aa73563"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/yiisoft/yii/archive/bca0420b6799b0b2a7966aa90bcd15cb4aa73563.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library",
+            "description": "Yii PHP Framework 1.1.x",
+            "homepage": "https://github.com/yiisoft/yii"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "phundament/gii-template-collection",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/motin/gii-template-collection.git",
+                "reference": "f884dc9bfb967d6bf41a9a0f68c37c0bce785cdd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/motin/gii-template-collection/zipball/f884dc9bfb967d6bf41a9a0f68c37c0bce785cdd",
+                "reference": "f884dc9bfb967d6bf41a9a0f68c37c0bce785cdd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "schmunk42/relation": "Yii Framework active record relation components"
+            },
+            "type": "library",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://www.usrbin.de"
+                }
+            ],
+            "description": "Gii Template Collection, Model and CRUD templates with Boostrap UI",
+            "homepage": "http://phundament.com/",
+            "keywords": [
+                "autoload",
+                "dependency",
+                "package"
+            ],
+            "support": {
+                "source": "https://github.com/motin/gii-template-collection/tree/develop"
+            },
+            "time": "2015-03-16 07:40:40"
+        },
+        {
+            "name": "schmunk42/giic",
+            "version": "dev-assets-basepath",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/motin/giic.git",
+                "reference": "45b654f2fc7a5dfbf13c2fa8a408d2e4f40f653c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/motin/giic/zipball/45b654f2fc7a5dfbf13c2fa8a408d2e4f40f653c",
+                "reference": "45b654f2fc7a5dfbf13c2fa8a408d2e4f40f653c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xsl": "*",
+                "php": ">=5.3.0",
+                "yiisoft/yii": ">=1.1.12,<2.0"
+            },
+            "type": "library",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Munk",
+                    "email": "schmunk@usrbin.de",
+                    "homepage": "http://www.usrbin.de"
+                }
+            ],
+            "description": "Toolset for running Gii on the command line",
+            "homepage": "https://github.com/schmunk42/giic",
+            "keywords": [
+                "cli",
+                "gii",
+                "yii"
+            ],
+            "support": {
+                "source": "https://github.com/motin/giic/tree/assets-basepath"
+            },
+            "time": "2014-10-09 09:23:45"
+        }
+    ],
+    "aliases": [
+        {
+            "alias": "0.17.3",
+            "alias_normalized": "0.17.3.0",
+            "version": "dev-gcms",
+            "package": "phundament/p3media"
+        },
+        {
+            "alias": "1.3.0",
+            "alias_normalized": "1.3.0.0",
+            "version": "9999999-dev",
+            "package": "crisu83/yii-sentry"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "1.1.16.0",
+            "package": "yiisoft/yii"
+        }
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "phundament/jquery-file-upload": 20,
+        "phundament/p3media": 20,
+        "neam/yii-i18n-columns": 20,
+        "neam/yii-i18n-attribute-messages": 20,
+        "neam/yii-i18n-tools": 20,
+        "neam/yii-restricted-access": 20,
+        "neam/yii-workflow-core": 20,
+        "neam/yii-workflow-task-list": 20,
+        "neam/yii-workflow-progress-tracking": 20,
+        "neam/yii-qa-state": 20,
+        "neam/yii-relational-graph-db": 20,
+        "neam/yii-relations-ui-core": 20,
+        "neam/yii-permalinkable-items-core": 20,
+        "neam/yii-streamlog": 20,
+        "motin/yii-owner-behavior": 20,
+        "yiiext/nested-set-behavior": 20,
+        "lichtner/fluentpdo": 20,
+        "propel/propel": 20,
+        "phpoffice/phpword": 20,
+        "phpoffice/phppowerpoint": 20,
+        "sepia/po-parser": 20,
+        "neam/php-po2json": 20,
+        "weavora/wrest": 20,
+        "codemix/hybridauthmanager": 20,
+        "nordsoftware/yii-utils": 20,
+        "crisu83/yii-formatter": 20,
+        "crisu83/yii-sentry": 20,
+        "2amigos/resource-manager": 20,
+        "schmunk42/giic": 20,
+        "phundament/gii-template-collection": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.4.0"
+    },
+    "platform-dev": []
+}

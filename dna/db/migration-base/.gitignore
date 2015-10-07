@@ -1,0 +1,7 @@
+/*/data.sql
+/*/schema.sql
+/*/media
+!/clean-db/data.sql
+!/clean-db/schema.sql
+!/post-acceptance-init-db/data.sql
+!/post-acceptance-init-db/schema.sql
