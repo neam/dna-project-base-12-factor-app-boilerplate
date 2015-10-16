@@ -2,16 +2,16 @@
 # This service has a single purpose: Mapping a virtual host request to corresponding services deployed in an elastic instance cluster.
 
 router%DEPLOY_STABILITY_TAG%:
-  image: neam/tutum-haproxy-awaiting-prs
+  image: neam/tutum-haproxy:91ab49
   links:
-    - %VIRTUAL_HOST_BASED_WEB_SERVICE_NAME_1%
-    - %VIRTUAL_HOST_BASED_WEB_SERVICE_NAME_2%
-    - %VIRTUAL_HOST_BASED_WEB_SERVICE_NAME_3%
-    - %VIRTUAL_HOST_BASED_WEB_SERVICE_NAME_etc%
+    - %STACK_WEB_SERVICE_NAME_1%
+    - %STACK_WEB_SERVICE_NAME_2%
+    - %STACK_WEB_SERVICE_NAME_3%
+    - %STACK_WEB_SERVICE_NAME_etc%
   ports:
-    - "80"
-    - "443"
-    - "8088" # Haproxy Statistics endpoint TODO: Switch to 1936 when using latest tutum master again
+    - "80:80"
+    - "443:443"
+    - "1936:1936"
   environment:
     # Clarify the timeout setting, making it easy to adjust
     TIMEOUT: connect 5000, client 50000, server 50000
@@ -24,8 +24,8 @@ router%DEPLOY_STABILITY_TAG%:
   # Set cluster deploy tags to ensure this container is launched inside a cluster and not on a publicly facing node
   tags:
     - public-%DEPLOY_STABILITY_TAG%
-  # Auto-restart in case container dies unexpectedly
-  autorestart: on_failure
+  # Auto-restart in case container is stopped unexpectedly
+  autorestart: always
   # Do not update the service when a new version is pushed to the registry (since we want finer control of when new configuration is applied)
   autoredeploy: false
   # Container distribution among nodes (so that we easily can add more public nodes elastically)

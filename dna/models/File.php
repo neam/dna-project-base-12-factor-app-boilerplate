@@ -20,11 +20,6 @@ class File extends MetadataFile
         return parent::init();
     }
 
-    public function getItemLabel()
-    {
-        return $this->defaultItemLabel("path");
-    }
-
     public function behaviors()
     {
         return array_merge(

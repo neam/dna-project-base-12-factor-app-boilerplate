@@ -5,8 +5,59 @@
 
 namespace neam\bootstrap;
 
-// parse JWT for bootstrap-level tenant-specific-config (auth0)
+use Exception;
+
+// ==== Config bootstrap checks ====
+
+// class to parse JWT (auth0) for bootstrap-level tenant-specific-config based on the X-Data-Profile request header
 require_once("$project_root/config/auth0-jwt-bootstrap.php");
+// class to parse virtual host data mapping
+require_once("$project_root/config/virtual-host-data-map-bootstrap.php");
+
+/**
+ * Determine the DATA config variable on a per-request basis from:
+ *
+ *  1. Require the env var to be set externally on cli requests
+ *  2. Use X-Data-Profile header if the Authorization header is available (not available on OPTIONS requests for instance)
+ *  3. Use Host header and VIRTUAL_HOST_DATA_MAP config var
+ *
+ */
+
+// 1. Require the env var to be set externally on cli requests
+if (!isset($_SERVER['REQUEST_METHOD'])) {
+    // Cli
+    $DATA = Config::read('DATA');
+    if (empty($DATA)) {
+        throw new Exception('Env var DATA needs to be set for cli executions');
+    }
+} else {
+    // 2. Use X-Data-Profile headern if the Authorization header is available (not available on OPTIONS requests for instance)
+    $headers = getallheaders();
+    if (isset($headers["Authorization"])) {
+        // parse JWT
+        \Auth0JwtBootstrap::bootstrap();
+        if (!defined('AUTH0_VALID_DECODED_TOKEN_SERIALIZED') || !defined('AUTH0_APP')) {
+            throw new Exception('Auth0JwtBootstrap::bootstrap() failed to define required constants');
+        }
+        // set DATA based on JWT
+        \Auth0JwtBootstrap::setDataProfile();
+        // dummy check
+        $DATA = Config::read('DATA');
+        if (empty($DATA)) {
+            throw new Exception('Auth0JwtBootstrap::setDataProfile() failed to define required env var');
+        }
+    }
+    // 3. Use Host header and VIRTUAL_HOST_DATA_MAP config var
+    else {
+        \VirtualHostDataMapBootstrap::setDataProfile();
+        // dummy check
+        $DATA = Config::read('DATA');
+        if (empty($DATA)) {
+            throw new Exception('VirtualHostDataMapBootstrap::setDataProfile() failed to define required env var');
+        }
+    }
+
+}
 
 // ==== DNA Revision ====
 
@@ -18,7 +69,11 @@ Config::expect("APPNAME", $default = null, $required = true); // Always set in d
 Config::expect("APPVHOST", $default = null, $required = true); // Always set in deployments so that they can be aware of what deployment this is
 Config::expect("ENV", $default = null, $required = true);
 Config::expect("CONFIG_ENVIRONMENT", $default = 'production', $required = false); // Used in main-local.php and then in index.php to decide which env-*.php configuration file to include
+Config::expect("VIRTUAL_HOST_DATA_MAP", $default = null, $required = true);
+Config::expect("VIRTUAL_HOST_WEIGHT", $default = null, $required = true);
+Config::expect("VIRTUAL_HOST", $default = null, $required = true);
 Config::expect("DATA", $default = null, $required = (!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'OPTIONS'));
+Config::expect("COMMIT_SHA", $default = "commit-sha-not-set", $required = false);
 
 // ==== Identity-related config ====
 
@@ -100,15 +155,20 @@ Config::expect("DEBUG_LOGS", $default = false);
 Config::expect("LOCAL_OFFLINE_DATA", $default = null);
 Config::expect("YII2_ENABLE_ERROR_HANDLER", $default = false);
 
-// ==== Runtime config ====
+// ==== Config based on the per-request DATA config env var ====
 
 /*
  * Some config is altered on a per-request basis:
  * 1. We use db_%DATA% as the database name
  * 2. We use a DATABASE_NAME-based hash as the database user
+ * 3. Some APPVHOST (and consequently PUBLIC_FILES_S3_PATH, CDN_PATH_HTTP and CDN_PATH_HTTPS) includes %DATA%
  *
  * This makes it feasible to access DATA-specific databases.
  * An outside routine/script is responsible for creating the corresponding users and databases.
  */
 $_ENV['DATABASE_NAME'] = 'db_' . str_replace("-", "_", Config::read("DATA"));
 $_ENV['DATABASE_USER'] = substr(md5($_ENV['DATABASE_NAME']), 0, 16);
+$_ENV['APPVHOST'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("APPVHOST"));
+$_ENV['PUBLIC_FILES_S3_PATH'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("PUBLIC_FILES_S3_PATH"));
+$_ENV['CDN_PATH_HTTP'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("CDN_PATH_HTTP"));
+$_ENV['CDN_PATH_HTTPS'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("CDN_PATH_HTTPS"));

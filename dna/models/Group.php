@@ -21,11 +21,6 @@ class Group extends MetadataGroup
         return parent::init();
     }
 
-    public function getItemLabel()
-    {
-        return isset($this->heading) ? $this->heading : 'Group #' . $this->id;
-    }
-
     public function relations()
     {
         return array_merge(
@@ -37,19 +32,8 @@ class Group extends MetadataGroup
                     'select' => 'COUNT( DISTINCT t.account_id )', // In case account has many roles in group
                 ),
             ),
-            parent::relations()
+            $this->trait_relations()
         );
-    }
-
-    public function rules()
-    {
-        $return = array_merge(
-            parent::rules(),
-            array( // Ordinary validation rules
-            )
-        );
-        //Yii::log("model->rules(): " . print_r($return, true), "trace", __METHOD__);
-        return $return;
     }
 
     public function search($criteria = null)

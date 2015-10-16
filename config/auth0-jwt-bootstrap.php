@@ -12,21 +12,9 @@ class Auth0JwtBootstrap
     {
 
         // Support multiple auth0 clients
-        $AUTH0_CLIENT_APPS = getenv('AUTH0_CLIENT_APPS');
-        $AUTH0_CLIENT_IDS = getenv('AUTH0_CLIENT_IDS');
-        $AUTH0_CLIENT_SECRETS = getenv('AUTH0_CLIENT_SECRETS');
-        if (!empty($AUTH0_CLIENT_APPS)) {
-            throw new Exception("Env var AUTH0_CLIENT_APPS is empty");
-        }
-        if (empty($AUTH0_CLIENT_IDS)) {
-            throw new Exception("Env var AUTH0_CLIENT_IDS is empty");
-        }
-        if (empty($AUTH0_CLIENT_SECRETS)) {
-            throw new Exception("Env var AUTH0_CLIENT_SECRETS is empty");
-        }
-        $auth0_apps = explode(",", $AUTH0_CLIENT_APPS);
-        $auth0_client_ids = explode(",", $AUTH0_CLIENT_IDS);
-        $auth0_client_secrets = explode(",", $AUTH0_CLIENT_SECRETS);
+        $auth0_apps = explode(",", Config::read('AUTH0_APPS', null, $required = true));
+        $auth0_client_ids = explode(",", Config::read('AUTH0_CLIENT_IDS', null, $required = true));
+        $auth0_client_secrets = explode(",", Config::read('AUTH0_CLIENT_SECRETS', null, $required = true));
 
         return [$auth0_apps, $auth0_client_ids, $auth0_client_secrets];
 
@@ -159,24 +147,4 @@ class Auth0JwtBootstrap
 
     }
 
-}
-
-if (!isset($_SERVER['REQUEST_METHOD'])) {
-    // Cli
-    $DATA = Config::read('DATA');
-    if (empty($DATA)) {
-        throw new Exception('Env var DATA needs to be set for cli executions');
-    }
-} elseif ($_SERVER['REQUEST_METHOD'] !== 'OPTIONS') {
-    // GET POST PUT etc
-    // set DATA based on JWT
-    Auth0JwtBootstrap::bootstrap();
-    if (!defined('AUTH0_VALID_DECODED_TOKEN_SERIALIZED') || !defined('AUTH0_APP')) {
-        throw new Exception('Auth0JwtBootstrap::bootstrap() failed to define required constants');
-    }
-    Auth0JwtBootstrap::setDataProfile();
-    $DATA = Config::read('DATA');
-    if (empty($DATA)) {
-        throw new Exception('Auth0JwtBootstrap::setDataProfile() failed to define required env var');
-    }
 }

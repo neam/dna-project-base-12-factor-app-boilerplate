@@ -36,14 +36,6 @@ class Account extends MetadataAccount
     /**
      * @inheritDoc
      */
-    public function getItemLabel()
-    {
-        return parent::getItemLabel();
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
         return array_merge(
@@ -91,14 +83,13 @@ class Account extends MetadataAccount
         // the \nordsoftware\yii_account\models\ar\Account schema states that create_at and salt are required
         // but the extension chooses to validate against the model before setting these values...
         // thus we need to manually remove this validation rule for yii-account sign-up form to work as expected
-        unset($parentRules[array_search(array('create_at, salt', 'required'), $parentRules)]);
+        unset($parentRules[array_search(array('salt', 'required'), $parentRules)]);
 
         return array_merge(
             $parentRules,
             array(
                 array('username', 'length', 'min' => self::USERNAME_MIN_LENGTH),
                 array('password', 'length', 'min' => self::PASSWORD_MIN_LENGTH),
-                array('username, email', 'required'),
                 array(
                     'username',
                     'unique',
@@ -111,7 +102,7 @@ class Account extends MetadataAccount
                     'pattern' => '/^[A-Za-z0-9_]+$/u',
                     'message' => Yii::t('app', 'Incorrect symbols (A-z0-9).')
                 ),
-                array('email', 'unique', 'message' => Yii::t('app', 'Email address already exists.')),
+                //array('email', 'unique', 'message' => Yii::t('app', 'Email address already exists.')),
                 array('email', 'email'),
                 array('activkey', 'default', 'setOnEmpty' => true, 'value' => ''),
             )

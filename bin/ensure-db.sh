@@ -26,6 +26,8 @@ source /tmp/php-app-config.sh
 #fi
 
 # create new db
-echo "vendor/neam/yii-dna-deployment/util/setup-db.sh $DATABASE_HOST $DATABASE_PORT $DATABASE_NAME $DATABASE_USER $DATABASE_PASSWORD | mysql -u$DATABASE_ROOT_USER -p$DATABASE_ROOT_PASSWORD -h$DATABASE_HOST -P$DATABASE_PORT"
+echo "* Creating the database $DATABASE_NAME"
+vendor/neam/yii-dna-deployment/util/setup-db.sh $DATABASE_HOST $DATABASE_PORT $DATABASE_NAME $DATABASE_USER $DATABASE_PASSWORD | mysql -u$DATABASE_ROOT_USER -p$DATABASE_ROOT_PASSWORD -h$DATABASE_HOST -P$DATABASE_PORT
+echo "* Done!"
 
 exit 0

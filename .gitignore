@@ -16,8 +16,9 @@ npm-debug.log
 # Tmp files
 /tmp/
 
-# Data
+# Local data
 .files
+.current-local-cli-data-profile
 
 # Sensitive information
 /deploy/config/secrets.php

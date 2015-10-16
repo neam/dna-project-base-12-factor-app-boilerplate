@@ -21,28 +21,12 @@ $_ENV["USER_DATA_BACKUP_UPLOADERS_SECRET"] = "";
 $_ENV["PUBLIC_FILE_UPLOADERS_ACCESS_KEY"] = "";
 $_ENV["PUBLIC_FILE_UPLOADERS_SECRET"] = "";
 $_ENV["PUBLIC_FILES_S3_REGION"] = "us-standard";
-$_ENV["PUBLIC_FILES_S3_PATH"] = "/m/" . Config::read("APPVHOST") . "/";
-$_ENV["CDN_PATH_HTTP"] = "http://static._PROJECT_.com" . $_ENV["PUBLIC_FILES_S3_PATH"];
-$_ENV["CDN_PATH_HTTPS"] = "https://static._PROJECT_.com" . $_ENV["PUBLIC_FILES_S3_PATH"];
+$_ENV["PUBLIC_FILES_S3_PATH"] = "/m/" . Config::read("APPVHOST", null, $required = true) . "/";
+$_ENV["CDN_PATH_HTTP"] = "http://static.adoveo.com" . Config::read("PUBLIC_FILES_S3_PATH", null, $required = true);
+$_ENV["CDN_PATH_HTTPS"] = "https://static.adoveo.com" . Config::read("PUBLIC_FILES_S3_PATH", null, $required = true);
 
 $_ENV["COMPOSER_GITHUB_TOKEN"] = "";
-$_ENV["TUTUM_USER"] = "";
-$_ENV["TUTUM_EMAIL"] = "";
-$_ENV["TUTUM_PASSWORD"] = "";
-$_ENV["TUTUM_APIKEY"] = "";
 $_ENV["NEW_RELIC_LICENSE_KEY"] = "";
-
-$_ENV["DEVELOPMENT_SMTP_HOST"] = "mailcatcher";
-$_ENV["DEVELOPMENT_SMTP_PORT"] = "25";
-$_ENV["DEVELOPMENT_SMTP_USERNAME"] = "foo";
-$_ENV["DEVELOPMENT_SMTP_PASSWORD"] = "bar";
-$_ENV["DEVELOPMENT_SMTP_ENCRYPTION"] = "foo";
-
-$_ENV["PRODUCTION_SMTP_HOST"] = "smtp.example.com";
-$_ENV["PRODUCTION_SMTP_PORT"] = "587";
-$_ENV["PRODUCTION_SMTP_USERNAME"] = "changeme";
-$_ENV["PRODUCTION_SMTP_PASSWORD"] = "changeme";
-$_ENV["PRODUCTION_SMTP_ENCRYPTION"] = "tls";
 
 $_ENV["FILEPICKER_API_KEY"] = "";
 
@@ -50,9 +34,6 @@ $_ENV["AUTH0_APPS"] = "";
 $_ENV["AUTH0_CLIENT_IDS"] = "";
 $_ENV["AUTH0_CLIENT_SECRETS"] = "";
 $_ENV["CORS_ACL_ORIGIN_HOSTS"] = "localhost:9000,app._PROJECT_.com,_PROJECT_.com";
-
-$_ENV["DEVELOPMENT_GA_TRACKING_ID"] = "";
-$_ENV["PRODUCTION_GA_TRACKING_ID"] = "";
 
 $_ENV["SENTRY_DSN"] = "";
 
@@ -77,24 +58,23 @@ if (Config::read("DEPLOY_STABILITY_TAG") === "prod") {
     $_ENV["GA_TRACKING_ID"] = $_ENV["DEVELOPMENT_GA_TRACKING_ID"];
 }
 
-// Amazon RDS administration
-
-$_ENV["DEV_RDS_HOST"] = "";
-$_ENV["PROD_RDS_HOST"] = "";
-$_ENV["DATABASE_ROOT_USER"] = "";
-$_ENV["DATABASE_ROOT_PASSWORD"] = "";
-
-// Amazon RDS app access details
-
-$app = Config::read("APPVHOST");
-switch ($app) {
-    default:
-        throw new Exception("Amazon RDS deploy database access credentials missing for app '{$app}'");
-        $_ENV["DATABASE_HOST"] = "";
-        $_ENV["DATABASE_PORT"] = "";
-        $_ENV["DATABASE_PASSWORD"] = "";
-        break;
-    case "";
-        // During prepare-step APPVHOST will be empty, which is fine, we don't need database credentials at that stage
-        break;
+// Amazon RDS db access details
+if (Config::read("DEPLOY_STABILITY_TAG") === "dev") {
+    $_ENV["DATABASE_HOST"] = $_ENV["DEV_DATABASE_HOST"];
+    $_ENV["DATABASE_PORT"] = $_ENV["DEV_DATABASE_PORT"];
+    $_ENV["DATABASE_PASSWORD"] = $_ENV["DEV_DATABASE_PASSWORD"];
+    $_ENV["DATABASE_ROOT_USER"] = $_ENV["DEV_DATABASE_HOST_ROOT_USER"];
+    $_ENV["DATABASE_ROOT_PASSWORD"] = $_ENV["DEV_DATABASE_HOST_ROOT_PASSWORD"];
+} elseif (Config::read("DEPLOY_STABILITY_TAG") === "demo") {
+    $_ENV["DATABASE_HOST"] = $_ENV["DEMO_DATABASE_HOST"];
+    $_ENV["DATABASE_PORT"] = $_ENV["DEMO_DATABASE_PORT"];
+    $_ENV["DATABASE_PASSWORD"] = $_ENV["DEMO_DATABASE_PASSWORD"];
+    $_ENV["DATABASE_ROOT_USER"] = $_ENV["DEMO_DATABASE_HOST_ROOT_USER"];
+    $_ENV["DATABASE_ROOT_PASSWORD"] = $_ENV["DEMO_DATABASE_HOST_ROOT_PASSWORD"];
+} elseif (Config::read("DEPLOY_STABILITY_TAG") === "prod") {
+    $_ENV["DATABASE_HOST"] = $_ENV["PROD_DATABASE_HOST"];
+    $_ENV["DATABASE_PORT"] = $_ENV["PROD_DATABASE_PORT"];
+    $_ENV["DATABASE_PASSWORD"] = $_ENV["PROD_DATABASE_PASSWORD"];
+    $_ENV["DATABASE_ROOT_USER"] = $_ENV["PROD_DATABASE_HOST_ROOT_USER"];
+    $_ENV["DATABASE_ROOT_PASSWORD"] = $_ENV["PROD_DATABASE_HOST_ROOT_PASSWORD"];
 }

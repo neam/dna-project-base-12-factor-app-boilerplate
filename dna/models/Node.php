@@ -18,11 +18,6 @@ class Node extends MetadataNode
         return parent::init();
     }
 
-    public function getItemLabel()
-    {
-        return "Node #" . $this->id;
-    }
-
     public function behaviors()
     {
         return array_merge(

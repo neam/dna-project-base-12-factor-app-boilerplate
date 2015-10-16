@@ -34,7 +34,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "neam/docker-stack": "dev-develop",
+        "neam/docker-stack": "dev-feature/neam-docker-stacks-0.5.0",
         "neam/yii-dna-pre-release-testing": "dev-develop",
         "neam/yii-dna-deployment": "dev-develop",
         "neam/yii-dna-test-framework": "dev-develop",

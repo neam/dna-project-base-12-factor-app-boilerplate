@@ -1,0 +1,4 @@
+192.168.99.100 docker._PROJECT_.local
+
+192.168.99.100 clean-db._PROJECT_.local
+192.168.99.100 example._PROJECT_.local

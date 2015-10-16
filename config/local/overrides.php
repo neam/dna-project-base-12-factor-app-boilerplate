@@ -5,6 +5,11 @@
 
 namespace neam\bootstrap;
 
+// Don't require VIRTUAL_HOST* as long as it is hard-coded into the local docker-compose.yml file
+
+Config::expect("VIRTUAL_HOST", $default = "local-virtual-host", $required = false);
+Config::expect("VIRTUAL_HOST_WEIGHT", $default = "999", $required = false);
+
 // Don't require config for sentry error reporting nor google analytics tracking when running locally
 
 Config::expect("SENTRY_DSN", $default = null, $required = false);
