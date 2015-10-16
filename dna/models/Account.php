@@ -30,7 +30,7 @@ class Account extends MetadataAccount
      */
     public function init()
     {
-        parent::init();
+        return parent::init();
     }
 
     /**
