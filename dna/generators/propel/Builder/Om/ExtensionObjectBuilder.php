@@ -54,31 +54,36 @@ class ExtensionObjectBuilder extends \Propel\Generator\Builder\Om\ExtensionObjec
          * @var string $name
          * @var \Propel\Generator\Model\Column $column
          */
+        $candidates = [];
         foreach ($tableColumns as $name => $column) {
 
             // First check common attributes for labels
             if ($column->getLowercasedName() === 'label') {
-                return $column->getPhpName();
+                $candidates[0] = $column->getPhpName();
             }
             if ($column->getLowercasedName() === 'title') {
-                return $column->getPhpName();
+                $candidates[1] = $column->getPhpName();
             }
             if ($column->getLowercasedName() === 'name') {
-                return $column->getPhpName();
+                $candidates[2] = $column->getPhpName();
             }
             if ($column->getLowercasedName() === 'ref') {
-                return $column->getPhpName();
+                $candidates[3] = $column->getPhpName();
             }
 
-            // Find the first column of type 'string'
-            if ($column->getType() !== 'TIMESTAMP'
-                && $column->getPhpType() === 'string'
+            // Find the first column of type 'VARCHAR'
+            if ($column->getType() === 'VARCHAR'
                 && !$column->isPrimaryKey()
+                && empty($candidates[4])
             ) {
-                return $column->getPhpName();
-                break;
+                $candidates[4] = $column->getPhpName();
             }
 
+        }
+
+        if (!empty($candidates)) {
+            ksort($candidates);
+            return array_shift($candidates);
         }
 
         // If the columns contains no column of type 'string', return the
