@@ -10,35 +10,34 @@
 # DRONE_COMMIT_SHORT=`git rev-parse --verify --short=7 $DRONE_COMMIT`
 
 export CI=1
-export USER_GENERATED_DATA_S3_BUCKET="s3://_PROJECT_-user-data-backups"
+export USER_GENERATED_DATA_S3_BUCKET="s3://_PROJECT_-product-user-data-backups"
 export PUBLIC_FILES_S3_BUCKET="s3://static._PROJECT_.com"
 export PUBLIC_FILES_S3_HOST="static._PROJECT_.com"
 export WEB_CONFIG_ENVIRONMENT=production
 export BRAND_HOME_URL=www._PROJECT_.com
-export REPO=_PROJECT_-web-src
 
-# Use the development dokku deployment for all deployments except for demo, release and master deployments
-if [ "$GRANULARITY" == "project-branch-commit-specific" ] || ([[ "$DRONE_BRANCH" != release* ]] && [[ "$DRONE_BRANCH" != release* ]] && [[ "$DRONE_BRANCH" != live* ]] && [ "$DRONE_BRANCH" != "master" ]); then
+# Use the development tutum deployment for all deployments except for demo, release and master deployments
+if [ "$GRANULARITY" == "project-branch-commit-specific" ] || ([[ "$DRONE_BRANCH" != release* ]] && [[ "$DRONE_BRANCH" != hotfix* ]] && [[ "$DRONE_BRANCH" != live* ]] && [ "$DRONE_BRANCH" != "master" ]); then
     export DEPLOY_STABILITY_TAG=dev
     export TOPLEVEL_DOMAIN=_PROJECT_dev.com
     export DEFAULT_COVERAGE=minimal
     export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_dev.com@%DATA%,%DATA%.player._PROJECT_dev.com@%DATA%"
-    export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_dev.com, *.player._PROJECT_dev.com'
+    export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_dev.com, *.product._PROJECT_dev.com'
 else
-    # Use demo dokku deployment for demo deployments, otherwise use production dokku
+    # Use demo tutum deployment for demo deployments, otherwise use production tutum
     if [[ "$DRONE_BRANCH" == demo* ]]; then
         export DEPLOY_STABILITY_TAG=demo
         export TOPLEVEL_DOMAIN=_PROJECT_demo.com
         export DEFAULT_COVERAGE=basic
         export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_demo.com@%DATA%,%DATA%.player._PROJECT_demo.com@%DATA%"
-        export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_demo.com, *.player._PROJECT_demo.com'
+        export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_demo.com, *.product._PROJECT_demo.com'
     else
         export DEPLOY_STABILITY_TAG=prod
         export TOPLEVEL_DOMAIN=_PROJECT_.com
         export DEFAULT_COVERAGE=basic
         export VIRTUAL_HOST_DATA_MAP=foo
         export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_.com@%DATA%,%DATA%.player._PROJECT_.com@%DATA%,%DATA%.ratataa.se@%DATA%,sas.ratataa.se@sas,cokecce._PROJECT_.com@cokecce,bigbrother.ratataa.se@sbs-discovery"
-        export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_.com, *.player._PROJECT_.com, *.ratataa.se'
+        export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_.com, *.product._PROJECT_.com'
     fi
 fi
 
@@ -158,7 +157,7 @@ cd $DRONE_BUILD_DIR/_PROJECT_-product
     else
         APPNAME=${WEB_BRANCH}
     fi
-    APPNAME=${APPNAME}-$DATA
+    APPNAME=${APPNAME}-product-$DATA
     export APPNAME=$(vhostappname "$APPNAME")
     #echo APPNAME=$APPNAME
 
@@ -187,5 +186,4 @@ cd $DRONE_BUILD_DIR/_PROJECT_-product
 cd $DRONE_BUILD_DIR
 
 export WEB_BASE_URL="$APPVHOST"
-export WEB_BACKEND_BASE_URL="$APPVHOST/backend/"
 export WEB_API_BASE_URL="$APPVHOST/api/"
