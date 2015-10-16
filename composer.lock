@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1fe8a74fa833d2d9e48fe046f378ebc1",
+    "hash": "60f47cf409f4a8126b4c1961cc15ed01",
+    "content-hash": "e45d608538bffe666022561ad41946b2",
     "packages": [
         {
             "name": "motin/yii-consoletools",
@@ -51,16 +52,16 @@
         },
         {
             "name": "neam/docker-stack",
-            "version": "dev-develop",
+            "version": "dev-feature/neam-docker-stacks-0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neam/docker-stack.git",
-                "reference": "4d32ffa120fac88f14a416ec3632ef5d5707efcb"
+                "reference": "5450a799230fceedeeecce9c91415bcf4e4465f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neam/docker-stack/zipball/4d32ffa120fac88f14a416ec3632ef5d5707efcb",
-                "reference": "4d32ffa120fac88f14a416ec3632ef5d5707efcb",
+                "url": "https://api.github.com/repos/neam/docker-stack/zipball/5450a799230fceedeeecce9c91415bcf4e4465f3",
+                "reference": "5450a799230fceedeeecce9c91415bcf4e4465f3",
                 "shasum": ""
             },
             "bin": [
@@ -99,10 +100,10 @@
                 "php-fpm"
             ],
             "support": {
-                "source": "https://github.com/neam/docker-stack/tree/develop",
+                "source": "https://github.com/neam/docker-stack/tree/feature/neam-docker-stacks-0.5.0",
                 "issues": "https://github.com/neam/docker-stack/issues"
             },
-            "time": "2015-10-07 08:04:09"
+            "time": "2015-10-16 08:48:25"
         },
         {
             "name": "neam/php-app-config",
@@ -110,12 +111,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/neam/php-app-config.git",
-                "reference": "4dd0fff6325652ca6fe2dc84bded0d32b18cc117"
+                "reference": "27470016bd36bdc8b90563d58352c615f128bbe3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neam/php-app-config/zipball/4dd0fff6325652ca6fe2dc84bded0d32b18cc117",
-                "reference": "4dd0fff6325652ca6fe2dc84bded0d32b18cc117",
+                "url": "https://api.github.com/repos/neam/php-app-config/zipball/27470016bd36bdc8b90563d58352c615f128bbe3",
+                "reference": "27470016bd36bdc8b90563d58352c615f128bbe3",
                 "shasum": ""
             },
             "require": {
@@ -146,7 +147,7 @@
                 "config",
                 "php"
             ],
-            "time": "2015-04-27 06:29:57"
+            "time": "2015-10-15 19:49:34"
         },
         {
             "name": "neam/yii-dna-deployment",
@@ -154,12 +155,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/neam/yii-dna-deployment.git",
-                "reference": "625e96f357809f6b2a393ee06722e34d774444c5"
+                "reference": "1280b888f88eb998fdb6b0a3e6298e48e2e2124b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neam/yii-dna-deployment/zipball/625e96f357809f6b2a393ee06722e34d774444c5",
-                "reference": "625e96f357809f6b2a393ee06722e34d774444c5",
+                "url": "https://api.github.com/repos/neam/yii-dna-deployment/zipball/1280b888f88eb998fdb6b0a3e6298e48e2e2124b",
+                "reference": "1280b888f88eb998fdb6b0a3e6298e48e2e2124b",
                 "shasum": ""
             },
             "require": {
@@ -211,7 +212,7 @@
                 "source": "https://github.com/neam/yii-dna-deployment/tree/develop",
                 "issues": "https://github.com/neam/yii-dna-deployment/issues"
             },
-            "time": "2015-09-07 11:02:06"
+            "time": "2015-10-15 19:48:25"
         },
         {
             "name": "neam/yii-dna-pre-release-testing",
@@ -219,12 +220,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/neam/yii-dna-pre-release-testing.git",
-                "reference": "d6a75edc471b5dd217e11b978d11746cf417cc7f"
+                "reference": "ba238ae10d5dc030f8cb11d9c8135972a0a861a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neam/yii-dna-pre-release-testing/zipball/d6a75edc471b5dd217e11b978d11746cf417cc7f",
-                "reference": "d6a75edc471b5dd217e11b978d11746cf417cc7f",
+                "url": "https://api.github.com/repos/neam/yii-dna-pre-release-testing/zipball/ba238ae10d5dc030f8cb11d9c8135972a0a861a4",
+                "reference": "ba238ae10d5dc030f8cb11d9c8135972a0a861a4",
                 "shasum": ""
             },
             "require": {
@@ -269,7 +270,7 @@
                 "source": "https://github.com/neam/yii-dna-pre-release-testing/tree/develop",
                 "issues": "https://github.com/neam/yii-dna-pre-release-testing/issues"
             },
-            "time": "2015-09-29 10:35:54"
+            "time": "2015-10-07 22:30:58"
         },
         {
             "name": "neam/yii-dna-test-framework",

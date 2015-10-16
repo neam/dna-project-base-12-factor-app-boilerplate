@@ -31,7 +31,7 @@
             "url": "git@github.com:neam/yii-dna-test-framework.git"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
         "neam/docker-stack": "dev-feature/neam-docker-stacks-0.5.0",
