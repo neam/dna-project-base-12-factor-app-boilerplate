@@ -30,6 +30,8 @@ if (!isset($_SERVER['REQUEST_METHOD'])) {
     if (empty($DATA)) {
         throw new Exception('Env var DATA needs to be set for cli executions');
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    // Do nothing since we don't need the DATA env var
 } else {
     // 2. Use X-Data-Profile headern if the Authorization header is available (not available on OPTIONS requests for instance)
     $headers = getallheaders();

@@ -26,7 +26,7 @@ abstract class DatabaseView
 
     public function createView($dbViewSql)
     {
-        $this->_db->createCommand($dbViewSql)->execute();
+        $this->_db->getPdoInstance()->exec($dbViewSql);
     }
 
     /**

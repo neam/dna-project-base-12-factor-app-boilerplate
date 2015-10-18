@@ -2,3 +2,6 @@
 
 192.168.99.100 clean-db._PROJECT_.local
 192.168.99.100 example._PROJECT_.local
+
+1.2.3.4 clean-db.build._PROJECT_.com
+1.2.3.4 example.build._PROJECT_.com

@@ -13,11 +13,14 @@
 # User data
 .files
 
-# Development-only
+# Locally synced tenant data
 dna/db/migration-results/*/data.sql
 dna/db/migration-base/*/data.sql
 dna/db/migration-base/*/schema.sql
 dna/db/migration-base/*/media
+!dna/db/migration-base/clean-db/data.sql
+!dna/db/migration-base/clean-db/schema.sql
+!dna/db/migration-base/clean-db/media
 
 # Sensitive information
 /deploy/config/secrets.php

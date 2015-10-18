@@ -10,7 +10,7 @@
 # DRONE_COMMIT_SHORT=`git rev-parse --verify --short=7 $DRONE_COMMIT`
 
 export CI=1
-export USER_GENERATED_DATA_S3_BUCKET="s3://_PROJECT_-product-user-data-backups"
+export USER_GENERATED_DATA_S3_BUCKET="s3://_PROJECT_-product-user-data-uploads"
 export PUBLIC_FILES_S3_BUCKET="s3://static._PROJECT_.com"
 export PUBLIC_FILES_S3_HOST="static._PROJECT_.com"
 export WEB_CONFIG_ENVIRONMENT=production

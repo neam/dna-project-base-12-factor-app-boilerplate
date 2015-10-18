@@ -34,7 +34,7 @@ Then, run the following in the build server:
     cd ~/_PROJECT_-project
     git clone --recursive -b develop git@bitbucket.org:_PROJECT_/_PROJECT_-product.git _PROJECT_-product
     cd ~/_PROJECT_-project/_PROJECT_-product
-
+    
     git clone https://github.com/neam/docker-stack ~/.docker-stack
     echo 'export PATH=$PATH:~/.docker-stack/cli/docker-stack' >> ~/.bash_profile
     source ~/.bash_profile
@@ -46,7 +46,7 @@ Locally:
     scp deploy/config/deploy-prepare-secrets.php _PROJECT_@build._PROJECT_.com:/home/dokku/_PROJECT_-project/_PROJECT_-product/deploy/config/deploy-prepare-secrets.php
     scp deploy/config/secrets.php _PROJECT_@build._PROJECT_.com:/home/dokku/_PROJECT_-project/_PROJECT_-product/deploy/config/secrets.php
 
-On build server:
+In build server:
 
     cd ~/_PROJECT_-project/_PROJECT_-product
     stack/start.sh
@@ -201,7 +201,6 @@ Run it in order to open a shell in the deployed phpfiles container. Cd into the 
 
 Then run relevant commands, for instance:
 
-    bin/upload-current-files-to-cdn.sh # Sync to CDN
     bin/upload-current-user-data.sh # Create a backup of the current files
     
 And even: (but be careful - live files and database! only do this on new deployments to install a database that was locally curated before)
