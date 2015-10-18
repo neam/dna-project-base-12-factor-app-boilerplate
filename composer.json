@@ -56,9 +56,10 @@
                 "display_errors=${DISPLAY_PHP_ERRORS}",
                 "short_open_tag=on"
             ],
-            "document-root": "health-checks",
+            "document-root": "external-apis/health-checks",
             "index-document": "index.php",
             "php-service": "phpha",
+            "php-runtime": "hhvm",
             "memcached-key-prefix": "healthchecks",
             "nginx-includes": [
                 "stack/nginx/include/location-defaults.conf"
@@ -67,7 +68,9 @@
                 {
                     "location": "/api/",
                     "document-root": "external-apis/rest-api/www",
+                    "index-document": "index.php",
                     "php-service": "phpha",
+                    "php-runtime": "hhvm",
                     "memcached-key-prefix": "api",
                     "nginx-includes": [
                         "stack/nginx/include/location-defaults.conf"

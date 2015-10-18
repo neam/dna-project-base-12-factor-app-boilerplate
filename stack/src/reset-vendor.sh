@@ -26,4 +26,5 @@ set -o errexit
 rm -rf vendor/
 rm -rf */vendor/
 rm -rf */*/vendor/
+rm -rf ui/angular-frontend/node_modules
 PREFER=dist stack/src/install-deps.sh

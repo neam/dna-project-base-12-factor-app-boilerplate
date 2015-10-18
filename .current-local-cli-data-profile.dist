@@ -1,3 +1,3 @@
 # Uncomment one of the following to set the default DATA profile for commands run in a worker container (ie by running stack/shell.sh)
 DATA=clean-db
-#DATA=user-generated
+#DATA=example

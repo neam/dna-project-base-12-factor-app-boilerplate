@@ -21,7 +21,7 @@ if [ "$GRANULARITY" == "project-branch-commit-specific" ] || ([[ "$DRONE_BRANCH"
     export DEPLOY_STABILITY_TAG=dev
     export TOPLEVEL_DOMAIN=_PROJECT_dev.com
     export DEFAULT_COVERAGE=minimal
-    export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_dev.com@%DATA%,%DATA%.player._PROJECT_dev.com@%DATA%"
+    export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_dev.com@%DATA%,%DATA%.product._PROJECT_dev.com@%DATA%"
     export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_dev.com, *.product._PROJECT_dev.com'
 else
     # Use demo tutum deployment for demo deployments, otherwise use production tutum
@@ -29,14 +29,14 @@ else
         export DEPLOY_STABILITY_TAG=demo
         export TOPLEVEL_DOMAIN=_PROJECT_demo.com
         export DEFAULT_COVERAGE=basic
-        export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_demo.com@%DATA%,%DATA%.player._PROJECT_demo.com@%DATA%"
+        export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_demo.com@%DATA%,%DATA%.product._PROJECT_demo.com@%DATA%"
         export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_demo.com, *.product._PROJECT_demo.com'
     else
         export DEPLOY_STABILITY_TAG=prod
         export TOPLEVEL_DOMAIN=_PROJECT_.com
         export DEFAULT_COVERAGE=basic
         export VIRTUAL_HOST_DATA_MAP=foo
-        export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_.com@%DATA%,%DATA%.player._PROJECT_.com@%DATA%,%DATA%.ratataa.se@%DATA%,sas.ratataa.se@sas,cokecce._PROJECT_.com@cokecce,bigbrother.ratataa.se@sbs-discovery"
+        export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_.com@%DATA%,%DATA%.product._PROJECT_.com@%DATA%,foo.whitelabelclient.com@foo-client"
         export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_.com, *.product._PROJECT_.com'
     fi
 fi

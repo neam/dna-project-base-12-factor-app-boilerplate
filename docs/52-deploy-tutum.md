@@ -25,7 +25,7 @@ It is recommended to build and push the docker images on a shell server. Set one
 
 Set up a new user on a server with docker installed and connect:
 
-    ssh sq@build.neamlabs.com
+    ssh _PROJECT_@build._PROJECT_.com
 
 Then, run the following in the build server:
 
@@ -41,10 +41,10 @@ Then, run the following in the build server:
 
 Locally:
 
-    scp .env _PROJECT_@build._PROJECT_.com:/home/dokku/_PROJECT_-project/_PROJECT_-product/.env
-    scp .current-local-cli-data-profile _PROJECT_@build._PROJECT_.com:/home/dokku/_PROJECT_-project/_PROJECT_-product/.current-local-cli-data-profile
-    scp deploy/config/deploy-prepare-secrets.php _PROJECT_@build._PROJECT_.com:/home/dokku/_PROJECT_-project/_PROJECT_-product/deploy/config/deploy-prepare-secrets.php
-    scp deploy/config/secrets.php _PROJECT_@build._PROJECT_.com:/home/dokku/_PROJECT_-project/_PROJECT_-product/deploy/config/secrets.php
+    scp .env _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/.env
+    scp .current-local-cli-data-profile _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/.current-local-cli-data-profile
+    scp deploy/config/deploy-prepare-secrets.php _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/deploy/config/deploy-prepare-secrets.php
+    scp deploy/config/secrets.php _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/deploy/config/secrets.php
 
 In build server:
 
@@ -171,13 +171,13 @@ If everything is ok, then go to source tree and finish the release using git flo
 
 Also, don't forget to upload the deployment metadata to the build server so that we can all access it:
 
-    scp -r deployments/* _PROJECT_@build._PROJECT_.com:/home/dokku/_PROJECT_-project/_PROJECT_-product/deployments/
+    scp -r deployments/* _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/deployments/
 
 ## Running worker commands in an already deployed stack
 
 If you don't have the corresponding stack metadata (in the deployments/ directory), get it from the build server where the metadata about the deployments is stored:
     
-    scp -r _PROJECT_@build._PROJECT_.com:/home/dokku/_PROJECT_-project/_PROJECT_-product/deployments/* deployments/
+    scp -r _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/deployments/* deployments/
 
 Then, run:
 

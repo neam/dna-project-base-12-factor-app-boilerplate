@@ -58,6 +58,9 @@ class DatabaseRoutineGeneratorCommand extends CConsoleCommand
 
         $this->_db =& Yii::app()->{$this->connectionID};
 
+        $this->d("No routines activated in project");
+        return;
+
         $this->relatedNodesRoutines(
             (int) $dryRun,
             $echo = function ($msg) {

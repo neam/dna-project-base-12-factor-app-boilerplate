@@ -20,17 +20,15 @@ Open up a terminal window and cd into the root directory of your 12-factor app's
 
 Install [Docker Toolbox](https://www.docker.com/toolbox/) and create a docker host to use for local development (switch out `virtualbox` for your vm software of choice):
 
-    docker-machine create --driver virtualbox _PROJECT_
+    docker-machine create --driver virtualbox default
 
 After each reboot, run:
 
-    docker-machine start _PROJECT_
-    docker-machine start default # <-- run this one instead if you migrated from boot2docker
+    docker-machine start default
 
 In each new terminal session, run (preferably by adding to ~/.bash_profile, ~/.bashrc or similar)
 
-    eval "$(docker-machine env _PROJECT_)"
-    eval "$(docker-machine env default)" # <-- run this one instead if you migrated from boot2docker
+    eval "$(docker-machine env default)"
 
 #### Boot2Docker
 
@@ -59,13 +57,13 @@ In order to ensure cross-platform consistency, most commands in the Adoveo proje
 
 ## Step 7 - Initialize the database with a relevant dataset
 
-* Follow the instructions to "Reset the database" in [Working with data](23-local-dev-working-with-data.md)
-* Follow the instructions in [Pulling in changes from teammates](26-local-dev-pulling-in-changes-from-teammates.md)
-* Now your yii apps should be accessible on the following urls locally and you should be able to login with admin/admin.
+* Follow relevant instructions in [Working with data](23-local-dev-working-with-data.md) at least down to and including "To reset to a clean database"
+* Follow relevant instructions in [Pulling in changes from teammates](26-local-dev-pulling-in-changes-from-teammates.md)
+* Now your product should be up and running locally.
 
 ## Step 8 - See your app in action
 
-* Checkout [URLs](13-overview-urls.md)
+Checkout [URLs](13-overview-urls.md)
 
 Note: To find out the ports that your stack is listening on:
 

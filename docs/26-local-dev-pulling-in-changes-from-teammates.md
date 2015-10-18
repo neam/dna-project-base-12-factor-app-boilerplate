@@ -13,13 +13,10 @@ Then, run the following to update your local environment's dependencies:
 
 If updates to docker-compose.yml has been made since you last started the docker stack:
 
-    docker-compose up -d
+    stack/start.sh
 
 If updates to the data profiles have been made and you have no unsaved data locally:
 
     stack/shell.sh
+    export DATA=example
     bin/reset-db.sh --force-s3-sync
-
-If updates to the webapps has been made since you last built them and you want to be able to run the webapps with env=dist:
-
-    docker-compose run builder stack/src/build.sh

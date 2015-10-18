@@ -49,11 +49,11 @@ If you have already run this once in the current DATA profile, no data will be r
 
 Note: If you have trouble with internet connectivity from inside the shell, run the following, then open a new shell.
 
-    docker-machine ssh _PROJECT_ 'echo nameserver 8.8.8.8 > /etc/resolv.conf'
+    docker-machine ssh default 'echo nameserver 8.8.8.8 > /etc/resolv.conf'
 
 Note: If you get a random 403 permission error for no good reason (for instance `ERROR: S3 error: 403 (RequestTimeTooSkewed)`), it could be because the virtual machine clock and your laptop's clock have gone out of sync (this can happen), which S3 gets picky about. To fix, run:
 
-    docker-machine ssh _PROJECT_ 'sudo ntpclient -s -h pool.ntp.org'
+    docker-machine ssh default 'sudo ntpclient -s -h pool.ntp.org'
 
 ## To upload your current data
 
@@ -99,12 +99,6 @@ Run the following to take the current user-generated schema and copies it to the
 
 A comment: Migrations are crucial when it comes to upgrading older deployments to the latest schema. If, however, there are no need of upgrading older deployments to the latest schema and code, migrations may instead add to the maintenance and development routines burden without adding value to the project. This is for instance the case during early development where there are no live deployments, or when all live deployments have run all migrations to date and there is no need to restore from old backups.
 
-## Syncing media files to CDN (also required locally)
-
-To sync the local media files to CDN, run:
-
-    bin/upload-current-files-to-cdn.sh
-
 ## Complete example - Sync database and files from "live" to local dev
 
 One use of data profiles is the ability to keep a single set of "live" database data and media files in one place, and then have all developers replicate this data and media files locally for local development.
@@ -121,6 +115,3 @@ One use of data profiles is the ability to keep a single set of "live" database 
 
     bin/reset-db.sh --force-s3-sync
 
-5. Sync the local media files to CDN:
-
-    bin/upload-current-files-to-cdn.sh

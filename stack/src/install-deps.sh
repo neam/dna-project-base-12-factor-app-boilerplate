@@ -10,17 +10,21 @@ if [ "$PREFER" == "" ]; then
   PREFER=source
 fi
 
+cd ui/angular-frontend
+npm install
+cd -
+
 composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
 
 cd dna/
 composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
 cd -
 
-cd frontend/
+cd external-apis/rest-api
 composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
 cd -
 
-cd backend/
+cd tools/code-generator
 composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
 cd -
 
