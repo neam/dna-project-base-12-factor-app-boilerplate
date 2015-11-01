@@ -41,19 +41,17 @@ Then, run the following in the build server:
 
 Locally:
 
-    scp .env _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/.env
-    scp .current-local-cli-data-profile _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/.current-local-cli-data-profile
     scp deploy/config/deploy-prepare-secrets.php _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/deploy/config/deploy-prepare-secrets.php
-    scp deploy/config/secrets.php _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/deploy/config/secrets.php
 
 In build server:
 
     cd ~/_PROJECT_-project/_PROJECT_-product
+    docker ps -q | xargs docker kill # <-- use this to make sure no other container is using port 80
     stack/start.sh
-    stack/restart.sh
     docker-compose run -e PREFER=dist builder stack/src/install-deps.sh
     vendor/bin/docker-stack build-directory-init
 
+Finally, add enough proper config to `~/_PROJECT_-project/_PROJECT_-product-build/.env` to be able to run the 12-factor app in the build server.  
 
 ## General deployment routine
 
@@ -100,8 +98,8 @@ Then, on the build server, run:
 
 Set up a temporary deployment on the build server - Part 1:
 
-    stack/start.sh # <-- good enough most times
-    stack/restart.sh # <-- use this instead to be sure that no previous containers are running
+    docker ps -q | xargs docker kill # <-- use this to make sure no other container is using port 80
+    stack/start.sh
 
 Then, on the build server, run:
 

@@ -53,10 +53,7 @@ else
     export GA_TRACKING_ID=$PRODUCTION_GA_TRACKING_ID
 fi
 
-# default CI_SCOPE to "all" (other valid value: "frontends", which only includes consume-related parts)
-#if [ "$CI_SCOPE" == "" ] || [ "$CI_SCOPE" == "{{CI_SCOPE}}" ]; then
-    CI_SCOPE="all"
-#fi
+CI_SCOPE="all"
 
 # double-check git version
 #git --version
@@ -66,12 +63,8 @@ function vhostbranchname {
 
     local STR=$1
 
-    # maximum length of the DRONE_BRANCH+projectref part of the APPNAME seems to be 45 chars, thus for "vizabi" a max of 38 chars would be ok. restricting to 35 chars to be on the safe side
-    #if [ "$CI_SCOPE" == "frontends" ]; then
-    #    STR=${STR:0:25} # shorter since the appname is prefixed with "frontends-"
-    #else
-        STR=${STR:0:35}
-    #fi
+    # subdomains and tutum service names can't be too long
+    STR=${STR:0:30}
 
     echo "$STR"
 
@@ -169,7 +162,7 @@ cd $DRONE_BUILD_DIR/_PROJECT_-product
     # setting for catch-all deployment
     # for tenants that are not requiring an individual SLA / deployment
     if [ "$DATA" == "%DATA%" ]; then
-      export APPVHOST="%DATA%."$DEPLOY_STABILITY_TAG
+      export APPVHOST=$APPNAME
       export VIRTUAL_HOST="$MULTI_TENANT_VIRTUAL_HOST"
       export VIRTUAL_HOST_WEIGHT=50
     fi

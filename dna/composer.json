@@ -58,10 +58,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/Gapminder/PHP-po-parser"
-        },
-        {
-            "type": "composer",
-            "url": "http://packages.phundament.com"
         }
     ],
     "minimum-stability": "stable",
@@ -111,6 +107,12 @@
         "yiisoft/yii": "1.1.16 as dev-master"
     },
     "autoload": {
+        "classmap": [
+            "components/",
+            "config/",
+            "traits/",
+            "models/metadata/traits"
+        ],
         "psr-4": {
             "propel\\": "generated-classes/propel/",
             "generators\\": "generators/"

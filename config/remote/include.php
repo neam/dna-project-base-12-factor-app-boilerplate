@@ -23,8 +23,12 @@ require_once("$project_root/config/virtual-host-data-map-bootstrap.php");
  *
  */
 
+// 0. Allow local offline mode via hard-coded local offline data profile config
+$LOCAL_OFFLINE_DATA = getenv('LOCAL_OFFLINE_DATA');
+if (!empty($LOCAL_OFFLINE_DATA)) {
+    $_ENV['DATA'] = $LOCAL_OFFLINE_DATA;
 // 1. Require the env var to be set externally on cli requests
-if (!isset($_SERVER['REQUEST_METHOD'])) {
+} elseif (!isset($_SERVER['REQUEST_METHOD'])) {
     // Cli
     $DATA = Config::read('DATA');
     if (empty($DATA)) {
@@ -75,7 +79,7 @@ Config::expect("VIRTUAL_HOST_DATA_MAP", $default = null, $required = true);
 Config::expect("VIRTUAL_HOST_WEIGHT", $default = null, $required = true);
 Config::expect("VIRTUAL_HOST", $default = null, $required = true);
 Config::expect("DATA", $default = null, $required = (!isset($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] !== 'OPTIONS'));
-Config::expect("COMMIT_SHA", $default = "commit-sha-not-set", $required = false);
+Config::expect("COMMITSHA", $default = "commit-sha-not-set", $required = false);
 
 // ==== Identity-related config ====
 

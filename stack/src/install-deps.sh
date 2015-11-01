@@ -24,6 +24,10 @@ cd external-apis/rest-api
 composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
 cd -
 
+cd external-apis/rest-api-dna
+composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
+cd -
+
 cd tools/code-generator
 composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
 cd -

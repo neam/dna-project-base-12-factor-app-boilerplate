@@ -45,15 +45,9 @@ Fire up the stack locally:
 
     docker-compose up -d
 
-Visit the below returned urls in your browser:
+Run the below to visit the backend url in your browser:
 
-    docker-stack local url
-    docker-stack local url /backend/
-
-> Hint: On OSX, you can open the url directly from a terminal session:
->
->    stack/open-browser.sh
->    stack/open-browser.sh /backend/
+    stack/open-browser.sh /backend/
 
 To scale the PHP "ha" service:
 

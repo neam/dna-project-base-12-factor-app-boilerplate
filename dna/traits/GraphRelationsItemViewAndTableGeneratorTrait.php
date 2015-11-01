@@ -217,7 +217,7 @@ trait GraphRelationsItemViewAndTableGeneratorTrait
         }
 
         $selectResult = $this->_db->createCommand($sql . " LIMIT 2")->queryAll();
-        $this->_db->createCommand($viewSql)->execute();
+        $this->_db->getPdoInstance()->exec($viewSql);
         $selectViewResult = $this->_db->createCommand("SELECT * FROM $viewName LIMIT 2")->queryAll();
 
         if ($this->_verbose) {

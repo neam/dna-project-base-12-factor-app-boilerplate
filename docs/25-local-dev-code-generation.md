@@ -27,8 +27,6 @@ The workflow:
     docker-compose run -e DATA=clean-db phpfiles bin/reset-db.sh
     docker-compose run -e DATA=clean-db phpfiles bin/generate-content-model-metadata.sh
 
-(Not currently relevant: Before committing, make sure to autoformat all code in dna/models directory.)
-
 ## Generating RESTful API
 
 Operates on item types marked as "generate_yii_rest_api_crud".

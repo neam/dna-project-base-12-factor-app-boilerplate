@@ -47,6 +47,9 @@ class DatabaseViewGeneratorCommand extends CConsoleCommand
             $this->_verbose = true;
         }
 
+        $this->d("Not generating any item views currently");
+        return;
+
         // TODO: Refactor to use DatabaseView
         /*
         $this->actionItem(
