@@ -1,5 +1,8 @@
 <?php
 
+use Propel\Runtime\Propel;
+use Propel\Runtime\Exception\PropelException;
+
 class Suggestions
 {
     // use FooSuggestionsTrait;
@@ -12,15 +15,18 @@ class Suggestions
     static public function getAvailableAlgorithms()
     {
 
-        $algorithms = [
-            "foo" => [
-                "affected-item-types" => [
-                    "Foo" => [
-                        static::UPDATE,
+        $algorithms = array_merge_recursive(
+            static::getAvailableAlgorithms_Foo(),
+            [
+                "foo" => [
+                    "affected-item-types" => [
+                        "Foo" => [
+                            static::UPDATE,
+                        ],
                     ],
                 ],
-            ],
-        ];
+            ]
+        );
 
         // TODO: Filter
         return $algorithms;
@@ -30,11 +36,12 @@ class Suggestions
     /**
      * Prepares an algorithm-array that contains "data", "ref" and "config"
      *
-     * @param $algorithms
-     * @return mixed
-     * @throws CException
+     * @param $postedAlgorithms
+     * @param $requiresRollbackSupport
+     * @return array
+     * @throws Exception
      */
-    static public function preparePostedAlgorithmData($postedAlgorithms)
+    static public function preparePostedAlgorithmData($postedAlgorithms, $requiresRollbackSupport)
     {
 
         $availableAlgorithms = static::getAvailableAlgorithms();
@@ -48,7 +55,7 @@ class Suggestions
 
             // ref and data
             if (is_object($postedAlgorithm)) {
-                foreach ($postedAlgorithm as $key=>$value) {
+                foreach ($postedAlgorithm as $key => $value) {
                     $ref = $key;
                     $algorithm["data"] = $value;
                     break;
@@ -61,9 +68,15 @@ class Suggestions
 
             // config
             if (!isset($availableAlgorithms[$ref])) {
-                throw new CException("Algorithm not available: $ref");
+                throw new Exception("Algorithm not available: $ref");
             }
             $algorithm["config"] = $availableAlgorithms[$ref];
+
+            // double check rollback support (if nothing specified assume rollback supported - this flag is for algorithms that affect other things than database contents)
+            $rollbackSupported = !isset($algorithm["config"]["rollback-supported"]) ? true : $algorithm["config"]["rollback-supported"];
+            if ($requiresRollbackSupport && !$rollbackSupported) {
+                throw new Exception("Algorithm does not have rollback support: $ref");
+            }
 
             $algorithms[$ref] = $algorithm;
 
@@ -108,8 +121,11 @@ class Suggestions
         // get initial metadata
         $return["initial_metadata"] = [];
 
-        // set autocommit to 0 to prevent saving of data meant for preview
-        Yii::app()->db->createCommand("SET autocommit=0")->execute();
+        // PDO
+        $pdo = Propel::getWriteConnection('default');
+
+        // set autocommit to 0 to prevent saving of data within transaction
+        $pdo->exec("SET autocommit=0");
 
         // perform suggested actions - retry one time per second 10 times in case of deadlock
         $retry = 0;
@@ -117,7 +133,8 @@ class Suggestions
         while (!$done and $retry < 10) {
 
             // start transaction
-            $return["transaction"] = Yii::app()->db->beginTransaction();
+            $pdo->beginTransaction();
+            $return["transaction"] =& $pdo;
 
             try {
 
@@ -128,7 +145,7 @@ class Suggestions
 
                 $done = true;
 
-            } catch (CDbException $e) {
+            } catch (PropelException $e) {
 
                 // If deadlock - retry
                 if (strpos(
@@ -162,16 +179,35 @@ class Suggestions
     {
 
         $transaction->rollback();
+        $pdo = Propel::getWriteConnection('default');
 
         // reclaim auto-increment - http://stackoverflow.com/a/9312793/682317
         $itemTypesAffectedByAlgorithms = static::getItemTypesAffectedByAlgorithms($algorithms, static::CREATE);
         foreach ($itemTypesAffectedByAlgorithms as $itemType) {
-            $model = $itemType::model();
-            $table = $model->tableName();
-            Yii::app()->db->createCommand("ALTER TABLE $table auto_increment = 1")->execute();
+            $tableMapClass = '\\propel\\models\\Map\\' . $itemType . "TableMap";
+            $table = $tableMapClass::getTableMap()->getName();
+            $pdo->exec("ALTER TABLE $table auto_increment = 1");
         }
 
     }
+
+    /**
+     * @param $itemType
+     * @return Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     * @throws HttpException
+     */
+    static public function getModelOfItemType($itemType)
+    {
+
+        $modelName = '\\propel\\models\\' . $itemType;
+        if (!class_exists($modelName)) {
+            throw new HttpException(500, 'Invalid configuration');
+        }
+        $model = new $modelName();
+        return $model;
+
+    }
+
 
 }
 
