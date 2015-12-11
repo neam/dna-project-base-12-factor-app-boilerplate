@@ -9,7 +9,7 @@ require_once("$root/vendor/autoload.php");
 require_once("$root/dna/vendor/autoload.php");
 
 // root-level bootstrap logic
-require("$root/bootstrap.php");
+require_once("$root/bootstrap.php");
 
 // propel config
 return [

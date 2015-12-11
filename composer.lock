@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "60f47cf409f4a8126b4c1961cc15ed01",
-    "content-hash": "e45d608538bffe666022561ad41946b2",
+    "hash": "ca5fb5bbc57d88f64fd147a086697c55",
+    "content-hash": "b732063c2a41de4306ce733304febc3c",
     "packages": [
         {
             "name": "motin/yii-consoletools",

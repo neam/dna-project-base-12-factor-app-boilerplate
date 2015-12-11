@@ -3,7 +3,7 @@
 $root = dirname(__FILE__);
 
 // HHVM SCRIPT_NAME difference vs php-fpm workaround
-if (defined('HHVM_VERSION') && isset($_SERVER['SCRIPT_NAME'])) {
+if (defined('HHVM_VERSION') && isset($_SERVER['NGINX_SCRIPT_NAME'])) {
     $_SERVER['DOCUMENT_ROOT'] = $_SERVER['NGINX_DOCUMENT_ROOT'];
     $_SERVER['SCRIPT_NAME'] = $_SERVER['NGINX_SCRIPT_NAME'];
     $_SERVER['PHP_SELF'] = $_SERVER['NGINX_SCRIPT_NAME'];

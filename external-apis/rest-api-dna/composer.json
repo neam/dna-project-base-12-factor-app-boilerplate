@@ -1,0 +1,33 @@
+{
+  "name": "_PUBLISHER_/_PROJECT_-rest-api-dna",
+  "description": "DNA Project Base REST API DNA",
+  "keywords": [
+    "web",
+    "application",
+    "rest",
+    "dna-project-base"
+  ],
+    "license": "proprietary",
+  "authors": [
+    {
+      "name": "_NAME_",
+      "email": "_EMAIL_@example.com"
+    },
+    {
+      "name": "Open Source Community"
+    }
+  ],
+  "repositories": [],
+  "minimum-stability": "dev",
+  "require": {
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "classmap": [
+      "app/modules/v0/controllers/",
+      "app/modules/v0/models/"
+    ]
+  },
+  "scripts": {}
+}
