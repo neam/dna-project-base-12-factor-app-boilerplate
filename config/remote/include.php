@@ -23,17 +23,16 @@ require_once("$project_root/config/virtual-host-data-map-bootstrap.php");
  *
  */
 
-// 0. Allow local offline mode via hard-coded local offline data profile config
-$LOCAL_OFFLINE_DATA = getenv('LOCAL_OFFLINE_DATA');
-if (!empty($LOCAL_OFFLINE_DATA)) {
-    $_ENV['DATA'] = $LOCAL_OFFLINE_DATA;
 // 1. Require the env var to be set externally on cli requests
-} elseif (!isset($_SERVER['REQUEST_METHOD'])) {
+if (!isset($_SERVER['REQUEST_METHOD'])) {
     // Cli
     $DATA = Config::read('DATA');
     if (empty($DATA)) {
         throw new Exception('Env var DATA needs to be set for cli executions');
     }
+} elseif (!empty(getenv('LOCAL_OFFLINE_DATA'))) {
+    // X. Allow local offline mode via hard-coded local offline data profile config
+    $_ENV['DATA'] = getenv('LOCAL_OFFLINE_DATA');
 } elseif ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     // Do nothing since we don't need the DATA env var
 } else {

@@ -61,8 +61,6 @@ Enter a shell and run:
 
     bin/upload-current-user-data.sh
 
-Then, run the echo scripts at the bottom (it says its optional) to copy your new files into dna/db/migration-base/
-
 Commit your files in dna/db/migration-base/ - the three files to commit are:
 
 		dna/db/migration-base/{project-name}/schema.filepath

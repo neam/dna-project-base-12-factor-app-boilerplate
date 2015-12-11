@@ -29,7 +29,8 @@ class VirtualHostDataMapBootstrap
         $virtual_host_data_mappings = static::config();
 
         $DATA = null;
-        foreach ($virtual_host_data_mappings as $virtual_host => $data_profile) {
+        // array_reverse ensures that the leftmost mappings are overriding the rightmost more general mappings
+        foreach (array_reverse($virtual_host_data_mappings, true) as $virtual_host => $data_profile) {
 
             if ($data_profile !== '%DATA%') {
                 // Check direct hits in VIRTUAL_HOST_DATA_MAP (for instance %DATA%.player.adoveo.local@%DATA%,%DATA%.adoveo.local@%DATA%,%DATA%.ratataa.local@%DATA%,sas.ratataa.se@sas,cokecce.adoveo.com@cokecce,bigbrother.ratataa.se@sbs-discovery)
