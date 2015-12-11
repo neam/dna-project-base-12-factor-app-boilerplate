@@ -91,6 +91,7 @@
         "phpoffice/phpexcel": "1.7.9",
         "phpoffice/phpword": "dev-master#744d3f53d42ee31cd1f29daefd1c7c8cd87161d0",
         "phpoffice/phppowerpoint": "dev-master",
+        "league/flysystem": "~1.0.15",
         "sepia/po-parser": "dev-master",
         "neam/php-po2json": "dev-develop",
         "weavora/wrest": "dev-set-create-and-update-attributes-in-behavior",

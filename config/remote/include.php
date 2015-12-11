@@ -146,6 +146,9 @@ Config::expect("PUBLIC_FILE_UPLOADERS_SECRET", $default = null, $required = true
 Config::expect("CDN_PATH_HTTP", $default = null, $required = true);
 Config::expect("CDN_PATH_HTTPS", $default = null, $required = true);
 
+// To be able to access files locally
+Config::expect("LOCAL_USER_FILES_PATH", $default = null, $required = true);
+
 // ==== Misc ====
 
 Config::expect("YII_GII_PASSWORD", $default = uniqid(), $required = false);
@@ -178,3 +181,4 @@ $_ENV['APPVHOST'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("A
 $_ENV['PUBLIC_FILES_S3_PATH'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("PUBLIC_FILES_S3_PATH"));
 $_ENV['CDN_PATH_HTTP'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("CDN_PATH_HTTP"));
 $_ENV['CDN_PATH_HTTPS'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("CDN_PATH_HTTPS"));
+$_ENV['LOCAL_USER_FILES_PATH'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("LOCAL_USER_FILES_PATH"));
