@@ -38,12 +38,15 @@ return [
             'defaultConnection' => 'default',
             'connections' => ['default']
         ],
+        'migrations' => [
+            'parserClass' => '\\generators\\propel\\Reverse\\DnaProjectBaseMysqlSchemaContentModelMetadataDecorator', // Extending \Propel\Generator\Reverse\MysqlSchemaParser
+        ],
         'generator' => [
             'defaultConnection' => 'default',
             'connections' => ['default'],
             'objectModel' => [
                 'builders' => [
-                    'objectstub' => '\generators\propel\Builder\Om\ExtensionObjectBuilder',
+                    'objectstub' => '\\generators\\propel\\Builder\\Om\\ExtensionObjectBuilder', // Extending \Propel\Generator\Builder\Om\ExtensionObjectBuilder
                 ],
             ],
         ],
