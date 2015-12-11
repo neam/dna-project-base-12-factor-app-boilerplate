@@ -146,6 +146,7 @@ class DnaConfig
         require(static::$dnaDirectory . '/config/includes/p3media-extras.php');
         require(static::$dnaDirectory . '/config/includes/p3media-presets.php');
         require(static::$dnaDirectory . '/config/includes/yii-dna-cms.php');
+        require(static::$dnaDirectory . '/config/includes/i18n.php');
         //require(static::$dnaDirectory . '/config/includes/resource-manager.php');
         require(static::$dnaDirectory . '/config/includes/wrest.php');
 
