@@ -8,6 +8,8 @@ script_path=`dirname $0`
 cd $script_path/..
 
 # run actual command
-vendor/bin/yii-dna-pre-release-testing-console migrate create $@
+vendor/bin/propel -vvv migration:create --suffix=$@
+# legacy:
+#vendor/bin/yii-dna-pre-release-testing-console migrate create $@
 
 exit 0
