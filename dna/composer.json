@@ -101,7 +101,7 @@
         "alchemy/zippy": "*",
         "twilio/sdk": "~3.12.8",
         "2amigos/resource-manager": "dev-master",
-        "yiisoft/yii": "1.1.16 as dev-master"
+        "yiisoft/yii": "1.1.17 as dev-master"
     },
     "autoload": {
         "classmap": [

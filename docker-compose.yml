@@ -52,7 +52,7 @@ phphaproxy:
 
 # The elastically scalable php service for interpreting php code without access to /files
 phpha:
-  image: neam/dna-project-base-debian-php:5.6.13-fpm-0.4.0
+  image: neam/dna-project-base-debian-php:0.6.0
   links:
     - mailcatcher
     - redisphpsessionhandler

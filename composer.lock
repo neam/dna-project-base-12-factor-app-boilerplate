@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ca5fb5bbc57d88f64fd147a086697c55",
+    "hash": "23a7a6ad28a494602ad716cf43764db5",
     "content-hash": "b732063c2a41de4306ce733304febc3c",
     "packages": [
         {
@@ -155,12 +155,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/neam/yii-dna-deployment.git",
-                "reference": "42bed1e756f2d69a4b593a778ac5648c724ead2c"
+                "reference": "1fc64d14d77c0922300df64c092fada894a06aad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neam/yii-dna-deployment/zipball/42bed1e756f2d69a4b593a778ac5648c724ead2c",
-                "reference": "42bed1e756f2d69a4b593a778ac5648c724ead2c",
+                "url": "https://api.github.com/repos/neam/yii-dna-deployment/zipball/1fc64d14d77c0922300df64c092fada894a06aad",
+                "reference": "1fc64d14d77c0922300df64c092fada894a06aad",
                 "shasum": ""
             },
             "require": {
@@ -178,15 +178,7 @@
                 "util/setup-db.sh",
                 "util/setup-rackspace-cloud-db.sh",
                 "util/tutum-shell.sh",
-                "util/upload-current-media-as-public-files.sh",
-                "dokku-legacy/configure-s3cmd.sh",
-                "dokku-legacy/install-s3cmd.sh",
-                "dokku-legacy/app-buildstep-hook.sh",
-                "dokku-legacy/configure-persistent-p3media.sh",
-                "dokku-legacy/dokku-reset-db.sh",
-                "dokku-legacy/dokku-run-tests.sh",
-                "dokku-legacy/root-project-buildstep-hook.sh",
-                "dokku-legacy/update-buildpacks-file-revision.sh"
+                "util/upload-current-media-as-public-files.sh"
             ],
             "type": "library",
             "license": [
@@ -212,7 +204,7 @@
                 "source": "https://github.com/neam/yii-dna-deployment/tree/develop",
                 "issues": "https://github.com/neam/yii-dna-deployment/issues"
             },
-            "time": "2015-11-23 11:50:00"
+            "time": "2015-12-11 11:22:27"
         },
         {
             "name": "neam/yii-dna-pre-release-testing",
@@ -444,16 +436,16 @@
         },
         {
             "name": "yiisoft/yii",
-            "version": "1.1.16",
+            "version": "1.1.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii.git",
-                "reference": "bca0420b6799b0b2a7966aa90bcd15cb4aa73563"
+                "reference": "467ff50a77bf7030a168defc1d47f446136d6228"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii/zipball/bca0420b6799b0b2a7966aa90bcd15cb4aa73563",
-                "reference": "bca0420b6799b0b2a7966aa90bcd15cb4aa73563",
+                "url": "https://api.github.com/repos/yiisoft/yii/zipball/467ff50a77bf7030a168defc1d47f446136d6228",
+                "reference": "467ff50a77bf7030a168defc1d47f446136d6228",
                 "shasum": ""
             },
             "require": {
@@ -530,7 +522,7 @@
                 "framework",
                 "yii"
             ],
-            "time": "2014-12-21 19:30:17"
+            "time": "2016-01-13 16:23:58"
         }
     ],
     "packages-dev": [],
