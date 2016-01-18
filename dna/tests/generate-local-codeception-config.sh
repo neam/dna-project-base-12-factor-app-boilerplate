@@ -2,6 +2,6 @@
 
 script_path=`dirname $0`
 
-# no erb to generate from
+erb $script_path/codeception.yml.erb > $script_path/codeception.yml
 
 exit 0
