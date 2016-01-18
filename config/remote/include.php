@@ -119,7 +119,8 @@ Config::expect("SMTP_ENCRYPTION", $default = null, $required = true);
 Config::expect("SENTRY_DSN", $default = null, $required = true);
 
 // Filepicker is used to handle user uploads
-Config::expect("FILEPICKER_API_KEY", $default = null, $required = true);
+Config::expect("FILESTACK_API_KEY", $default = null, $required = true);
+Config::expect("FILESTACK_API_SECRET", $default = null, $required = true);
 
 // Auth0
 Config::expect("AUTH0_APPS", $default = null, $required = true);
@@ -147,6 +148,12 @@ Config::expect("CDN_PATH_HTTPS", $default = null, $required = true);
 
 // To be able to access files locally
 Config::expect("LOCAL_USER_FILES_PATH", $default = null, $required = true);
+
+// SMS Messaging service Twilio
+
+Config::expect("TWILIO_ACCOUNT_SID", $default = null, $required = true);
+Config::expect("TWILIO_AUTH_TOKEN", $default = null, $required = true);
+Config::expect("TWILIO_FROM_NUMBER", $default = null, $required = true);
 
 // ==== Misc ====
 

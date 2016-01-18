@@ -32,6 +32,7 @@ The workflow:
 Operates on item types marked as "generate_yii_rest_api_crud".
 
     docker-compose run -e DATA=clean-db phpfiles bin/generate-rest-api.sh
+    stack/src/install-deps.sh
 
 Now use git (SourceTree recommended) to stage the relevant generated changes and discard the changes that overwrote customly crafted parts that is not generated.
 

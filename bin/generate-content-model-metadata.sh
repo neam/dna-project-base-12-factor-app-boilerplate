@@ -7,9 +7,6 @@ set -o errexit
 script_path=`dirname $0`
 cd $script_path/..
 
-# debug
-#set -x
-
 # run actual commands
 bin/generate-dna-content-model-metadata-helper-classes.sh
 bin/generate-dna-item-traits.sh

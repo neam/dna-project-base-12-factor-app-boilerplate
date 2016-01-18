@@ -16,11 +16,28 @@ use Exception;
  *  §4 File instance records tell us where binary copies of the file are stored
  *  §5 File instances should (if possible) store it's binary copy using the relative path provided by $file->getPath(), so that retrieval of the file's binary contents is straightforward and eventual public url's follow the official path/name supplied by $file->getPath()
  *
+ * Current storage components handled by this trait:
+ *  - local (implies that the binary is stored locally)
+ *  - filestack (implies that the binary is stored at filestack)
+ *  - filestack_pending (implies that the binary is pending an asynchronous task to finish, after which point the instance will be converted into a 'filestack' instance)
+ *  - filepicker (legacy filestack name, included only to serve filepicker-stored files until all have been converted to filestack-resources)
+ *
  * Class FileTrait
  */
 trait FileTrait
 {
 
+    use FilestackFileTrait;
+    use FilestackSecuredFileTrait;
+    use FilestackConvertibleFileTrait;
+
+    /**
+     * @propel
+     * @yii
+     * @param $url
+     * @param $destination
+     * @return resource
+     */
     static public function downloadRemoteFileToPath($url, $destination)
     {
         $targetFileHandle = fopen($destination, 'w');
@@ -29,6 +46,14 @@ trait FileTrait
         return $targetFileHandle;
     }
 
+    /**
+     * @propel
+     * @yii
+     * @param $url
+     * @param $targetFileHandle
+     * @return mixed
+     * @throws Exception
+     */
     static public function downloadRemoteFileToStream($url, $targetFileHandle)
     {
         $BUFSIZ = 4095;
@@ -46,6 +71,10 @@ trait FileTrait
 
     protected $localFilesystem;
 
+    /**
+     * @propel
+     * @return Filesystem
+     */
     protected function getLocalFilesystem()
     {
         if (empty($this->localFilesystem)) {
@@ -54,12 +83,23 @@ trait FileTrait
         return $this->localFilesystem;
     }
 
+    /**
+     * @propel
+     * @yii
+     * @return string
+     */
     public function getLocalBasePath()
     {
         /** @var \propel\models\File $this */
         return rtrim(LOCAL_USER_FILES_PATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
+    /**
+     * @propel
+     * @param bool $ensure
+     * @return string
+     * @throws Exception
+     */
     public function getPathForManipulation($ensure = true)
     {
         /** @var \propel\models\File $this */
@@ -72,12 +112,23 @@ trait FileTrait
         return $this->getPath();
     }
 
+    /**
+     * @propel
+     * @param bool $ensure
+     * @return string
+     * @throws Exception
+     */
     public function getAbsolutePathForManipulation($ensure = true)
     {
         /** @var \propel\models\File $this */
         return $this->getLocalBasePath() . $this->getPathForManipulation($ensure);
     }
 
+    /**
+     * @propel
+     * @return string
+     * @throws Exception
+     */
     protected function getCorrectPath()
     {
         /** @var \propel\models\File $this */
@@ -96,6 +147,7 @@ trait FileTrait
      * Ensures:
      * 1. That the file-record have a local file instance
      * 2. That the local file instance actually has it's file in place locally
+     * @propel
      * @param null $params
      */
     public function ensureLocalFileInCorrectPath()
@@ -130,6 +182,11 @@ trait FileTrait
 
     }
 
+    /**
+     * @propel
+     * @return bool
+     * @throws Exception
+     */
     protected function checkIfLocalFileIsInCorrectPath()
     {
 
@@ -156,6 +213,12 @@ trait FileTrait
 
     }
 
+    /**
+     * @propel
+     * @return mixed|null|\propel\models\FileInstance
+     * @throws Exception
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
     protected function getEnsuredLocalFileInstance()
     {
 
@@ -184,37 +247,38 @@ trait FileTrait
         $localFileInstance = new \propel\models\FileInstance();
         $localFileInstance->setUri($correctPath);
         $localFileInstance->setStorageComponentRef('local');
-        $localFileInstance->setFile($this);
+        $localFileInstance->setFileRelatedByFileId($this);
         $localFileInstance->save();
 
         return $localFileInstance;
 
     }
 
+    /**
+     * @propel
+     * @return mixed|null|\propel\models\FileInstance
+     */
     public function localFileInstance()
     {
         /** @var \propel\models\File $this */
-        $fileInstances = $this->getFileInstances();
-        foreach ($fileInstances as $fileInstance) {
-            if ($fileInstance->getStorageComponentRef() === 'local') {
-                return $fileInstance;
-            }
-        }
-        return null;
+        return $this->getFileInstanceRelatedByLocalFileInstanceId() || null;
     }
 
+    /**
+     * @propel
+     * @return mixed|null|\propel\models\FileInstance
+     */
     public function remoteFileInstance()
     {
         /** @var \propel\models\File $this */
-        $fileInstances = $this->getFileInstances();
-        foreach ($fileInstances as $fileInstance) {
-            if ($fileInstance->getStorageComponentRef() === 'filepicker') {
-                return $fileInstance;
-            }
-        }
-        return null;
+        return $this->getFileInstanceRelatedByFilestackFileInstanceId() || null;
     }
 
+    /**
+     * @propel
+     * @throws Exception
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
     public function ensureFileMetadata()
     {
         /** @var \propel\models\File $this */
@@ -243,7 +307,9 @@ trait FileTrait
     }
 
     /**
-     * Return the first available absolut url to an instance of the current file
+     * Return the first available absolute url to an instance of the current file
+     * @propel
+     * @yii
      * @return string
      */
     public function absoluteUrl()
@@ -255,45 +321,49 @@ trait FileTrait
         }
     }
 
+    /**
+     * @yii
+     * @param \File $file
+     * @return mixed|null|string
+     */
     protected function absoluteUrl_yii(\File $file)
     {
-        $fileInstances = $file->fileInstances;
-        /** @var \FileInstance $fileInstance */
-        foreach ($fileInstances as $fileInstance) {
-            if ($fileInstance->storage_component_ref === 'local') {
-                // Local files are assumed published to a CDN
-                return CDN_PATH . 'media/' . $file->path;
-            } elseif ($fileInstance->storage_component_ref === 'filepicker') {
-                // Use Filepicker's CDN
-                return str_replace("www.filepicker.io", "cdn.filepicker.io", $fileInstance->uri);
-            }
+        if ($fileInstance = $file->localFileInstance) {
+            // Local files are assumed published to a CDN
+            return CDN_PATH . 'media/' . $file->path;
+        }
+        if ($fileInstance = $file->filestackFileInstance) {
+            return static::filestackCdnUrl(static::signFilestackUrl($fileInstance->uri));
         }
         return null;
     }
 
+    /**
+     * @propel
+     * @param \propel\models\File $file
+     * @return mixed|null|string
+     */
     protected function absoluteUrl_propel(\propel\models\File $file)
     {
-        $fileInstances = $file->getFileInstances();
-        foreach ($fileInstances as $fileInstance) {
-            if ($absoluteUrl = $this->fileInstanceAbsoluteUrl($fileInstance)) {
-                return $absoluteUrl;
-            }
+        if ($fileInstance = $file->getFileInstanceRelatedByLocalFileInstanceId()) {
+            // Local files are assumed published to a CDN
+            return CDN_PATH . 'media/' . $file->getPath();
+        }
+        if ($fileInstance = $file->getFileInstanceRelatedByFilestackFileInstanceId()) {
+            return static::filestackCdnUrl(static::signFilestackUrl($fileInstance->getUri()));
         }
         return null;
     }
 
-    protected function fileInstanceAbsoluteUrl(\propel\models\FileInstance $fileInstance)
+    /**
+     * Return pending file instance (one that will be available at a later point in time)
+     * @propel
+     * @return string ''
+     */
+    public function pendingFileInstance()
     {
-
         /** @var \propel\models\File $this */
-        if ($fileInstance->getStorageComponentRef() === 'local') {
-            // Local files are assumed published to a CDN
-            return CDN_PATH . 'media/' . $this->getPath();
-        } elseif ($fileInstance->getStorageComponentRef() === 'filepicker') {
-            // Use Filepicker's CDN
-            return str_replace("www.filepicker.io", "cdn.filepicker.io", $fileInstance->getUri());
-        }
-
+        return $this->getFileInstanceRelatedByFilestackPendingFileInstanceId() || null;
     }
 
 }

@@ -17,7 +17,7 @@ echo "* Generating propel migrations..."
 vendor/bin/propel -vvv diff --table-renaming
 
 # post-propel
-echo "* Reverting propel stand-alone config (so that the configuration once again can be used in the ordinary web apps)
+echo "* Reverting propel stand-alone config (so that the configuration once again can be used in the ordinary web apps)"
 git checkout -- generated-conf/config.php
 
 exit 0

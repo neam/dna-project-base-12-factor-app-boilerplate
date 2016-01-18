@@ -41,7 +41,7 @@ class DbMessageSource extends CDbMessageSource
             case null:
                 return null;
 
-            // Note that this falls back on the default case, i.e. returns the source message.
+            // Note that this, because of a missing break-statement in this case block, falls back on the default case, i.e. returns the source message.
             case 'langFallback':
                 if (strlen($language) === 5) {
                     $fallbackLanguage = substr($language, 0, 2);

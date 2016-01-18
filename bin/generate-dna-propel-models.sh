@@ -22,6 +22,8 @@ DECORATE_PROPEL_SCHEMA=0 vendor/bin/propel -vvv reverse
 #read
 echo "* Generating propel schema..."
 vendor/bin/propel -vvv sql:build
+echo "* Pristine propel schema generated. Manually revert changes to main schema.xml before continuing. Press ENTER to continue"
+read
 echo "* Generating propel models..."
 rm -r generated-classes/propel/models/Base/*.php || true
 rm -r generated-classes/propel/models/Map/*.php || true

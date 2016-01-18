@@ -44,7 +44,7 @@ class DnaProjectBaseMysqlSchemaContentModelMetadataDecorator extends \Propel\Gen
         $database->setIdentifierQuoting(true);
 
         // Load content model metadata
-        $contentModelMetadata = new \dna_project_control_panel\dna\config\ContentModelMetadata(
+        $contentModelMetadata = new \__PROJECT__\dna\config\ContentModelMetadata(
             $contentModelMetadataJsonPath
         );
 

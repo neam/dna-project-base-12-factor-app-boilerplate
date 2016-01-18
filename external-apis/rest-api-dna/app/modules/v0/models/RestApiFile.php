@@ -6,34 +6,36 @@ class RestApiFile extends BaseRestApiFile
     /**
      * @inheritdoc
      */
-    public static function getApiAttributes(\propel\models\File $item, $level = 0)
+    public static function getApiAttributes(\propel\models\File $item)
     {
-        $return = parent::getApiAttributes($item, $level);
-        $return["absolute_url"] = $item->absoluteUrl();
+        /*
         $return["fileInstances"] = RelatedItems::formatItems(
             "FileInstance",
             $item,
             "FileId",
             $level //+1 // Ensure one less level of this relation gets populated
         );
+        */
+        $return = parent::getApiAttributes($item);
         return $return;
     }
 
     /**
      * @inheritdoc
      */
-    public static function getListableAttributes(\propel\models\File $item, $level = 0)
+    public static function getWrapperAttributes(\propel\models\File $item = null)
     {
-        $return = parent::getListableAttributes($item, $level);
+        $return = parent::getWrapperAttributes($item);
+        $return["absolute_url"] = $item ? $item->absoluteUrl() : null;
         return $return;
     }
 
     /**
      * @inheritdoc
      */
-    public static function getRelatedAttributes(\propel\models\File $item, $level)
+    public static function getItemAttributes(\propel\models\File $item)
     {
-        $return = parent::getRelatedAttributes($item, $level);
+        $return = parent::getItemAttributes($item);
         return $return;
     }
 
@@ -62,10 +64,10 @@ class RestApiFile extends BaseRestApiFile
 
         // Also add file-instances that are specified in the request
         // For now, we simply replace existing file-instances with the ones sent in the request
-        if (!empty($requestAttributes['attributes']->fileInstances)) {
+        if (!empty($requestAttributes->attributes->fileInstances)) {
 
             $fileInstances = new \Propel\Runtime\Collection\Collection();
-            foreach ($requestAttributes['attributes']->fileInstances as $fileInstanceInRequest) {
+            foreach ($requestAttributes->attributes->fileInstances as $fileInstanceInRequest) {
 
                 $attributes = (array) $fileInstanceInRequest->attributes;
                 // Remove redundant file attribute which already is defined to be the current $item due to the request structure

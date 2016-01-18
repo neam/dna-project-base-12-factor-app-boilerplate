@@ -57,7 +57,7 @@ Finally, add enough proper config to `~/_PROJECT_-project/_PROJECT_-product-buil
 
 First, make sure that everything is tested, committed and pushed. 
 
-Create a new release in SourceTree.
+Create a new release in SourceTree, call it `YY.MM.R`, where YY is the current year, MM is the current month, and R is an incremental number for the current months' releases, for instance `15.11.2` if you are releasing the 2nd release in nov 2015.
 
 Push the new branch. 
 

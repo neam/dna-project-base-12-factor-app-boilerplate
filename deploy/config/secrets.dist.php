@@ -28,18 +28,27 @@ $_ENV["CDN_PATH_HTTPS"] = "https://static.adoveo.com" . Config::read("PUBLIC_FIL
 $_ENV["COMPOSER_GITHUB_TOKEN"] = "";
 $_ENV["NEW_RELIC_LICENSE_KEY"] = "";
 
-$_ENV["FILEPICKER_API_KEY"] = "";
+// Filestack (previously Filepicker)
+$_ENV["FILESTACK_API_KEY"] = "";
+$_ENV["FILESTACK_API_SECRET"] = "";
 
+// Auth0
 $_ENV["AUTH0_APPS"] = "";
 $_ENV["AUTH0_CLIENT_IDS"] = "";
 $_ENV["AUTH0_CLIENT_SECRETS"] = "";
 $_ENV["CORS_ACL_ORIGIN_HOSTS"] = "localhost:9000,app._PROJECT_.com,_PROJECT_.com";
 
+// Sentry
 $_ENV["SENTRY_DSN"] = "";
 
 // Deployment-specifics
 $_ENV['WEB_SERVER_POSIX_USER'] = "www-data";
 $_ENV['WEB_SERVER_POSIX_GROUP'] = "www-data";
+
+// SMS Messaging service Twilio
+$_ENV["TWILIO_ACCOUNT_SID"] = "AC8c7a2821177ed021d4b2441f9b837a90";
+$_ENV["TWILIO_FROM_NUMBER"] = "+46769446600";
+$_ENV["TWILIO_AUTH_TOKEN"] = "";
 
 // Smtp url
 if (Config::read("DEPLOY_STABILITY_TAG") === "prod") {

@@ -55,6 +55,14 @@ Note: If you get a random 403 permission error for no good reason (for instance 
 
     docker-machine ssh default 'sudo ntpclient -s -h pool.ntp.org'
 
+## To ensure and reset to a database to the currently referenced user generated data profile:
+
+    bin/ensure-and-reset-db-force-s3-sync.sh
+
+## To ensure and reset to all databases to the currently referenced user generated data profile:
+
+    bin/ensure-and-reset-db-force-s3-sync-for-all-hosted-data-profiles.sh
+
 ## To upload your current data
 
 Enter a shell and run:
@@ -75,8 +83,8 @@ Create a new data profile using the helper script, then upload the current curre
 
     export DATA=clean-db
     bin/new-data-profile.sh <profileref>
-    bin/upload-current-user-data.sh
-    # then run the three commands to update the data refs
+    # run the three commands output by the above command
+    # add the new data profile to .env.dist's listing of LOCAL_OFFLINE_DATA and HOSTED_DATA_PROFILES
     # commit and push
 
 ## Migrations

@@ -79,5 +79,10 @@
             ]
         }
     },
+    "autoload": {
+        "psr-4": {
+            "dna_project_control_panel\\": "./"
+        }
+    },
     "scripts": {}
 }
