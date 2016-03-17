@@ -39,13 +39,13 @@ Make sure to set the `USER_DATA_BACKUP_UPLOADERS_*` config vars in your `secrets
 
 Uncomment/set the DATA variable in your `.current-cli-data-profile` to the data environment you want to reset to.
 
-Then, run a normal database reset:
+Then, run a database reset:
 
     bin/reset-db.sh
 
 If you have already run this once in the current DATA profile, no data will be re-fetched from S3. To force sync from S3, run:
 
-    bin/reset-db.sh --force-s3-sync
+    bin/ensure-and-reset-db-force-s3-sync.sh
 
 Note: If you have trouble with internet connectivity from inside the shell, run the following, then open a new shell.
 
@@ -77,6 +77,12 @@ Commit your files in dna/db/migration-base/ - the three files to commit are:
 
 Push.
 
+## To safely migrate current data
+
+The following first creates a backup, syncs it to S3 then resets the database and applies all migrations:
+
+    bin/safe-migration-via-upload-user-data-and-reset-db.sh
+
 ## To create a new DATA profile based on the current data profile
 
 Create a new data profile using the helper script, then upload the current current user-generated data to S3, commit the references and profile-related files in dna (anything with <profileref> in it's path) and push.
@@ -86,6 +92,21 @@ Create a new data profile using the helper script, then upload the current curre
     # run the three commands output by the above command
     # add the new data profile to .env.dist's listing of LOCAL_OFFLINE_DATA and HOSTED_DATA_PROFILES
     # commit and push
+
+## Adding a new DATA profile to a deployed stack
+
+Run the following worker commands in the deployed stack:
+
+    export DATABASE_ROOT_USER="changeme"
+    export DATABASE_ROOT_PASSWORD="changeme"
+    export DATA=newprofile
+    bin/create-new-data-profile.sh $DATA
+    bin/ensure-db.sh
+    bin/migrate.sh
+    bin/reset-db.sh
+    bin/upload-current-user-data.sh
+
+Note: If the DATA profile should be associated with a subdomain different from the actual data profile, you need to add the new virtual host and associated data profile to the virtual host data profile mapping environment variable `VIRTUAL_HOST_DATA_MAP`. For instance, add `customsubdomain.adoveo.com|foodataprofile`
 
 ## Migrations
 
@@ -105,19 +126,36 @@ Run the following to take the current user-generated schema and copies it to the
 
 A comment: Migrations are crucial when it comes to upgrading older deployments to the latest schema. If, however, there are no need of upgrading older deployments to the latest schema and code, migrations may instead add to the maintenance and development routines burden without adding value to the project. This is for instance the case during early development where there are no live deployments, or when all live deployments have run all migrations to date and there is no need to restore from old backups.
 
-## Complete example - Sync database and files from "live" to local dev
+## Complete example - Sync database and files from "live" to local dev or build server (for pre-release testing)
 
 One use of data profiles is the ability to keep a single set of "live" database data and media files in one place, and then have all developers replicate this data and media files locally for local development.
 
-1. Make changes in backend and upload files "live"
+The "example" data profile is used here. Adapt to the data profile you are interested in copying. 
 
-2. Log into the "live" phpfiles container and upload the current data:
+1. Make changes in live campaign manager / backend
 
+2. Log into the "live" phpfiles container (can be done by logging in to Tutum, navigation to the relevant stack, then to the "phpfiles" service, then click the `>_` button on the phpfiles-container's row) and upload the current data:
+
+    bash
+    export DATA=example;cd dna;vendor/bin/propel config:convert;cd ..
     bin/upload-current-user-data.sh
 
-3. Run the echo scripts at the bottom LOCALLY.
+3. If using the Tutum browser-based shell, select the three echo scripts at the bottom, right-click, choose "Copy", paste them into a plain-text editor and remove the extra new-lines, then copy the fixed echo scripts once again before pasting them locally.
 
-4. Open up a shell locally and run:
+Tip: The latest new data ref commands can also be checked in the log:
 
-    bin/reset-db.sh --force-s3-sync
+    cat dna/db/uploaded-user-data.log | less
 
+4. Paste / run these echo scripts LOCALLY or on the build server (depending on where you are testing).
+
+Example (do not copy paste this example, instead, use the echo scripts copied above):
+
+    # Commands that have been run locally in order to set the refs to point to this user data (revert these changes if your data set is not meant to be the base of future production deployments)          
+    echo 'DATA-example/ENV-deployments/release_16.03.1-%DATA%/2016-03-15_154857/schema.sql.gz' > dna/db/migration-base/example/schema.filepath                      
+    echo 'DATA-example/ENV-deployments/release_16.03.1-%DATA%/2016-03-15_154857/data.sql.gz' > dna/db/migration-base/example/data.filepath                          
+    echo 'DATA-example/ENV-deployments/release_16.03.1-%DATA%/2016-03-15_154857/media/' > dna/db/migration-base/example/media.folderpath                            
+
+5. Open up a shell locally (`stack/shell.sh`) and run:
+
+    export DATA=example
+    bin/ensure-and-reset-db-force-s3-sync.sh

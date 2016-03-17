@@ -57,7 +57,7 @@ In order to ensure cross-platform consistency, most commands in the Adoveo proje
 
 ## Step 7 - Initialize the database with a relevant dataset
 
-* Follow relevant instructions in [Working with data](23-local-dev-working-with-data.md) at least down to and including "To reset to a clean database"
+* Follow relevant instructions in [Working with data](23-local-dev-working-with-data.md) at least down to and including "To reset to a clean database". In order to be able to work with user-generated data, follow the instructions to to and including "To ensure and reset to all databases to the currently referenced user generated data profile".
 * Follow relevant instructions in [Pulling in changes from teammates](26-local-dev-pulling-in-changes-from-teammates.md)
 * Now your product should be up and running locally.
 

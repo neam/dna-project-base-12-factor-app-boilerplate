@@ -22,4 +22,10 @@ Build and deploy
 
 - [Overview](50-deploy-overview.md)
 - [Tutum](52-deploy-tutum.md)
+- [Tutum Misc](52-deploy-tutum.misc.md)
 
+Manage
+------
+
+- [Deployments](60-manage-deployments.md)
+- [Users](61-manage-users.md)
