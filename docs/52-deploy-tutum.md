@@ -7,22 +7,24 @@ Zero downtime production deployment routine using Tutum.
 
 This document describes the following process:
 
-1. Deploy on build server and Tutum
+**1. Deploy on build server and Tutum**
 
-A. Manage [git flow](http://nvie.com/posts/a-successful-git-branching-model/) release routines in your 12-factor-app git repository
-B. Check out source code and install deps in build environment
-C. Start up a docker stack and local database to verify that the source code and deps are yielding a working application
-D. Create docker images with this source code, which is verified to work, tagging it with the current git commit sha
-E. Push these docker images to our private tutum docker registry
-F. Generate stack files for tutum deployment that includes the relevant deployment config 
-G. Deploy the stack on tutum, next to any existing stack that is used in production
+* A. Manage [git flow](http://nvie.com/posts/a-successful-git-branching-model/) release routines in your 12-factor-app git repository
+* B. Check out source code and install deps in build environment
+* C. Start up a docker stack and local database to verify that the source code and deps are yielding a working application
+* D. Create docker images with this source code, which is verified to work, tagging it with the current git commit sha
+* E. Push these docker images to our private tutum docker registry
+* F. Generate stack files for tutum deployment that includes the relevant deployment config 
+* G. Deploy the stack on tutum, next to any existing stack that is used in production
 
-2. Decide what data profiles should use which stacks
+**2. Decide what data profiles should use which stacks**
 
-A. Locking previous data profiles to previously running stacks
-B. Unlocking previously locked data profiles to use the latest wildcard stack
+* A. Locking previous data profiles to previously running stacks
+* B. Unlocking previously locked data profiles to use the latest wildcard stack
+  
+**3. Use the newly deployed stack for production URLs (Zero-downtime blue/green deployment, switching out the old stack for the new)**
 
-3. Use the newly deployed stack for production URLs (Zero-downtime blue/green deployment, switching out the old stack for the new)
+## Installation / first-time set-up
 
 Information on how to set-up your project for this deployment routine is available in `vendor/neam/yii-dna-deployment/README.md`
 
