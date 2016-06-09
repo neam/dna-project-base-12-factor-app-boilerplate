@@ -39,11 +39,13 @@ trait FilestackFileTrait
 
         $handle = static::extractHandleFromFilestackUrl($filestackUrl);
         $client = new GuzzleHttp\Client();
-        $response = $client->get('https://www.filestackapi.com/api/file/' . $handle . '/metadata');
+        $filestackMetadataUrl = 'https://www.filestackapi.com/api/file/' . $handle . '/metadata';
+        $requestUrl = File::signFilestackUrl($filestackMetadataUrl);
+        $response = $client->get($requestUrl);
 
         $data = new \stdClass();
-        $data->fpfile = $response;
-        $data->fpkey = FILEPICKER_API_KEY;
+        $data->fpfile = GuzzleHttp\Utils::jsonDecode($response->getBody());
+        $data->fpkey = FILESTACK_API_KEY;
 
         $fileInstance->setDataJson(json_encode($data));
 
@@ -54,7 +56,18 @@ trait FilestackFileTrait
 
         $urlinfo = parse_url($filestackUrl);
         $_ = explode("/", $urlinfo["path"]);
-        return $_[3];
+        $return = null;
+        if ($_[1] === "api" && $_[2] === "file") {
+            $return = $_[3];
+        } elseif (count($_) === 2) {
+            $return = $_[1];
+        }
+        if (empty($return)) {
+            throw new \Exception(
+                "Empty handle extracted from filestack url ('$filestackUrl') - (\$_: " . print_r($_, true) . ")"
+            );
+        }
+        return $return;
 
     }
 

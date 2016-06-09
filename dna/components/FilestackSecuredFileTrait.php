@@ -22,8 +22,14 @@ trait FilestackSecuredFileTrait
     static public function filestackHandleReadOnlyJsonPolicy($handle)
     {
 
-        $half_hour_expiry = strval(intval(time() + 60 * 30));
-        return '{"handle": "' . $handle . '","call":["read"],"expiry":' . $half_hour_expiry . '}';
+        // By locking the expiry to a fixed date in the future (in this case the end of next month), visitors may cache the requests
+        // for up to 1 month, and have access to the file in up to 2 months
+        $now = new \DateTime();
+        $oneMonth = new \DateInterval('P1M');
+        $oneMonthFromNow = $now->add($oneMonth);
+        $endOfNextMonth = \DateTime::createFromFormat("Y-m-d H:i:s", $oneMonthFromNow->format( 'Y-m-t 23:59:59' ));
+        $endOfNextMonthExpiry = strval($endOfNextMonth->format("U"));
+        return '{"handle": "' . $handle . '","call":["read","convert"],"expiry":' . $endOfNextMonthExpiry . '}';
 
     }
 

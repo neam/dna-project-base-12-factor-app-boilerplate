@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+$basePath = dirname(__FILE__);
+$root = $basePath . DIRECTORY_SEPARATOR . '..';
+
+// include composer autoloaders
+require_once("$root/vendor/autoload.php");
+require_once("$root/dna/vendor/autoload.php");
+
+// root-level bootstrap logic
+require("$root/bootstrap.php");
+
+// propel cli
+require("$root/dna/vendor/propel/propel/bin/propel.php");

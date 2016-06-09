@@ -128,19 +128,34 @@ class AppUtil
 
     }
 
-    static public function propelQuerySQL(\Propel\Runtime\ActiveQuery\ModelCriteria $query)
-    {
+    static public function propelQuerySQL(
+        \Propel\Runtime\ActiveQuery\ModelCriteria $query
+    ) {
 
-        $params = array(); // This will be filled with the parameters
-        $sql = $query->createSelectSql($params);
-
-        foreach ($params as $key => $param) {
-            $ordinal = $key + 1;
-            $placeholder = ":p$ordinal";
-            $value = $param["value"];
-            $sql = str_replace($placeholder, "'$value'", $sql);
+        $placeholderParams = [];
+        $sql = static::createSelectSqlAndSetCorrespondingPlaceholderParams($query, $placeholderParams);
+        foreach ($placeholderParams as $key => $value) {
+            if ($value instanceof DateTime) {
+                $value = $value->format("Y-m-d H:i:s");
+            }
+            $sql = str_replace(":$key", "'$value'", $sql);
         }
+        return $sql;
 
+    }
+
+    static public function createSelectSqlAndSetCorrespondingPlaceholderParams(
+        \Propel\Runtime\ActiveQuery\ModelCriteria $query,
+        &$placeholderParams
+    ) {
+
+        $params = []; // This will be filled with the parameters
+        $sql = $query->createSelectSql($params);
+        $index = 1;
+        foreach ($params as $param) {
+            $placeholderParams["p" . $index] = $param["value"];
+            $index++;
+        }
         return $sql;
 
     }

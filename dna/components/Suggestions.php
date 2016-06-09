@@ -12,6 +12,8 @@ class Suggestions
     const DELETE = 'delete';
     const ANY = 'any';
 
+    static public $statusLog = [];
+
     static public function getAvailableAlgorithms()
     {
 
@@ -113,7 +115,17 @@ class Suggestions
 
     }
 
-    static public function run($algorithms)
+    static public function getPdoForSuggestions()
+    {
+
+        // PDO
+        $pdo = Propel::getWriteConnection('default');
+
+        return $pdo;
+
+    }
+
+    static public function run($algorithms, \Propel\Runtime\Connection\ConnectionInterface &$pdo)
     {
 
         $return = [];
@@ -121,11 +133,8 @@ class Suggestions
         // get initial metadata
         $return["initial_metadata"] = [];
 
-        // PDO
-        $pdo = Propel::getWriteConnection('default');
-
         // set autocommit to 0 to prevent saving of data within transaction
-        $pdo->exec("SET autocommit=0");
+        $pdo->exec("SET SESSION autocommit = 0");
 
         // perform suggested actions - retry one time per second 10 times in case of deadlock
         $retry = 0;
@@ -134,7 +143,6 @@ class Suggestions
 
             // start transaction
             $pdo->beginTransaction();
-            $return["transaction"] =& $pdo;
 
             try {
 
@@ -145,7 +153,7 @@ class Suggestions
 
                 $done = true;
 
-            } catch (PropelException $e) {
+            } catch (PDOException $e) {
 
                 // If deadlock - retry
                 if (strpos(
@@ -155,7 +163,7 @@ class Suggestions
                 ) {
 
                     // rollback transaction
-                    static::rollbackTransactionAndReclaimAutoIncrement($algorithms, $return["transaction"]);
+                    static::rollbackTransactionAndReclaimAutoIncrement($algorithms, $pdo);
                     sleep(1);
                     $retry++;
 
@@ -175,18 +183,29 @@ class Suggestions
 
     }
 
-    static public function rollbackTransactionAndReclaimAutoIncrement($algorithms, $transaction)
-    {
+    static public $autoIncrementValues = [];
 
-        $transaction->rollback();
-        $pdo = Propel::getWriteConnection('default');
+    static public function rollbackTransactionAndReclaimAutoIncrement(
+        $algorithms,
+        \Propel\Runtime\Connection\ConnectionInterface &$pdo
+    ) {
+
+        $pdo->rollback();
+        //$pdo = Propel::getWriteConnection('default');
 
         // reclaim auto-increment - http://stackoverflow.com/a/9312793/682317
         $itemTypesAffectedByAlgorithms = static::getItemTypesAffectedByAlgorithms($algorithms, static::CREATE);
         foreach ($itemTypesAffectedByAlgorithms as $itemType) {
             $tableMapClass = '\\propel\\models\\Map\\' . $itemType . "TableMap";
-            $table = $tableMapClass::getTableMap()->getName();
-            $pdo->exec("ALTER TABLE $table auto_increment = 1");
+            /** @var \Propel\Runtime\Map\TableMap $tableMap */
+            $tableMap = $tableMapClass::getTableMap();
+            $table = $tableMap->getName();
+            // TODO: Find a better way to determine if the "table" indeed is a view
+            if (strpos($table, "denormalized_") !== false) {
+                continue;
+            }
+            $autoIncrementValue = 1;
+            $pdo->exec("ALTER TABLE $table auto_increment = $autoIncrementValue");
         }
 
     }
@@ -208,6 +227,10 @@ class Suggestions
 
     }
 
+    static public function status($message)
+    {
+        static::$statusLog[] = $message;
+    }
 
 }
 

@@ -5,9 +5,9 @@ Managing Deployments
 
 ### Running worker commands in an already deployed stack
 
-#### Tutum browser shell
+#### Docker Cloud browser shell
 
-1. Log into Tutum
+1. Log into Docker Cloud
 2. Stacks
 3. Choose the relevant stack
 4. Click on the "phpfiles" services
@@ -22,7 +22,7 @@ Also note that output copied from the browser shell will include extra newlines 
 
 If you don't have the corresponding stack metadata (in the deployments/ directory), get it from the build server where the metadata about the deployments is stored:
     
-    scp -r dokku@build.neamlabs.com:/home/dokku/adoveo-project/adoveo-web/deployments/* deployments/
+    scp -r _PROJECT_@build.neamlabs.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/deployments/* deployments/
 
 Then, run:
 
@@ -38,7 +38,7 @@ For instance:
     
 In the output from the diagnose.sh script you will have a command similar to:
 
-    tutum exec <container-id> /bin/bash # (phpfiles-1)
+    docker-cloud exec <container-id> /bin/bash # (phpfiles-1)
 
 Run it in order to open a shell in the deployed phpfiles container. Cd into the app directory:
 

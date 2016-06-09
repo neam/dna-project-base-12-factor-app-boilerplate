@@ -46,14 +46,14 @@ SET
             file_instance
         WHERE
             file_instance.file_id = parent_query_file_table.id
-                AND storage_component_ref = \'local\'),
+                AND storage_component_ref = \'local\' ORDER BY id DESC LIMIT 1),
     filestack_file_instance_id = (SELECT
             id
         FROM
             file_instance
         WHERE
             file_instance.file_id = parent_query_file_table.id
-                AND storage_component_ref IN (\'filepicker\' , \'filestack\'))
+                AND storage_component_ref IN (\'filepicker\' , \'filestack\') ORDER BY id DESC LIMIT 1)
 WHERE
     1;',
 );

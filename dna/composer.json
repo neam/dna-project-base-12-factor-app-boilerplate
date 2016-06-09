@@ -82,6 +82,8 @@
         "lichtner/fluentpdo": "dev-error-handler@dev",
         "propel/propel": "dev-awaiting-pull-requests@dev",
         "monolog/monolog": ">=1.17.1",
+        "contextio/php-contextio": "dev-master",
+        "guzzlehttp/guzzle": "~5.0",
         "ircmaxell/random-lib": "v1.0.0",
         "phpnode/yiipassword": ">=1.0.3",
         "league/flysystem": "~1.0.15",

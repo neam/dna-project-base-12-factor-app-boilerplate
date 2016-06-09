@@ -9,12 +9,10 @@ if (defined('HHVM_VERSION') && isset($_SERVER['NGINX_SCRIPT_NAME'])) {
     $_SERVER['PHP_SELF'] = $_SERVER['NGINX_SCRIPT_NAME'];
 }
 
-// dna composer autoloader required for all requests nowadays
-
+// Dna composer autoloader required for all requests nowadays
 require_once("$root/dna/vendor/autoload.php");
 
-// make app config available as PHP constants
-
+// Make app config available as PHP constants
 require("$root/vendor/neam/php-app-config/include.php");
 
 // General error reporting level

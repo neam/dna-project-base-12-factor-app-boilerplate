@@ -26,11 +26,12 @@ class FilestackIntegrationLogicTest extends \Codeception\TestCase\Test
             ['https://www.filepicker.io/api/file/in8hKtocK0tHwM03XhS4/convert?crop=0,131,640,202', 'in8hKtocK0tHwM03XhS4'],
             ['https://www.filestackapi.com/api/file/rROOlm9qABMWvbaZrfu5', 'rROOlm9qABMWvbaZrfu5'],
             ['https://www.filestackapi.com/api/file/in8hKtocK0tHwM03XhS4/convert?crop=0,131,640,202', 'in8hKtocK0tHwM03XhS4'],
+            ['https://cdn.filestackcontent.com/VgvFVdvvTkml0WXPIoGn', 'VgvFVdvvTkml0WXPIoGn'],
         ];
     }
 
     /**
-     * @group data:clean-db,coverage:full
+     * @group coverage:full
      * @dataProvider filestackUrlHandleProvider
      */
     public function testExtractHandleFromFilestackUrl($filestackUrl, $expectedHandle)

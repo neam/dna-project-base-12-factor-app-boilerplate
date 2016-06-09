@@ -16,7 +16,7 @@ export PUBLIC_FILES_S3_HOST="static._PROJECT_.com"
 export WEB_CONFIG_ENVIRONMENT=production
 export BRAND_HOME_URL=www._PROJECT_.com
 
-# Use the development tutum deployment for all deployments except for demo, release and master deployments
+# Use the development docker-cloud deployment for all deployments except for demo, release and master deployments
 if [ "$GRANULARITY" == "project-branch-commit-specific" ] || ([[ "$DRONE_BRANCH" != release* ]] && [[ "$DRONE_BRANCH" != hotfix* ]] && [[ "$DRONE_BRANCH" != live* ]] && [ "$DRONE_BRANCH" != "master" ]); then
     export DEPLOY_STABILITY_TAG=dev
     export TOPLEVEL_DOMAIN=_PROJECT_dev.com
@@ -42,8 +42,6 @@ else
 fi
 
 # Docker images are managed by these user accounts
-export TUTUM_USER=_PROJECT_
-export DOCKER_REGISTRY_USER=_PROJECT_
 export REPO=_PROJECT_-web-src
 
 # Use the development ga tracking id for all deployments except production deployments
@@ -150,7 +148,10 @@ cd $DRONE_BUILD_DIR/_PROJECT_-product
     else
         APPNAME=${WEB_BRANCH}
     fi
-    APPNAME=${APPNAME}-product-$DATA
+    APPNAME=${APPNAME}-product
+    if [ ! "$DATA" == "%DATA%" ]; then
+      APPNAME=${APPNAME}-$DATA
+    fi
     export APPNAME=$(vhostappname "$APPNAME")
     #echo APPNAME=$APPNAME
 

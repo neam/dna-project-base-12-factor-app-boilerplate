@@ -75,15 +75,15 @@ Make sure you have at least the following versions:
 
     docker -v
 
-    Docker version 1.8.2, build 0a8c2e3
+    Docker version 1.10.3, build 20f81dd
 
     docker-machine -v
 
-    docker-machine version 0.4.1 (e2c88d6)
+    docker-machine version 0.6.0, build e27fb87
 
-    tutum -v
+    docker-cloud -v
 
-    tutum 0.16.21
+    docker-cloud 1.0.4
 
 For debugging, you can echo all available linked environment variables related to running containers:
 

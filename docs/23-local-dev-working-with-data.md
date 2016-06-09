@@ -85,26 +85,61 @@ The following first creates a backup, syncs it to S3 then resets the database an
 
 ## To create a new DATA profile based on the current data profile
 
-Create a new data profile using the helper script, then upload the current current user-generated data to S3, commit the references and profile-related files in dna (anything with <profileref> in it's path) and push.
+Create a new data profile locally using the helper script, then upload the current current user-generated data to S3, commit the references and profile-related files in dna (anything with <profileref> in it's path) and push.
 
-    export DATA=clean-db
-    bin/new-data-profile.sh <profileref>
+    export DATA=newprofile
+    bin/new-data-profile.sh $DATA
     # run the three commands output by the above command
+    bin/ensure-db.sh
+    bin/reset-db.sh
+    bin/upload-current-user-data.sh
     # add the new data profile to .env.dist's listing of LOCAL_OFFLINE_DATA and HOSTED_DATA_PROFILES
-    # commit and push
+    # commit the new files and push
 
 ## Adding a new DATA profile to a deployed stack
+
+This is done to make a new data profile available in an already deployed stack, which was deployed before the data profile was created and committed locally.
 
 Run the following worker commands in the deployed stack:
 
     export DATABASE_ROOT_USER="changeme"
     export DATABASE_ROOT_PASSWORD="changeme"
     export DATA=newprofile
-    bin/create-new-data-profile.sh $DATA
+    bin/new-data-profile.sh $DATA
     bin/ensure-db.sh
-    bin/migrate.sh
     bin/reset-db.sh
     bin/upload-current-user-data.sh
+
+Don't forget follow the instructions under "To create a new DATA profile based on the current data profile" above in order to keep track of the data profile in git. 
+
+Also, you'll need to add the data profile to the auth0-users that should have access to it, both in the endpoints and permissions sections:
+
+```
+    {
+      "slug": "newprofile@local",
+      "DATA": "newprofile"
+    },
+    {
+      "slug": "newprofile@api._PROJECT_.com",
+      "API_BASE_URL": "//api._PROJECT_.com/api",
+      "API_VERSION": "v0",
+      "DATA": "newprofile"
+    },
+```
+
+```
+{
+  "r0": {
+    "permissions": {
+      ... (the other data profiles) ...
+      "newprofile": {
+        "superuser": 1,
+        "groups": []
+      }
+    }
+  }
+}
+```
 
 Note: If the DATA profile should be associated with a subdomain different from the actual data profile, you need to add the new virtual host and associated data profile to the virtual host data profile mapping environment variable `VIRTUAL_HOST_DATA_MAP`. For instance, add `customsubdomain.adoveo.com|foodataprofile`
 
@@ -132,15 +167,15 @@ One use of data profiles is the ability to keep a single set of "live" database 
 
 The "example" data profile is used here. Adapt to the data profile you are interested in copying. 
 
-1. Make changes in live campaign manager / backend
+1. Make changes in live angular frontend
 
-2. Log into the "live" phpfiles container (can be done by logging in to Tutum, navigation to the relevant stack, then to the "phpfiles" service, then click the `>_` button on the phpfiles-container's row) and upload the current data:
+2. Log into the "live" phpfiles container (can be done by logging in to Docker Cloud, navigation to the relevant stack, then to the "phpfiles" service, then click the `>_` button on the phpfiles-container's row) and upload the current data:
 
     bash
-    export DATA=example;cd dna;vendor/bin/propel config:convert;cd ..
+    export DATA=example;
     bin/upload-current-user-data.sh
 
-3. If using the Tutum browser-based shell, select the three echo scripts at the bottom, right-click, choose "Copy", paste them into a plain-text editor and remove the extra new-lines, then copy the fixed echo scripts once again before pasting them locally.
+3. If using the Docker Cloud browser-based shell, select the three echo scripts at the bottom, right-click, choose "Copy", paste them into a plain-text editor and remove the extra new-lines, then copy the fixed echo scripts once again before pasting them locally.
 
 Tip: The latest new data ref commands can also be checked in the log:
 
@@ -150,7 +185,6 @@ Tip: The latest new data ref commands can also be checked in the log:
 
 Example (do not copy paste this example, instead, use the echo scripts copied above):
 
-    # Commands that have been run locally in order to set the refs to point to this user data (revert these changes if your data set is not meant to be the base of future production deployments)          
     echo 'DATA-example/ENV-deployments/release_16.03.1-%DATA%/2016-03-15_154857/schema.sql.gz' > dna/db/migration-base/example/schema.filepath                      
     echo 'DATA-example/ENV-deployments/release_16.03.1-%DATA%/2016-03-15_154857/data.sql.gz' > dna/db/migration-base/example/data.filepath                          
     echo 'DATA-example/ENV-deployments/release_16.03.1-%DATA%/2016-03-15_154857/media/' > dna/db/migration-base/example/media.folderpath                            

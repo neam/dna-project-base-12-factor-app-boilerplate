@@ -17,7 +17,7 @@ The workflow:
 6. Generate item types helper class and model files
 
 ### Get an up to date `dna/content-model-metadata.json` from dna-project-control-panel locally.
- 
+
     cd ~/Dev/Projects/code-generation-alchemists/project/dna-project-control-panel
     docker-stack local run -e DATA=_PROJECT_ phpfiles tools/code-generator/yii dna-content-model-metadata-json --configId=_ID_,7 | jq '.' > ~/Dev/Projects/_PROJECT_-project/_PROJECT_-product/dna/content-model-metadata.json
 
@@ -26,6 +26,12 @@ The workflow:
     cd ~/Dev/Projects/_PROJECT_-project/_PROJECT_-product/
     docker-compose run -e DATA=clean-db phpfiles bin/reset-db.sh
     docker-compose run -e DATA=clean-db phpfiles bin/generate-content-model-metadata.sh
+
+## Generate migration that syncs schema.xml with the current clean-db database
+
+    docker-compose run -e DATA=clean-db phpfiles bin/generate-dna-propel-migrations.sh
+
+Remember to re-generate item types helper class and model files after generating this migration.
 
 ## Generating RESTful API
 
@@ -38,30 +44,7 @@ Now use git (SourceTree recommended) to stage the relevant generated changes and
 
 ## Generating UI
 
-### Generating workflow ui controllers and views
-
-Operates on item types marked as "generate_yii_workflow_ui_crud".
-
-Requires up to date content model metadata helper class and model traits.
-
-Updating the pristine generated files:
-
-    docker-compose run -e DATA=clean-db phpfiles bin/generate-yii-workflow-ui-crud.sh
-
-Move generated yii controllers to cms:
-
-    mv tools/code-generator/modules/ywuicrud/controllers/* ui/yii-dna-cms/app/controllers/
-
-Move generated yii views to cms:
-
-    cp -r tools/code-generator/modules/ywuicrud/views/* ui/yii-dna-cms/app/views/
-    rm -r tools/code-generator/modules/ywuicrud/views/*
-
-Now use git (SourceTree recommended) to stage the relevant generated changes and discard the changes that overwrote customly crafted parts that is not generated.
-
-Updating code-generation logic is done by adding/tweaking/enhancing providers and configure what providers is used where by modifying `ui/yii-dna-cms/app/config/code-generation/provider-bootstrap.php`.
-
-#### Generating angularjs ui
+#### Generating Angular Frontend UI CRUD
 
 Operates on item types marked as "generate_yii_workflow_ui_crud".
 

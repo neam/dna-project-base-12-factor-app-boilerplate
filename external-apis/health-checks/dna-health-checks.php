@@ -8,3 +8,6 @@ require("$root/bootstrap.php");
 
 echo "COMMITSHA: " . COMMITSHA . "\n ";
 echo "DATA: " . DATA . "\n ";
+echo "host: " . gethostname() . "\n ";
+echo "date: " . date("Y-m-d H:i:s") . "\n ";
+echo "gmdate: " . gmdate("Y-m-d H:i:s") . "\n ";

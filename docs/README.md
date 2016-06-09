@@ -21,8 +21,8 @@ Build and deploy
 ------
 
 - [Overview](50-deploy-overview.md)
-- [Tutum](52-deploy-tutum.md)
-- [Tutum Misc](52-deploy-tutum.misc.md)
+- [Docker Cloud](52-deploy-docker-cloud.md)
+- [Docker Cloud Misc](52-deploy-docker-cloud.misc.md)
 
 Manage
 ------

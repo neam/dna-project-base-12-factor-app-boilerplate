@@ -16,8 +16,7 @@ if [ "$DATA" == "" ]; then
 fi
 
 # make app config available as shell variables
-php vendor/neam/php-app-config/export.php | tee /tmp/php-app-config.sh
-source /tmp/php-app-config.sh
+source vendor/neam/php-app-config/shell-export.sh
 
 # ensure we have a root db user
 #if [ "$DATABASE_ROOT_USER" == "" ]; then
@@ -27,7 +26,7 @@ source /tmp/php-app-config.sh
 
 # create new db
 echo "* Creating the database $DATABASE_NAME"
-vendor/neam/yii-dna-deployment/util/setup-db.sh $DATABASE_HOST $DATABASE_PORT $DATABASE_NAME $DATABASE_USER $DATABASE_PASSWORD | mysql -u$DATABASE_ROOT_USER -p$DATABASE_ROOT_PASSWORD -h$DATABASE_HOST -P$DATABASE_PORT
+echo "SELECT 1" | mysql -u$DATABASE_USER -p$DATABASE_PASSWORD -h$DATABASE_HOST -P$DATABASE_PORT && echo "Database already exists" || vendor/neam/yii-dna-deployment/util/setup-db.sh $DATABASE_HOST $DATABASE_PORT $DATABASE_NAME $DATABASE_USER $DATABASE_PASSWORD | mysql -u$DATABASE_ROOT_USER -p$DATABASE_ROOT_PASSWORD -h$DATABASE_HOST -P$DATABASE_PORT
 echo "* Done!"
 echo "* To verify that the database exists and access is granted, run the following and ensure no error message is returned:"
 echo ""

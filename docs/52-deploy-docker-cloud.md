@@ -1,21 +1,21 @@
-Deploy to Tutum
+Deploy to Docker Cloud
 ===============
 
-Zero downtime production deployment routine using Tutum.
+Zero downtime production deployment routine using Docker Cloud.
 
 ## Overview
 
 This document describes the following process:
 
-**1. Deploy on build server and Tutum**
+**1. Deploy on build server and Docker Cloud**
 
 * A. Manage [git flow](http://nvie.com/posts/a-successful-git-branching-model/) release routines in your 12-factor-app git repository
 * B. Check out source code and install deps in build environment
 * C. Start up a docker stack and local database to verify that the source code and deps are yielding a working application
 * D. Create docker images with this source code, which is verified to work, tagging it with the current git commit sha
-* E. Push these docker images to our private tutum docker registry
-* F. Generate stack files for tutum deployment that includes the relevant deployment config 
-* G. Deploy the stack on tutum, next to any existing stack that is used in production
+* E. Push these docker images to our private docker registry
+* F. Generate stack files for docker-cloud deployment that includes the relevant deployment config 
+* G. Deploy the stack on docker-cloud, next to any existing stack that is used in production
 
 **2. Decide what data profiles should use which stacks**
 
@@ -28,11 +28,11 @@ This document describes the following process:
 
 Information on how to set-up your project for this deployment routine is available in `vendor/neam/yii-dna-deployment/README.md`
 
-To prepare a build environment (such as seting up a new build server), follow the instructions in `52-deploy-tutum.misc.md` under "Build server first time setup".
+To prepare a build environment (such as seting up a new build server), follow the instructions in `52-deploy-docker-cloud.misc.md` under "Build server first time setup".
 
 ## General deployment routine = For new platform releases
 
-### Step 1 - Deploy on build server and Tutum
+### Step 1 - Deploy on build server and Docker Cloud
 
 First, make sure that everything is tested, committed and pushed. 
 
@@ -74,7 +74,7 @@ Then checkout the relevant branch, for instance:
 
     git checkout develop
     # or
-    git checkout release/16.03.1
+    git checkout release/16.05.1
 
 Then, on the build server:
 
@@ -89,19 +89,18 @@ If they differ, make sure that all changes are pushed and that the branches are 
 
 #### Start up a docker stack and local database to verify that the source code and deps are yielding a working application
 
-Then, on the build server, run:
+Then, on the build server, run: (don't worry is you get an error message like "fatal: Cannot force update the current branch", it is not a problem in the build process)
 
-    vendor/bin/docker-stack build-directory-sync # (don't worry about "fatal: Cannot force update the current branch", it is expected)
+    vendor/bin/docker-stack build-directory-sync
     cd ../$(basename $(pwd))-build/
 
 Set up a temporary deployment on the build server - Part 1:
 
-    docker ps -q | xargs docker kill # <-- use this to make sure no other container is using port 80
-    stack/start.sh
+    stack/recreate.sh
 
 Then, on the build server, run:
 
-    docker-compose run -e PREFER=dist builder stack/src/install-deps.sh
+    docker-compose run --rm -e PREFER=dist builder stack/src/install-personal-unit-deps.sh
 
 Set up a temporary deployment on the build server - Part 2:
 
@@ -129,25 +128,31 @@ The health checks are available on:
 
     vendor/bin/docker-stack local url router 80 $DATA._PROJECT_.build._PROJECT_.com /status/dna-health-checks.php
 
+To check that angular frontend will work as expected, log in locally and use the "$DATA@build._PROJECT_.com" (ie "example@build._PROJECT_.com") data environment and try out angular frontend features against this api endpoint. (Requires that the relevant //build._PROJECT_.com data environments and access are to relevant Auth0-users settings)
+
 #### Create docker images with this source code, which is verified to work, tagging it with the current git commit sha
 
-When you have verified that everything works, build and push the source code to tutum:
+When you have verified that everything works, build and push the source code to docker-cloud:
     
     vendor/neam/yii-dna-deployment/deploy/build.sh
+    
+In order to use the pushed images as base image for future builds, make sure to copy the resulting previously-pushed-tag specifications to the versioned directory and commit them.
 
-#### Generate stack files for tutum deployment that includes the relevant deployment config
+    cp .stack.*.previously-pushed-tag ../_PROJECT_-product/
+
+#### Generate stack files for docker-cloud deployment that includes the relevant deployment config
 
 Then, locally (the other terminal window):
 
     deploy/generate-config.sh
     
-#### Deploy the stack on tutum, next to any existing stack that is used in production
+#### Deploy the stack on docker-cloud, next to any existing stack that is used in production
 
-Follow the instructions printed by the above command. When it is time to follow "Then, run one of the following to deploy", run the first group of commands (tutum stack create and start). 
+Follow the instructions printed by the above command under "To deploy to docker-cloud". 
 
 This will start a second, parallel, stack if one was already there before. 
 
-Wait for the new stack to be fully running.
+Wait for the new stack to be fully running (this is seen in the Docker Cloud web interface in the Stacks section)
 
 ### Step 2 - Decide what data profiles should use which stacks
 
@@ -157,7 +162,7 @@ TODO: Clarify difference between wildcard-deployments and locked-down deployment
 
 #### Locking previous data profiles to previously running stacks
 
-Example: `dataprofilefoo` was previously using the "latest stack" (wildcard) but is not expected to release new campaigns short term and should be locked to a previously stable stack. 
+Example: `dataprofilefoo` was previously using the "latest stack" (wildcard) but is not expected to use new product features in the short term and should be locked to a previously stable stack. 
 
 This way it can be kept online without having to be tested to be compatible for all new platform upgrades.
  
@@ -207,7 +212,7 @@ Run the following to echo the commands to run in the production stack:
 
     # Reset db and run migrations
     for DATA in $DATA_PROFILES; do
-      echo "export DATA=$DATA;cd dna;vendor/bin/propel config:convert;cd .."
+      echo "export DATA=$DATA;"
       echo "bin/safe-migration-via-upload-user-data-and-reset-db.sh"
       echo "bin/upload-current-files-to-cdn.sh"
     done
@@ -277,7 +282,7 @@ When you have made sure that all data profile references are up to date (the dat
 
     # Reset db and run migrations
     for DATA in $DATA_PROFILES; do
-      echo "export DATA=$DATA;cd dna;vendor/bin/propel config:convert;cd .."
+      echo "export DATA=$DATA;"
       echo "bin/ensure-and-reset-db-force-s3-sync.sh"
     done
     
@@ -285,18 +290,19 @@ Run the commands output above, one by one, and ensure migrations etc are applied
 
 ### Step 4 - Use the newly deployed stack for production URLs (Zero-downtime blue/green deployment, switching out the old stack for the new)
 
-When the new stack is verified to work as expected, you should link the new stack's web* service to the public router service in tutum (and remove any previous linked web*-service for that deployment) so that it is receiving traffic to it's public domain name:
+When the new stack is verified to work as expected, you should link the new stack's web* service to the public router service in docker-cloud (and remove any previous linked web*-service for that deployment) so that it is receiving traffic to it's public domain name:
 
-1. Open up [http://public._PROJECT__.com:1936]() and inspect the current HAProxy router state.
-2. Log in to Tutum, go to:
+1. Open up [http://public._PROJECT__.com:1936]() (credentials - see below) and inspect the current HAProxy router state.
+2. Log in to Docker Cloud, go to:
     - Stack router-prod
     - Service routerprod
     - Click "Edit"
     - Click "Next: environment variables"
-    - Remove previous wildcard stack web service
-    - Link new previous wildcard stack web service
+    - (Here: Check the STATS_AUTH credentials for user/pass to public._PROJECT_.com:1936)
+    - Remove previous wildcard stack web service (unless it is locked down to a data profile)
+    - Link new wildcard stack web service
     - Click "Save"
-Note: No tutum service re-deploy is necessary when changing only a service's links.
+Note: No docker-cloud service re-deploy is necessary when changing only a service's links.
 3. Verify that the new stack is loaded in the HAProxy router by checking [http://public._PROJECT__.com:1936]() again.
 
 If cache busting is not thoroughly implemented, you need to login to Cloudflare, visit the domain name(s) of the updated stacks, choose Cache, and then Purge everything. Also, don't forget to tell every returning visitor to clear their cache... And please enable cache busting everywhere in the project :)

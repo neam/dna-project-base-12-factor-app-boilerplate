@@ -56,6 +56,9 @@ trait FileTrait
      */
     static public function downloadRemoteFileToStream($url, $targetFileHandle)
     {
+        if (empty($url)) {
+            throw new Exception("Invalid url argument ('$url') to downloadRemoteFileToStream()");
+        }
         $BUFSIZ = 4095;
         $rfile = fopen($url, 'r');
         if (!$rfile) {
@@ -171,7 +174,9 @@ trait FileTrait
 
         // Dummy check
         if (!$this->checkIfLocalFileIsInCorrectPath()) {
-            throw new Exception("ensureLocalFileInCorrectPath() failure - local file is still not in correct path");
+            throw new Exception(
+                "ensureLocalFileInCorrectPath() failure - local file instance's file is not in correct path"
+            );
         }
 
         // Save the correct path in file.path
@@ -224,17 +229,15 @@ trait FileTrait
 
         /** @var \propel\models\File $this */
         $localFileInstance = $this->localFileInstance();
-        if (!empty($localFileInstance)) {
-            return $localFileInstance;
-        }
-
-        $remoteFileInstance = $this->remoteFileInstance();
-        if (empty($remoteFileInstance)) {
-            throw new Exception("No file instance available to get a binary copy of the file from");
-        }
 
         // Download the file
         if (!$this->checkIfLocalFileIsInCorrectPath()) {
+
+            $remoteFileInstance = $this->remoteFileInstance();
+            if (empty($remoteFileInstance)) {
+                throw new Exception("No file instance available to get a binary copy of the file from");
+            }
+
             $publicUrl = $this->fileInstanceAbsoluteUrl($remoteFileInstance);
             $tmpStream = tmpfile();
             $this->downloadRemoteFileToStream($publicUrl, $tmpStream);
@@ -243,12 +246,16 @@ trait FileTrait
         }
 
         // Create a local file instance since none exists
-        $correctPath = $this->getCorrectPath();
-        $localFileInstance = new \propel\models\FileInstance();
-        $localFileInstance->setUri($correctPath);
-        $localFileInstance->setStorageComponentRef('local');
-        $localFileInstance->setFileRelatedByFileId($this);
-        $localFileInstance->save();
+        if (empty($localFileInstance)) {
+            $correctPath = $this->getCorrectPath();
+            $localFileInstance = new \propel\models\FileInstance();
+            $localFileInstance->setUri($correctPath);
+            $localFileInstance->setStorageComponentRef('local');
+            $localFileInstance->setFileRelatedByFileId($this); // <-- TODO: Remove this column
+            $localFileInstance->save();
+            $this->setFileInstanceRelatedByLocalFileInstanceId($localFileInstance);
+            $this->save();
+        }
 
         return $localFileInstance;
 
@@ -261,7 +268,8 @@ trait FileTrait
     public function localFileInstance()
     {
         /** @var \propel\models\File $this */
-        return $this->getFileInstanceRelatedByLocalFileInstanceId() || null;
+        return $this->getFileInstanceRelatedByLocalFileInstanceId(
+        ) ? $this->getFileInstanceRelatedByLocalFileInstanceId() : null;
     }
 
     /**
@@ -271,7 +279,8 @@ trait FileTrait
     public function remoteFileInstance()
     {
         /** @var \propel\models\File $this */
-        return $this->getFileInstanceRelatedByFilestackFileInstanceId() || null;
+        return $this->getFileInstanceRelatedByFilestackFileInstanceId(
+        ) ? $this->getFileInstanceRelatedByFilestackFileInstanceId() : null;
     }
 
     /**
@@ -346,11 +355,10 @@ trait FileTrait
     protected function absoluteUrl_propel(\propel\models\File $file)
     {
         if ($fileInstance = $file->getFileInstanceRelatedByLocalFileInstanceId()) {
-            // Local files are assumed published to a CDN
-            return CDN_PATH . 'media/' . $file->getPath();
+            return $file->fileInstanceAbsoluteUrl($fileInstance);
         }
         if ($fileInstance = $file->getFileInstanceRelatedByFilestackFileInstanceId()) {
-            return static::filestackCdnUrl(static::signFilestackUrl($fileInstance->getUri()));
+            return $file->fileInstanceAbsoluteUrl($fileInstance);
         }
         return null;
     }
@@ -363,7 +371,33 @@ trait FileTrait
     public function pendingFileInstance()
     {
         /** @var \propel\models\File $this */
-        return $this->getFileInstanceRelatedByFilestackPendingFileInstanceId() || null;
+        return $this->getFileInstanceRelatedByFilestackPendingFileInstanceId() ? $this->getFileInstanceRelatedByFilestackPendingFileInstanceId() : null;
     }
+
+    /**
+     * @propel
+     * @param \propel\models\FileInstance $fileInstance
+     * @return mixed|string
+     * @throws Exception
+     */
+    protected function fileInstanceAbsoluteUrl(\propel\models\FileInstance $fileInstance)
+    {
+
+        $storageComponentRef = $fileInstance->getStorageComponentRef();
+        /** @var \propel\models\File $this */
+        switch ($storageComponentRef) {
+            case 'local':
+                // Local files are assumed published to a CDN
+                return CDN_PATH . 'media/' . $this->getPath();
+            case 'filepicker':
+            case 'filestack':
+                return static::filestackCdnUrl(static::signFilestackUrl($fileInstance->getUri()));
+        }
+        throw new Exception(
+            "fileInstanceAbsoluteUrl() encountered an unsupported storage component ref ('$storageComponentRef')"
+        );
+
+    }
+
 
 }

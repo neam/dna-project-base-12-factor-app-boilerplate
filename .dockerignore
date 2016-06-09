@@ -2,13 +2,13 @@
 
 # Git metadata
 .git
+**/.git
 
 # Runtime files
-*/*/*/runtime/*
-*/*/runtime/*
+**/runtime/*
 
 # Tmp files
-/tmp/
+tmp/*
 
 # User data
 .files
@@ -23,16 +23,23 @@ dna/db/migration-base/*/media
 !dna/db/migration-base/clean-db/media
 
 # Sensitive information
-/deploy/config/secrets.php
+deploy/config/*secrets.php
 .env
 .*.env
-/deployments
+deployments*
+**/*secrets.php
 
 # Components not deployed via Docker
-/ui/angular-frontend/
-/ui/angular-frontend-dna/
+ui/angular-frontend/
+ui/angular-frontend-dna/
+
+# Components not necessary to deploy
+**/vendor/yiisoft/yii/docs
+**/vendor/yiisoft/yii/demos
+**/vendor/yiisoft/yii/tests
 
 # Local components
+**/.sass-cache
 .idea
-/tools/code-generator/
-/stack/localdb/
+tools/code-generator/
+stack/localdb/.db/

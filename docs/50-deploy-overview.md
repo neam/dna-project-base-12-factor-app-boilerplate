@@ -1,7 +1,7 @@
 Deploy: Overview
 ====================
 
-The project is designed to be deployed to a docker container platform (Tutum) with access to a cloud database service.
+The project is designed to be deployed to a docker container platform (Docker Cloud) with access to a cloud database service.
 
 Before you start, make sure that you have created a local deploy configuration file for sensitive configuration directives:
 
@@ -11,5 +11,5 @@ Before you start, make sure that you have created a local deploy configuration f
 
 # Supported deployment targets
 
- - [Tutum](52-deploy-tutum.md)
+ - [Docker Cloud](52-deploy-docker-cloud.md)
 

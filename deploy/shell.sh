@@ -8,6 +8,6 @@ script_path=`dirname $0`
 cd $script_path/..
 
 # run actual command
-vendor/neam/yii-dna-deployment/util/tutum-shell.sh $@
+vendor/neam/yii-dna-deployment/util/docker-cloud-shell.sh $@
 
 exit 0

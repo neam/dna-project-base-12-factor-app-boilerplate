@@ -6,10 +6,10 @@ use Exception;
 
 // Non-versioned secrets that are only required in the deploy prepare step
 
-$_ENV["TUTUM_USER"] = "";
-$_ENV["TUTUM_EMAIL"] = "";
-$_ENV["TUTUM_PASSWORD"] = "";
-$_ENV["TUTUM_APIKEY"] = "";
+$_ENV["DOCKERCLOUD_USER"] = "";
+$_ENV["DOCKERCLOUD_EMAIL"] = "";
+$_ENV["DOCKERCLOUD_PASSWORD"] = "";
+$_ENV["DOCKERCLOUD_APIKEY"] = "";
 
 // Non-versioned secrets that depend on production stability level
 

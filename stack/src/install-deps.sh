@@ -6,30 +6,15 @@ set -x
 # fail on any error
 set -o errexit
 
-if [ "$PREFER" == "" ]; then
-  PREFER=source
+export PREFER=$PREFER
+
+if [ -d /root/.docker-host-ssh ]; then
+  echo '* Working around permission errors locally by copying .ssh config temporarily instead of using host-volume-mounted ditos'
+  cp -r /root/.docker-host-ssh /root/.ssh
 fi
 
-cd ui/angular-frontend
-npm install
-cd -
-
-composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
-
-cd dna/
-composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
-cd -
-
-cd external-apis/rest-api
-composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
-cd -
-
-cd external-apis/rest-api-dna
-composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
-cd -
-
-cd tools/code-generator
-composer install --prefer-$PREFER --optimize-autoloader --ignore-platform-reqs
-cd -
+script_path=`dirname $0`
+$script_path/install-core-deps.sh
+$script_path/install-local-deps.sh
 
 exit 0

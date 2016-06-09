@@ -2,6 +2,7 @@
 
 namespace generators\propel\Reverse;
 
+use Propel\Generator\Behavior\NestedSet\NestedSetBehavior;
 use Propel\Generator\Model\Behavior;
 use Propel\Generator\Model\Column;
 use Propel\Generator\Model\Database;
@@ -89,6 +90,21 @@ class DnaProjectBaseMysqlSchemaContentModelMetadataDecorator extends \Propel\Gen
             if ($itemType->is_versioned) {
                 $behavior = new VersionableBehavior();
                 $behavior->setName("versionable");
+                $table->addBehavior($behavior);
+            }
+
+            // TODO: Add nested set on a is_...-attribute instead
+            if ($table->hasColumn('lft')) {
+                $behavior = new NestedSetBehavior();
+                $behavior->setName("nested_set");
+                $left_column = 'lft';
+                $right_column = 'rgt';
+                $level_column = 'level';
+                $use_scope = 'true';
+                $scope_column = 'root';
+                $behavior->setParameters(
+                    compact('left_column', 'right_column', 'level_column', 'use_scope', 'scope_column')
+                );
                 $table->addBehavior($behavior);
             }
 

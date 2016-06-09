@@ -3,8 +3,7 @@
 # The local mock version of the public haproxy router, responsible for serving the correct "web" service based on the VIRTUAL_HOST
 # locally we only have a single "web" service, nonetheless it is important to locally mimic the complete request chain
 router:
-  # version-locked via: docker pull tutum/haproxy && docker tag tutum/haproxy neam/tutum-haproxy:a1e506f && docker push neam/tutum-haproxy:a1e506f
-  image: neam/tutum-haproxy:a1e506f
+  image: tutum/haproxy:0.2.3.1
   links:
     - web
   ports:
@@ -28,7 +27,7 @@ web:
     - "80"
   environment:
     NGINX_ERROR_LOG_LEVEL: 'notice'
-    VIRTUAL_HOST: '*.192.168.99.100.xip.io, 192.168.99.100, *._PROJECT_.build.neamlabs.com, *.ngrok.io'
+    VIRTUAL_HOST: '*.192.168.99.100.xip.io, 192.168.99.100, *.build._PROJECT_.com, *.ngrok.io'
     # The haproxy router is configured to respond to port 80 without ssl, thus we need to make sure that proxying to the web service's port 443 is not attempted
     # A separate haproxy and corresponding web service needs to be set up to respond to port 443 with ssl if required
     EXCLUDE_PORTS: 443
@@ -110,7 +109,7 @@ localdb:
     - ./stack/localdb/.db/mysql:/var/lib/mysql:rw
     - ./stack/localdb/:/stack/localdb:rw
   ports:
-    - "3306"
+    - "13306:3306"
   environment:
     MYSQL_ROOT_PASSWORD: "local-mysql-pass"
   command: "/stack/localdb/run.sh"
@@ -138,23 +137,28 @@ builder:
     - .files:/files:rw
     - ../.git:/.git
     - ~/.composer:/root/.composer
-    - ~/.ssh:/root/.ssh:ro
+    - ~/.ssh:/root/.docker-host-ssh:ro
   working_dir: '/app'
   command: "true"
 
 # A container to run tester commands locally - start a shell by running stack/tester-shell.sh
 tester:
-  image: neam/php-app-tester:0.6.0
+  build: stack/php/image/tester/
+  #image: neam/php-app-tester:0.6.0
   links:
     - web
     - localdb
   volumes:
     - .:/app:rw
+    - .:/__PROJECT__:rw
     - .files:/files:rw
+    - ../.git:/.git
+    - ~/.composer:/root/.composer
+    - ~/.ssh:/root/.ssh:ro
   working_dir: '/app'
   env_file:
    - .current-local-cli-data-profile
-  command: "true"
+  command: "/bin/bash"
 
 # A container to run worker/administration commands locally - start a shell by running stack/shell.sh
 worker:
@@ -163,11 +167,15 @@ worker:
     - localdb
   volumes:
     - .:/app:rw
+    - .:/__PROJECT__:rw
     - .files:/files:rw
+    - ../.git:/.git
+    - ~/.composer:/root/.composer
+    - ~/.ssh:/root/.ssh:ro
   working_dir: '/app'
   env_file:
    - .current-local-cli-data-profile
-  command: "true"
+  command: "/bin/bash"
 
 # A container that is linked to and thus can output linked information about running containers locally
 info:

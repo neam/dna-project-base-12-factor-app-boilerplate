@@ -57,7 +57,7 @@ trait FilestackConvertibleFileTrait
         $convertMetadata = new \stdClass();
         $convertMetadata->convertConfig = $convertConfig;
         $convertMetadata->convertStatus = $convertStatus;
-        if ($convertStatus && $convertStatus->timestamp) {
+        if ($convertStatus && isset($convertStatus->timestamp)) {
             $dateTime = new \DateTime();
             $dateTime->setTimestamp($convertStatus->timestamp);
             $convertMetadata->formattedConvertStatusTimestamp = $dateTime->format("Y-m-d H:i:s");
@@ -69,24 +69,41 @@ trait FilestackConvertibleFileTrait
     /**
      * @param File $sourceFile
      * @param File $destinationFile
-     * @param $convertConfig
+     * @param $convertConfigJson
      * @throws FilestackMovieConversionAttemptException
      */
     static public function softAttemptFilestackMovieConversion(
         \propel\models\File $sourceFile = null,
         \propel\models\File $destinationFile = null,
-        $convertConfig = null
+        $convertConfigJson = null,
+        $filestackConversionResultAttributeToPromote = null
     ) {
 
-        try {
-            File::attemptFilestackMovieConversion($sourceFile, $destinationFile, $convertConfig);
-        } catch (FilestackMovieConversionAttemptException $e) {
+        $exception = null;
 
-            $convertStatus = new \stdClass();
-            $convertStatus->status = "attempt-exception";
-            $convertStatus->message = $e->getMessage();
-            $destinationFile->setFilestackPendingFileInstanceConvertMetadata($convertConfig, $convertStatus);
-            $destinationFile->save();
+        try {
+            $convertConfig = GuzzleHttp\Utils::jsonDecode($convertConfigJson);
+            File::attemptFilestackMovieConversion($sourceFile, $destinationFile, $convertConfig, $filestackConversionResultAttributeToPromote);
+        } catch (FilestackMovieConversionAttemptException $e) {
+            $exception = $e;
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+            $exception = $e;
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $exception = $e;
+        } catch (\InvalidArgumentException $e) {
+            $exception = $e;
+        }
+
+        if (!empty($exception)) {
+
+            // Save the exception-status in the destination file record (if exists)
+            if (!empty($destinationFile)) {
+                $convertStatus = new \stdClass();
+                $convertStatus->status = "exception";
+                $convertStatus->message = $exception->getMessage();
+                $destinationFile->setFilestackPendingFileInstanceConvertMetadata($convertConfig, $convertStatus);
+                $destinationFile->save();
+            }
 
         }
 
@@ -102,7 +119,8 @@ trait FilestackConvertibleFileTrait
     static public function attemptFilestackMovieConversion(
         \propel\models\File $sourceFile = null,
         \propel\models\File $destinationFile = null,
-        $convertConfig = null
+        $convertConfig = null,
+        $filestackConversionResultAttributeToPromote = null
     ) {
 
         // Check if conversion can be initiated
@@ -114,6 +132,9 @@ trait FilestackConvertibleFileTrait
         }
         if (empty($destinationFile)) {
             throw new FilestackMovieConversionAttemptException("Empty destination file");
+        }
+        if (empty($filestackConversionResultAttributeToPromote)) {
+            throw new FilestackMovieConversionAttemptException("Empty conversion result attribute to promote");
         }
         if (!$fileInstance = $sourceFile->getFileInstanceRelatedByFilestackFileInstanceId()) {
             throw new FilestackMovieConversionAttemptException("No file stack file instance");
@@ -129,7 +150,7 @@ trait FilestackConvertibleFileTrait
         if (!empty($pendingConvertMetadata)
             && !empty($pendingConvertMetadata->convertConfig)
             && (json_encode($pendingConvertMetadata->convertConfig) === json_encode($convertConfig))
-            && ($pendingConvertMetadata->convertStatus === 'promoted')
+            && ($pendingConvertMetadata->convertStatus->status === 'promoted')
         ) {
             // Do nothing
             return;
@@ -143,7 +164,7 @@ trait FilestackConvertibleFileTrait
         $destinationFile->setFilestackPendingFileInstanceConvertMetadata($convertConfig, $convertStatus);
         $destinationFile->save();
 
-        static::promoteCompletedFilestackConvertion($destinationFile);
+        static::promoteCompletedFilestackConvertion($destinationFile, $filestackConversionResultAttributeToPromote);
 
     }
 
@@ -172,9 +193,9 @@ trait FilestackConvertibleFileTrait
         // From Filestack support: The policy and signature are added to the request as part of the security task. So your request should be something like this: curl -X GET "https://process.filestackapi.com/AKw4FdqUITxOs472rjZhpz/video_convert=preset:h264.hi,extname:.mp4/security=policy:eyJoYW5kbGUiOiAiT2dJNDdGTHFRUzJwNTRPcmQ4c04iLCJjYWxsIjpbInBpY2siLCJyZWFkIiwic3RhdCIsIndyaXRlIiwid3JpdGVVcmwiLCJzdG9yZSIsImNvbnZlcnQiLCJyZW1vdmUiXSwiZXhwaXJ5IjoxNDUyODU5NjQ2fQ%3D%3D,signature:f7ec33869c239dbe24154f91b9b20c13f5c4a0990377d0aebfc40bd712325c69/OgI47FLqQS2p54Ord8sN"
         $filestackRequestUrl = 'https://process.filestackapi.com/' . FILESTACK_API_KEY . '/video_convert=' . $video_convert_param . '/security=' . $security_param . '/' . $handle;
 
-        // Perform request
+        // Perform request with a short timeout
         $client = new GuzzleHttp\Client();
-        $response = $client->get($filestackRequestUrl);
+        $response = $client->get($filestackRequestUrl, ['connect_timeout' => 2]);
         return GuzzleHttp\Utils::jsonDecode($response->getBody());
 
     }
@@ -206,7 +227,7 @@ trait FilestackConvertibleFileTrait
      * @param \propel\models\File $destinationFile
      * @throws Exception
      */
-    static public function promoteCompletedFilestackConvertion(\propel\models\File $destinationFile)
+    static public function promoteCompletedFilestackConvertion(\propel\models\File $destinationFile, $filestackConversionResultAttributeToPromote)
     {
 
         $pendingConvertMetadata = $destinationFile->getFilestackPendingFileInstanceConvertMetadata();
@@ -215,7 +236,7 @@ trait FilestackConvertibleFileTrait
             && $pendingConvertMetadata->convertStatus
             && ($pendingConvertMetadata->convertStatus->status === 'completed')
             && (!empty($pendingConvertMetadata->convertStatus->data))
-            && (!empty($pendingConvertMetadata->convertStatus->data->url))
+            && (!empty($pendingConvertMetadata->convertStatus->data->$filestackConversionResultAttributeToPromote))
         ) {
 
             // Mark pending file instance as promoted
@@ -226,7 +247,7 @@ trait FilestackConvertibleFileTrait
             );
 
             // Create and set the main filestack file instance based on the converted media's filestack url
-            $filestackUrl = $pendingConvertMetadata->convertStatus->data->url;
+            $filestackUrl = $pendingConvertMetadata->convertStatus->data->$filestackConversionResultAttributeToPromote;
             $fileInstance = File::createFileInstanceWithMetadataByFilestackUrl($filestackUrl);
             $destinationFile->setFileInstanceRelatedByFilestackFileInstanceId($fileInstance);
 

@@ -21,3 +21,14 @@ modules:
         MailCatcher:
             url: 'http://<%= ENV['MAILCATCHER_HOST'] %>'
             port: '<%= ENV['MAILCATCHER_SMTP_PORT'] %>'
+<% if ENV.has_key? "SAUCELABS" and ENV['SAUCELABS'].to_s == "1" %>
+extensions:
+    enabled:
+        - Codeception\Extension\SauceExtension
+    config:
+        Codeception\Extension\SauceExtension:
+            username: <%= ENV['SAUCE_USERNAME'] %>
+            accesskey: <%= ENV['SAUCE_ACCESS_KEY'] %>
+            build: <%= ENV['SAUCE_METADATA_BUILD'] %>
+            tags: <%= ENV['SAUCE_METADATA_TAGS'] %>
+<% end %>

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x;
+#set -x;
 
 script_path=`dirname $0`
 cd $script_path
@@ -8,28 +8,37 @@ cd $script_path
 # fail on any error
 set -o errexit
 
+source $TESTS_FRAMEWORK_BASEPATH/_set-codeception-group-args.sh
+
+time codecept run unit-db-agnostic $CODECEPTION_GROUP_ARGS --debug --fail-fast
+
+if [ ! "$1" == "--include-db-dependent" ]; then
+  echo "* Skipping db-dependent tests by default. Use --include-db-dependent to include them";
+  exit 0;
+fi
+
+if [[ "$DATA" != test_* ]]; then
+  echo "* Skipping db-dependent tests since the data profile is not prefixed with test_, meaning that there is a risk that tests run against live data";
+  exit 0;
+fi
+
+echo "* Running db-dependent tests for data profile $DATA";
+
 # reset-db or not
 RESET_DB=1
-if [ "$1" == "--skip-reset-db" ]; then
+if [ "$2" == "--skip-reset-db" ]; then
   RESET_DB=0
 fi
 
-# TODO: loop this through. every available yii-dna-api-revision should work with various schemas and various schemas should work with all unit tests
+if [ "$RESET_DB" == 1 ]; then
+time   $PROJECT_BASEPATH/bin/reset-db.sh;
+time   test_console mysqldump --dumpPath=dna/tests/codeception/_data/
+  sed -i -e 's/\/\*!50013 DEFINER=`[^`]*`@`[^`]*` SQL SECURITY DEFINER \*\///' $PROJECT_BASEPATH/dna/tests/codeception/_data/dump.sql
+fi
 
-source $TESTS_FRAMEWORK_BASEPATH/_set-codeception-group-args.sh
-# TODO: Restore support for test-databases, then re-enable usable of dbTest
-#connectionID=dbTest
-if [ "$RESET_DB" == 1 ]; then $PROJECT_BASEPATH/bin/reset-db.sh; fi
+time codecept run unit-db-dependent $CODECEPTION_GROUP_ARGS --debug --fail-fast
+#codecept run functional $CODECEPTION_GROUP_ARGS --debug --fail-fast
 
-test_console mysqldump --dumpPath=dna/tests/codeception/_data/
-codecept run unit $CODECEPTION_GROUP_ARGS --debug --fail-fast
-#codecept run functional -g data:$DATA --debug
+#if [ "$RESET_DB" == 1 ]; then $PROJECT_BASEPATH/bin/reset-db.sh; fi
 
-# TODO: Restore support for test-databases, then re-enable usable of dbTest
-#connectionID=dbTest
-if [ "$RESET_DB" == 1 ]; then $PROJECT_BASEPATH/bin/reset-db.sh; fi
-
-# TODO: loop this through. every available yii-dna-api-revision should work with various schemas and various schemas should work with every available yii-api
-# the yii-apis are tested first using unit tests and then tested through integration tests of the apps that actually use the apis:
-# - rest-api - all various rest contracts should work as well
-# - frontends - should work with the old schema and new
+echo "* Done running tests"
