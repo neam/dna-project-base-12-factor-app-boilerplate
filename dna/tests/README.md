@@ -27,9 +27,11 @@ We group all tests based on how much testing coverage is required, so that build
 
 ### Running tests locally
 
-The below commands should be run in a tester shell:
+The below commands should be run in a tester shell, choose any of the below:
 
-    stack/tester-shell.sh
+    stack/tester-shell.sh hhvm
+    stack/tester-shell.sh php5
+    stack/tester-shell.sh php7.0
 
 Ensure the existence of a clean test data profile corresponding to the current data profile:
 
@@ -48,21 +50,21 @@ To run all db-agnostic tests in sequence:
     # We use two levels of bash processes in order to cope for failures when sourcing the test preparation script
     bash
     source _before-test.sh
-    time ./_test.sh
+    time ./_test-db-agnostic.sh
 
 It will default to `COVERAGE=full`. To override, set the COVERAGE env var before running the script, for instance:
 
     bash
     export COVERAGE=basic
     source _before-test.sh
-    time ./_test.sh
+    time ./_test-db-agnostic.sh
 
-To also run the db-dependent tests (takes 2-3min currently to set-up and tear down the db contents):
+To run the db-dependent tests (takes 2-3min currently to set-up and tear down the db contents):
 
-    time ./_test.sh --include-db-dependent
+    time ./_test-db-dependent.sh
 
-It is also possible to run the tests without resetting the database between each run (`_test.sh` must however first have been run without the skip-flag so that the db is set up properly):
+It is also possible to run the tests without resetting the database between each run (`_test-db-dependent.sh` must however first have been run without the skip-flag so that the db is set up properly):
 
-    time ./_test.sh --include-db-dependent --skip-reset-db
+    time ./_test-db-dependent.sh --skip-reset-db
 
 Note that this is merely used in some cases during test development and is not expected to result in all tests passing.

@@ -27,9 +27,13 @@ A Redis service is included in the docker stack and configured as the PHP sessio
 Install docker-stack cli in your home directory and make it available in PATH when using bash: 
 
     git clone https://github.com/neam/docker-stack ~/.docker-stack
-    git clone file:///Users/motin/Dev/Projects/neam/dna-project-base/components/composer-packages/docker-stack ~/.docker-stack
     echo 'export PATH=$PATH:~/.docker-stack/cli' >> ~/.bash_profile
     source ~/.bash_profile
+
+If you already have docker-stack installed, you can update it by running:
+
+    cd ~/.docker-stack
+    git pull
 
 Enter your project directory (can be an empty directory in case you simply want to try out the stack):
 

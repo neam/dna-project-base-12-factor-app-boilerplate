@@ -13,6 +13,7 @@ class Suggestions
     const ANY = 'any';
 
     static public $statusLog = [];
+    static public $itemTypesAffectedByAlgorithms = [];
 
     static public function getAvailableAlgorithms()
     {
@@ -31,6 +32,30 @@ class Suggestions
         );
 
         // TODO: Filter
+        return $algorithms;
+
+    }
+
+    static public function preProcess($suggestions, $save)
+    {
+
+        if (!empty($suggestions) && !is_array($suggestions)) {
+            $suggestions = [$suggestions];
+        }
+
+        $postedAlgorithms = $suggestions;
+        $requiresRollbackSupport = !$save;
+        $algorithms = static::preparePostedAlgorithmData($postedAlgorithms, $requiresRollbackSupport);
+
+        static::$itemTypesAffectedByAlgorithms = Suggestions::getItemTypesAffectedByAlgorithms(
+            $algorithms,
+            Suggestions::ANY
+        );
+
+        if (empty(static::$itemTypesAffectedByAlgorithms)) {
+            throw new Exception("No item types affected by selected algorithms");
+        }
+
         return $algorithms;
 
     }
@@ -96,6 +121,8 @@ class Suggestions
     static public function getItemTypesAffectedByAlgorithms($algorithms, $byAction = null)
     {
 
+        $itemTypesAffectedByAlgorithm = [];
+
         foreach ($algorithms as $ref => $algorithm) {
 
             // config
@@ -125,8 +152,53 @@ class Suggestions
 
     }
 
-    static public function run($algorithms, \Propel\Runtime\Connection\ConnectionInterface &$pdo)
+    static public function run($suggestions, $save, $hookToRunInModifiedState = null)
     {
+
+        $algorithms = Suggestions::preProcess($suggestions, $save);
+        $pdo = Suggestions::getPdoForSuggestions();
+
+        try {
+
+            // Modify database within a db transaction
+            Suggestions::processWithinDbTransaction($algorithms, $pdo);
+
+            // Commit transaction if we are supposed to save the results of the operations
+            if ($save) {
+                $pdo->commit();
+            }
+
+            // Currently in modified state, run hook that is guaranteed to have access to the results of the operations
+            if (is_callable($hookToRunInModifiedState)) {
+                $hookToRunInModifiedState(static::$itemTypesAffectedByAlgorithms, $pdo);
+            }
+
+            // Rollback if we are not saving
+            if (!$save) {
+                Suggestions::rollbackTransactionAndReclaimAutoIncrement($algorithms, $pdo);
+            }
+
+        } catch (Exception $e) {
+            try {
+                Suggestions::rollbackTransactionAndReclaimAutoIncrement($algorithms, $pdo);
+                $te = new Exception("Suggestions->run() exception", null, $e);
+            } catch (PDOException $pdoe) {
+                $te = new Exception(
+                    "Suggestions->run() exception AND exception while attempting rollbackTransactionAndReclaimAutoIncrement [{$pdoe->getMessage()}]",
+                    null,
+                    $e
+                );
+            }
+            throw $e;
+        }
+
+    }
+
+    static public function processWithinDbTransaction($algorithms, \Propel\Runtime\Connection\ConnectionInterface &$pdo)
+    {
+
+        // Disable propel instance pooling while running algorithms
+        \Propel\Runtime\Propel::disableInstancePooling();
 
         $return = [];
 
@@ -148,7 +220,9 @@ class Suggestions
 
                 // perform suggested actions
                 foreach ($algorithms as $ref => $algorithm) {
+                    static::$statusLog[] = "Running algorithm $ref";
                     static::$ref($algorithm["data"]);
+                    static::$statusLog[] = "Done running algorithm $ref";
                 }
 
                 $done = true;
@@ -163,6 +237,7 @@ class Suggestions
                 ) {
 
                     // rollback transaction
+                    static::$statusLog[] = "Deadlock found when trying to get lock; restarting transaction";
                     static::rollbackTransactionAndReclaimAutoIncrement($algorithms, $pdo);
                     sleep(1);
                     $retry++;
@@ -230,6 +305,13 @@ class Suggestions
     static public function status($message)
     {
         static::$statusLog[] = $message;
+    }
+
+    static public function flushStatusLog()
+    {
+        $return = static::$statusLog;
+        static::$statusLog = [];
+        return $return;
     }
 
 }

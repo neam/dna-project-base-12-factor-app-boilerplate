@@ -37,10 +37,6 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/motin/Propel2.git"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/motin/nested-set-behavior.git"
         },
         {
@@ -61,7 +57,7 @@
         "crisu83/yii-rights": "Used for RWebUser in user component only"
     },
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.6.0",
         "phundament/jquery-file-upload": "@dev",
         "phundament/p3media": "dev-gcms as 0.17.3",
         "schmunk42/web-user-behavior": "0.1.*",
@@ -80,10 +76,11 @@
         "motin/yii-owner-behavior": "*@dev",
         "yiiext/nested-set-behavior": "dev-allow-save-and-delete-option@dev",
         "lichtner/fluentpdo": "dev-error-handler@dev",
-        "propel/propel": "dev-awaiting-pull-requests@dev",
+        "propel/propel": "dev-master@dev",
         "monolog/monolog": ">=1.17.1",
         "contextio/php-contextio": "dev-master",
         "guzzlehttp/guzzle": "~5.0",
+        "lstrojny/functional-php": "~1.2",
         "ircmaxell/random-lib": "v1.0.0",
         "phpnode/yiipassword": ">=1.0.3",
         "league/flysystem": "~1.0.15",
@@ -109,6 +106,7 @@
         "classmap": [
             "components/",
             "config/",
+            "exceptions/",
             "traits/",
             "models/metadata/traits"
         ],

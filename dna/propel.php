@@ -24,7 +24,13 @@ return [
                         ) ? ';port=' . DATABASE_PORT : '') . ';dbname=' . DATABASE_NAME,
                     'user' => DATABASE_USER,
                     'password' => DATABASE_PASSWORD,
-                    'attributes' => [],
+                    'attributes' => [
+                        'ATTR_EMULATE_PREPARES' => false,
+                        // Custom attributes not supported due to bug https://github.com/propelorm/Propel2/issues/1213
+                        //'ATTR_ERRMODE' => PDO::ERRMODE_EXCEPTION,
+                        //'MYSQL_ATTR_USE_BUFFERED_QUERY' => true,
+                        //'PROPEL_ATTR_CACHE_PREPARES' => true,
+                    ],
                     'settings' => [
                         'charset' => 'utf8mb4',
                         'queries' => [

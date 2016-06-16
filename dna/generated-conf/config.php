@@ -20,6 +20,7 @@ $manager->setConfiguration(array (
   'attributes' =>
   array (
     'ATTR_EMULATE_PREPARES' => false,
+    'ATTR_TIMEOUT' => 30,
   ),
   'settings' =>
   array (
@@ -28,6 +29,11 @@ $manager->setConfiguration(array (
     array (
       'utf8mb4' => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci, COLLATION_CONNECTION = utf8mb4_unicode_ci, COLLATION_DATABASE = utf8mb4_unicode_ci, COLLATION_SERVER = utf8mb4_unicode_ci',
     ),
+  ),
+  'model_paths' =>
+  array (
+    0 => 'src',
+    1 => 'vendor',
   ),
 ));
 $manager->setName('default');

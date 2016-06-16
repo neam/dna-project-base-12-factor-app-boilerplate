@@ -3,7 +3,7 @@
 #Ensure the existence of a test data profile for the current data profile:
 
     export PARENT_DATA=$DATA
-    export TEST_DATA=test_$DATA
+    export TEST_DATA=test-$DATA
     rm -r dna/db/migration-base/$TEST_DATA/ || true
     bin/new-data-profile.sh $TEST_DATA
     DATA=$TEST_DATA bin/ensure-db.sh

@@ -60,6 +60,7 @@ phpha:
     - .:/app:rw
   ports:
     - "9000"
+    - "9089" # Xdebug
   environment:
     TCP_PORTS: '9000'
     DISPLAY_PHP_ERRORS: 'on'
@@ -81,7 +82,7 @@ redisphpsessionhandler:
 # The single-node php service for interpreting php code with read-write access to user-generated files
 # (to support file uploads and other local file manipulations)
 phpfiles:
-  image: neam/dna-project-base-debian-php:0.6.0
+  image: neam/dna-project-base-debian-php:0.6.2
   links:
     - mailcatcher
     - redisphpsessionhandler
@@ -91,6 +92,7 @@ phpfiles:
     - .files:/files:rw
   ports:
     - "9000"
+    - "9089" # Xdebug
   environment:
     DISPLAY_PHP_ERRORS: 'on'
     XDEBUG_DEFAULT_ENABLE: 'off'
@@ -130,8 +132,7 @@ mailcatcher:
 
 # A container to run builder commands locally
 builder:
-  #build: vendor/neam/docker-stack/base-images/php-app-builder/
-  image: neam/php-app-builder:0.6.0
+  image: neam/php-app-builder:0.6.2
   volumes:
     - .:/app:rw # TODO: Make read-only when Yii is configured properly not to write to anywhere else than under /files
     - .files:/files:rw
@@ -139,12 +140,11 @@ builder:
     - ~/.composer:/root/.composer
     - ~/.ssh:/root/.docker-host-ssh:ro
   working_dir: '/app'
-  command: "true"
+  command: "/app/stack/php/shell.sh"
 
-# A container to run tester commands locally - start a shell by running stack/tester-shell.sh
-tester:
-  build: stack/php/image/tester/
-  #image: neam/php-app-tester:0.6.0
+# Containers to run tester commands locally - start a shell by running stack/tester-shell.sh <flavor>
+tester-hhvm:
+  image: neam/dna-project-base-debian-php-tester:0.6.2
   links:
     - web
     - localdb
@@ -155,14 +155,57 @@ tester:
     - ../.git:/.git
     - ~/.composer:/root/.composer
     - ~/.ssh:/root/.ssh:ro
+  environment:
+    RUNNING_LOCALLY: '1'
+    HHVM: '1'
   working_dir: '/app'
   env_file:
    - .current-local-cli-data-profile
-  command: "/bin/bash"
+  command: "/app/stack/php/shell.sh"
+
+tester-php5:
+  image: neam/dna-project-base-debian-php-tester:0.6.2
+  links:
+    - web
+    - localdb
+  volumes:
+    - .:/app:rw
+    - .:/__PROJECT__:rw
+    - .files:/files:rw
+    - ../.git:/.git
+    - ~/.composer:/root/.composer
+    - ~/.ssh:/root/.ssh:ro
+  environment:
+    RUNNING_LOCALLY: '1'
+    HHVM: '0'
+  working_dir: '/app'
+  env_file:
+   - .current-local-cli-data-profile
+  command: "/app/stack/php/shell.sh"
+
+tester-php7.0:
+  image: neam/dna-project-base-debian-php-tester:0.6.2-php7.0
+  links:
+    - web
+    - localdb
+  volumes:
+    - .:/app:rw
+    - .:/__PROJECT__:rw
+    - .files:/files:rw
+    - ../.git:/.git
+    - ~/.composer:/root/.composer
+    - ~/.ssh:/root/.ssh:ro
+  environment:
+    RUNNING_LOCALLY: '1'
+    HHVM: '0'
+  working_dir: '/app'
+  env_file:
+   - .current-local-cli-data-profile
+  command: "/app/stack/php/shell.sh"
 
 # A container to run worker/administration commands locally - start a shell by running stack/shell.sh
 worker:
-  image: neam/php-app-worker:0.6.0
+  image: neam/php-app-worker:0.6.2-php7.0
   links:
     - localdb
   volumes:
@@ -172,27 +215,10 @@ worker:
     - ../.git:/.git
     - ~/.composer:/root/.composer
     - ~/.ssh:/root/.ssh:ro
+  environment:
+    RUNNING_LOCALLY: '1'
+    HHVM: '0'
   working_dir: '/app'
   env_file:
    - .current-local-cli-data-profile
-  command: "/bin/bash"
-
-# A container that is linked to and thus can output linked information about running containers locally
-info:
-  image: debian:jessie
-  volumes:
-    - .:/app:rw
-    - .files:/files:rw
-  links:
-    - web
-    - phphaproxy
-    - phpha
-    - redisphpsessionhandler
-    - phpfiles
-    - mailcatcher
-    - builder
-    - tester
-    - worker
-    - localdb
-  working_dir: '/app'
-  command: "true"
+  command: "/app/stack/php/shell.sh"

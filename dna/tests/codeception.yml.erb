@@ -9,6 +9,21 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
+coverage:
+    enabled: true
+    whitelist:
+        include:
+            - ../components/*
+            - ../exceptions/*
+            - ../generated-classes/*
+            - ../models/*
+            - ../traits/*
+        exclude:
+            - ../tests/*
+            - ../generated-classes/propel/models/Base/*
+            - ../generated-classes/propel/models/Map/*
+            - ../models/base/*
+            - ../models/metadata/*
 modules:
     config:
         Db:
