@@ -6,8 +6,16 @@
 class_name: DbDependentCodeGuy
 modules:
     enabled: [Db, CodeHelper, Asserts]
+    config:
+        Db:
+            dsn: mysql:host=%DATABASE_HOST%;port=%DATABASE_PORT%;dbname=%DATABASE_NAME%
+            user: %DATABASE_USER%
+            password: %DATABASE_PASSWORD%
+            populate: true
+            cleanup: true
+            reconnect: true
+            dump: ./codeception/_data/dump-db-dependent.%DATA%.sql
 gherkin:
     contexts:
         default:
-            - Step\Unit_db_dependent\ClerkTestMethods
-            - Step\Unit_db_dependent\NeamtimeTestMethods
+            - Step\Unit_db_dependent\FooTestMethods

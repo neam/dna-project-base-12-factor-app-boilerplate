@@ -20,6 +20,8 @@ class DbAgnosticCodeGuy extends \Codeception\Actor
 {
     use _generated\DbAgnosticCodeGuyActions;
 
+    use \DnaTestTrait;
+
    /**
     * Define custom actions here
     */

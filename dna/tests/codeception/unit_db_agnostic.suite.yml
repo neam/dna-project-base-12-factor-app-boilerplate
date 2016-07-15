@@ -6,3 +6,6 @@
 class_name: DbAgnosticCodeGuy
 modules:
     enabled: [CodeHelper]
+gherkin:
+    contexts:
+        default:

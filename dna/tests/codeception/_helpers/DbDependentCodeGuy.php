@@ -20,30 +20,10 @@ class DbDependentCodeGuy extends \Codeception\Actor
 {
     use _generated\DbDependentCodeGuyActions;
 
+    use \DnaTestTrait;
+
     /**
      * Define custom actions here
      */
-
-    protected function exceptionAsString(Exception $e)
-    {
-        return "{" . get_class($e) . "} " . $e->getMessage()
-        . " in " . $e->getFile() . ":" . $e->getLine();
-        //. "\nStack trace: " . $e->getTraceAsString();
-    }
-
-    protected function codeceptDebugException(Exception $e)
-    {
-        codecept_debug("Exception: " . $this->exceptionAsString($e));
-        if (!empty($e->getPrevious())) {
-            codecept_debug(
-                "Exception P1: " . $this->exceptionAsString($e)
-            );
-            if (!empty($e->getPrevious()->getPrevious())) {
-                codecept_debug(
-                    "Exception P2: " . $this->exceptionAsString($e)
-                );
-            }
-        }
-    }
 
 }
