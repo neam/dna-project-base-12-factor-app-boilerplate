@@ -9,7 +9,7 @@ Introduces a short downtime (5-30 seconds) when stack services are restarted to 
 
 This document describes the following process:
 
-**1. Build docker images locally **
+**1. Build docker images locally**
 
 * A. Manage [git flow](http://nvie.com/posts/a-successful-git-branching-model/) hotfix routines in your 12-factor-app git repository
 * B. Prepare deployment variables in a new terminal window
@@ -33,7 +33,7 @@ Requires an existing stack, see [Docker Cloud - Via new stack](51-deploy-docker-
 
 First, make sure that everything is tested, committed and pushed. 
 
-#### Manage [git flow](http://nvie.com/posts/a-successful-git-branching-model/) release routines in your 12-factor-app git repository
+#### Manage [git flow](http://nvie.com/posts/a-successful-git-branching-model/) hotfix routines in your 12-factor-app git repository
 
 The repository that we deploy from is `adoveo-web`. Open it up in SourceTree.
 

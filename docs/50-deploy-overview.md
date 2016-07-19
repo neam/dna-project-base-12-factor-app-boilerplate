@@ -12,7 +12,7 @@ Before you start, make sure that you have created and populated the local deploy
 # Supported deployment strategies
 
  - [Docker Cloud - Via new stack](51-deploy-docker-cloud.via-new-stack.md)
- - [Docker Cloud - Hotfix patching existing stack](52-deploy-docker-cloud.hotfix-patching-existing-stack.md)
+ - [Docker Cloud - Hotfix - Patching existing stack](52-deploy-docker-cloud.hotfix-patching-existing-stack.md)
 
 # Miscellaneous documentation
 

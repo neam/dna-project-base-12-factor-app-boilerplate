@@ -7,7 +7,7 @@ Zero downtime production deployment routine using Docker Cloud.
 
 This document describes the following process:
 
-**1. Build docker images locally **
+**1. Build docker images locally**
 
 * A. Manage [git flow](http://nvie.com/posts/a-successful-git-branching-model/) release routines in your 12-factor-app git repository
 * B. Prepare deployment variables in a new terminal window
