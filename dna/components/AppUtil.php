@@ -152,7 +152,7 @@ class AppUtil
             }
             $sql = str_replace(":$key", "'$value'", $sql);
         }
-        return $sql;
+        return trim($sql);
 
     }
 
