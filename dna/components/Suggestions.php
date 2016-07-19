@@ -166,6 +166,8 @@ class Suggestions
             // Commit transaction if we are supposed to save the results of the operations
             if ($save) {
                 $pdo->commit();
+                // restore autocommit
+                $pdo->exec("SET SESSION autocommit = 1");
             }
 
             // Currently in modified state, run hook that is guaranteed to have access to the results of the operations
@@ -205,7 +207,7 @@ class Suggestions
         // get initial metadata
         $return["initial_metadata"] = [];
 
-        // set autocommit to 0 to prevent saving of data within transaction
+        // set autocommit to 0 to prevent saving of data within transaction (this causes the thread to hang on implicit commits instead of allowing them to implicitly save data)
         $pdo->exec("SET SESSION autocommit = 0");
 
         // perform suggested actions - retry one time per second 10 times in case of deadlock
@@ -267,6 +269,9 @@ class Suggestions
 
         $pdo->rollback();
         //$pdo = Propel::getWriteConnection('default');
+
+        // restore autocommit
+        $pdo->exec("SET SESSION autocommit = 1");
 
         // reclaim auto-increment - http://stackoverflow.com/a/9312793/682317
         $itemTypesAffectedByAlgorithms = static::getItemTypesAffectedByAlgorithms($algorithms, static::CREATE);
