@@ -71,22 +71,31 @@ trait FilestackFileTrait
 
     }
 
-    public function createFileFromFilestackUrl($filestackUrl)
+    static public function createFileFromFilestackUrl($filestackUrl)
     {
 
         $fileInstance = static::createFileInstanceWithMetadataByFilestackUrl($filestackUrl);
-        $data = json_decode($fileInstance->getDataJson());
 
         $file = new File();
+        static::setFileMetadataFromFilestackFileInstanceMetadata($file, $fileInstance);
+        $file->setFileInstanceRelatedByFilestackFileInstanceId($fileInstance);
+        $fileInstance->setFileRelatedByFileId($file); // <-- TODO: Remove this column
+
+        return $file;
+
+    }
+
+    static public function setFileMetadataFromFilestackFileInstanceMetadata(
+        \propel\models\File &$file,
+        \propel\models\FileInstance $fileInstance
+    ) {
+
+        $data = json_decode($fileInstance->getDataJson());
+
         $file->setSize($data->fpfile->size);
         $file->setMimetype($data->fpfile->mimetype);
         $file->setFilename($data->fpfile->filename);
         $file->setOriginalFilename($data->fpfile->filename);
-        $fileInstances = $file->getFileInstances();
-        $fileInstances->append($fileInstance);
-        $file->setFileInstances($fileInstances);
-
-        return $file;
 
     }
 

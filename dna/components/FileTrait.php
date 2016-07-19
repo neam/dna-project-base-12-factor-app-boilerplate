@@ -2,34 +2,36 @@
 
 namespace neam\file_registry;
 
-use League\Flysystem\Filesystem;
-use League\Flysystem\Adapter\Local;
 use Exception;
+use Suggestions;
 
 /**
  * Helper trait that encapsulates DNA project base file-handling logic
  *
  * Some principles:
- *  §1 Local file manipulation should be available simply by reading LOCAL_USER_FILES_PATH . DIRECTORY_SEPARATOR . $file->getPath() as defined in getLocalAbsolutePath()
+ *  §1 Local file manipulation should be available simply by reading LOCAL_TMP_FILES_PATH . DIRECTORY_SEPARATOR . $file->getPath() as defined in getLocalAbsolutePath()
  *  §2 The path to the file is relative to the storage component's file system and should follow the format $file->getId() . DIRECTORY_SEPARATOR . $file->getFilename() - this is the file's "correct path" and ensures that multiple files with the same filename can be written to all file systems
- *  §3 Running $file->ensureLocalFileInCorrectPath() ensures §1 and §2 (designed to run before local file manipulation, post file creation/modification time and/or as a scheduled process)
+ *  §3 Running $file->ensureCorrectLocalFile() ensures §1 and §2 (designed to run before local file manipulation, post file creation/modification time and/or as a scheduled process)
  *  §4 File instance records tell us where binary copies of the file are stored
  *  §5 File instances should (if possible) store it's binary copy using the relative path provided by $file->getPath(), so that retrieval of the file's binary contents is straightforward and eventual public url's follow the official path/name supplied by $file->getPath()
  *
  * Current storage components handled by this trait:
  *  - local (implies that the binary is stored locally)
  *  - filestack (implies that the binary is stored at filestack)
- *  - filestack_pending (implies that the binary is pending an asynchronous task to finish, after which point the instance will be converted into a 'filestack' instance)
+ *  - filestack-pending (implies that the binary is pending an asynchronous task to finish, after which point the instance will be converted into a 'filestack' instance)
  *  - filepicker (legacy filestack name, included only to serve filepicker-stored files until all have been converted to filestack-resources)
+ *  - public-files-s3 (implies that the binary is stored in Amazon S3 in a publicly accessible bucket)
  *
  * Class FileTrait
  */
 trait FileTrait
 {
 
+    use LocalFileTrait;
     use FilestackFileTrait;
     use FilestackSecuredFileTrait;
     use FilestackConvertibleFileTrait;
+    use PublicFilesS3FileTrait;
 
     /**
      * @propel
@@ -41,6 +43,7 @@ trait FileTrait
      */
     static public function downloadRemoteFileToStream($url, $targetFileHandle)
     {
+        Suggestions::status(__METHOD__);
         if (empty($url)) {
             throw new Exception("Invalid url argument ('$url') to downloadRemoteFileToStream()");
         }
@@ -54,63 +57,11 @@ trait FileTrait
             fwrite($lfile, fread($rfile, $BUFSIZ), $BUFSIZ);
         }
         fclose($rfile);
+        Suggestions::status("Downloaded file from $url");
         return $lfile;
     }
 
     protected $localFilesystem;
-
-    /**
-     * @propel
-     * @return Filesystem
-     */
-    protected function getLocalFilesystem()
-    {
-        if (empty($this->localFilesystem)) {
-            $this->localFilesystem = new Filesystem(new Local($this->getLocalBasePath()));
-        }
-        return $this->localFilesystem;
-    }
-
-    /**
-     * @propel
-     * @yii
-     * @return string
-     */
-    public function getLocalBasePath()
-    {
-        /** @var \propel\models\File $this */
-        return rtrim(LOCAL_USER_FILES_PATH, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @propel
-     * @param bool $ensure
-     * @return string
-     * @throws Exception
-     */
-    public function getPathForManipulation($ensure = true)
-    {
-        /** @var \propel\models\File $this */
-        if ($ensure) {
-            $this->ensureLocalFileInCorrectPath();
-        }
-        if (empty($this->getPath())) {
-            throw new Exception("File's path not set");
-        }
-        return $this->getPath();
-    }
-
-    /**
-     * @propel
-     * @param bool $ensure
-     * @return string
-     * @throws Exception
-     */
-    public function getAbsolutePathForManipulation($ensure = true)
-    {
-        /** @var \propel\models\File $this */
-        return $this->getLocalBasePath() . $this->getPathForManipulation($ensure);
-    }
 
     /**
      * @propel
@@ -124,126 +75,8 @@ trait FileTrait
         if (empty($id)) {
             throw new Exception("File's id not set - can't calculate the correct path");
         }
-        $filename = $this->getFilename();
-        if (empty($filename)) {
-            throw new Exception("File's filename not set - can't calculate the correct path");
-        }
-        return $this->getId() . DIRECTORY_SEPARATOR . $this->getFilename();
-    }
-
-    /**
-     * Ensures:
-     * 1. That the file-record have a local file instance
-     * 2. That the local file instance actually has it's file in place locally
-     * @propel
-     * @param null $params
-     */
-    public function ensureLocalFileInCorrectPath()
-    {
-
-        /** @var \propel\models\File $this */
-
-        $correctPath = $this->getCorrectPath();
-
-        // Get the ensured local file instance with a binary copy of the file
-        $localFileInstance = $this->getEnsuredLocalFileInstance();
-
-        // Move the local file instance to correct path if not already there
-        if ($localFileInstance->getUri() !== $correctPath) {
-            if (!$this->checkIfLocalFileIsInCorrectPath()) {
-                $this->getLocalFilesystem()->rename($localFileInstance->getUri(), $correctPath);
-            }
-            $localFileInstance->setUri($correctPath);
-            $localFileInstance->save();
-        }
-
-        // Dummy check
-        if (!$this->checkIfLocalFileIsInCorrectPath()) {
-            throw new Exception(
-                "ensureLocalFileInCorrectPath() failure - local file instance's file is not in correct path"
-            );
-        }
-
-        // Save the correct path in file.path
-        if ($this->getPath() !== $correctPath) {
-            $this->setPath($correctPath);
-            $this->save();
-        }
-
-    }
-
-    /**
-     * @propel
-     * @return bool
-     * @throws Exception
-     */
-    protected function checkIfLocalFileIsInCorrectPath()
-    {
-
-        /** @var \propel\models\File $this */
-
-        $correctPath = $this->getCorrectPath();
-
-        // Check if file exists
-        $exists = $this->getLocalFilesystem()->has($correctPath);
-        if (!$exists) {
-            return false;
-        }
-
-        // Check if existing file has the correct size
-        $size = $this->getLocalFilesystem()->getSize($correctPath);
-        if ($size !== $this->getSize()) {
-            return false;
-        }
-
-        // Check hash/contents to verify that the file is the same
-        // TODO
-
-        return true;
-
-    }
-
-    /**
-     * @propel
-     * @return mixed|null|\propel\models\FileInstance
-     * @throws Exception
-     * @throws \Propel\Runtime\Exception\PropelException
-     */
-    protected function getEnsuredLocalFileInstance()
-    {
-
-        /** @var \propel\models\File $this */
-        $localFileInstance = $this->localFileInstance();
-
-        // Download the file
-        if (!$this->checkIfLocalFileIsInCorrectPath()) {
-
-            $remoteFileInstance = $this->remoteFileInstance();
-            if (empty($remoteFileInstance)) {
-                throw new Exception("No file instance available to get a binary copy of the file from");
-            }
-
-            $publicUrl = $this->fileInstanceAbsoluteUrl($remoteFileInstance);
-            $tmpStream = tmpfile();
-            $this->downloadRemoteFileToStream($publicUrl, $tmpStream);
-            $correctPath = $this->getCorrectPath();
-            $this->getLocalFilesystem()->writeStream($correctPath, $tmpStream);
-        }
-
-        // Create a local file instance since none exists
-        if (empty($localFileInstance)) {
-            $correctPath = $this->getCorrectPath();
-            $localFileInstance = new \propel\models\FileInstance();
-            $localFileInstance->setUri($correctPath);
-            $localFileInstance->setStorageComponentRef('local');
-            $localFileInstance->setFileRelatedByFileId($this); // <-- TODO: Remove this column
-            $localFileInstance->save();
-            $this->setFileInstanceRelatedByLocalFileInstanceId($localFileInstance);
-            $this->save();
-        }
-
-        return $localFileInstance;
-
+        $filename = \neam\Sanitize::filename($this->getFilename());
+        return $this->getId() . DIRECTORY_SEPARATOR . $filename;
     }
 
     /**
@@ -258,14 +91,36 @@ trait FileTrait
     }
 
     /**
+     * Should return first best remote file instance where it is expected to find
+     * a binary copy of the file when there is no local file available
      * @propel
      * @return mixed|null|\propel\models\FileInstance
      */
     public function remoteFileInstance()
     {
         /** @var \propel\models\File $this */
-        return $this->getFileInstanceRelatedByFilestackFileInstanceId(
-        ) ? $this->getFileInstanceRelatedByFilestackFileInstanceId() : null;
+        if ($fileInstance = $this->getFileInstanceRelatedByFilestackFileInstanceId()) {
+            return $fileInstance;
+        }
+        if ($fileInstance = $this->getFileInstanceRelatedByPublicFilesS3FileInstanceId()) {
+            return $fileInstance;
+        }
+        return null;
+    }
+
+    /**
+     * Should return the first best remote public file instance where it is expected to find
+     * a public binary copy of the file
+     * @propel
+     * @return mixed|null|\propel\models\FileInstance
+     */
+    public function remotePublicFileInstance()
+    {
+        /** @var \propel\models\File $this */
+        if ($fileInstance = $this->getFileInstanceRelatedByPublicFilesS3FileInstanceId()) {
+            return $fileInstance;
+        }
+        return null;
     }
 
     /**
@@ -275,6 +130,7 @@ trait FileTrait
      */
     public function ensureFileMetadata()
     {
+        Suggestions::status(__METHOD__);
         /** @var \propel\models\File $this */
 
         $localFileInstance = $this->getEnsuredLocalFileInstance();
@@ -322,12 +178,15 @@ trait FileTrait
      */
     protected function absoluteUrl_yii(\File $file)
     {
-        if ($fileInstance = $file->localFileInstance) {
+        if (($fileInstance = $file->publicFilesS3FileInstance) && !empty($fileInstance->uri)) {
+            return static::publicFilesS3Url($fileInstance->uri);
+        }
+        if (($fileInstance = $file->filestackFileInstance) && !empty($fileInstance->uri)) {
+            return static::filestackCdnUrl(static::signFilestackUrl($fileInstance->uri));
+        }
+        if (($fileInstance = $file->localFileInstance) && !empty($fileInstance->uri)) {
             // Local files are assumed published to a CDN
             return CDN_PATH . 'media/' . $file->path;
-        }
-        if ($fileInstance = $file->filestackFileInstance) {
-            return static::filestackCdnUrl(static::signFilestackUrl($fileInstance->uri));
         }
         return null;
     }
@@ -339,10 +198,17 @@ trait FileTrait
      */
     protected function absoluteUrl_propel(\propel\models\File $file)
     {
-        if ($fileInstance = $file->getFileInstanceRelatedByLocalFileInstanceId()) {
+        if (($fileInstance = $file->getFileInstanceRelatedByPublicFilesS3FileInstanceId(
+            )) && !empty($fileInstance->getUri())
+        ) {
             return $file->fileInstanceAbsoluteUrl($fileInstance);
         }
-        if ($fileInstance = $file->getFileInstanceRelatedByFilestackFileInstanceId()) {
+        if (($fileInstance = $file->getFileInstanceRelatedByFilestackFileInstanceId()) && !empty($fileInstance->getUri(
+            ))
+        ) {
+            return $file->fileInstanceAbsoluteUrl($fileInstance);
+        }
+        if (($fileInstance = $file->getFileInstanceRelatedByLocalFileInstanceId()) && !empty($fileInstance->getUri())) {
             return $file->fileInstanceAbsoluteUrl($fileInstance);
         }
         return null;
@@ -356,7 +222,8 @@ trait FileTrait
     public function pendingFileInstance()
     {
         /** @var \propel\models\File $this */
-        return $this->getFileInstanceRelatedByFilestackPendingFileInstanceId() ? $this->getFileInstanceRelatedByFilestackPendingFileInstanceId() : null;
+        return $this->getFileInstanceRelatedByFilestackPendingFileInstanceId(
+        ) ? $this->getFileInstanceRelatedByFilestackPendingFileInstanceId() : null;
     }
 
     /**
@@ -365,12 +232,14 @@ trait FileTrait
      * @return mixed|string
      * @throws Exception
      */
-    protected function fileInstanceAbsoluteUrl(\propel\models\FileInstance $fileInstance)
+    public function fileInstanceAbsoluteUrl(\propel\models\FileInstance $fileInstance)
     {
 
         $storageComponentRef = $fileInstance->getStorageComponentRef();
         /** @var \propel\models\File $this */
         switch ($storageComponentRef) {
+            case 'public-files-s3':
+                return static::publicFilesS3Url($fileInstance->getUri());
             case 'local':
                 // Local files are assumed published to a CDN
                 return CDN_PATH . 'media/' . $this->getPath();
@@ -383,6 +252,5 @@ trait FileTrait
         );
 
     }
-
 
 }

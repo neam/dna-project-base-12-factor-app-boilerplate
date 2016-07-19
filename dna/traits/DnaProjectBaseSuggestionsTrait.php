@@ -7,7 +7,7 @@ trait DnaProjectBaseSuggestionsTrait
     {
 
         $algorithms = [
-            "ensureLocalFiles" => [
+            "ensureCorrectLocalFiles" => [
                 "affected-item-types" => [
                     "File" => [
                         static::UPDATE,
@@ -19,7 +19,7 @@ trait DnaProjectBaseSuggestionsTrait
                 // Since it moves the local files - TODO: Make previewable by implementing roll back for file operations
                 "rollback-supported" => false,
             ],
-            "ensureRemoteFiles" => [
+            "ensureRemotePublicFiles" => [
                 "affected-item-types" => [
                     "File" => [
                         static::UPDATE,
@@ -30,13 +30,25 @@ trait DnaProjectBaseSuggestionsTrait
                 ],
                 // Since it moves the local files - TODO: Make previewable by implementing roll back for file operations
                 "rollback-supported" => false,
+            ],
+            "setFileMetadataWhereMissingAndPossibleWithoutAccessingLocalFiles" => [
+                "affected-item-types" => [
+                    "File" => [
+                        static::UPDATE,
+                    ],
+                ],
             ],
             "setFileMetadataWhereMissing" => [
                 "affected-item-types" => [
                     "File" => [
                         static::UPDATE,
                     ],
+                    "FileInstance" => [
+                        static::CREATE,
+                    ],
                 ],
+                // Since it moves the local files - TODO: Make previewable by implementing roll back for file operations
+                "rollback-supported" => false,
             ],
         ];
 
@@ -46,40 +58,90 @@ trait DnaProjectBaseSuggestionsTrait
 
     /**
      * Ensures:
-     * 1. That all file-records has a local file in the correct path
-     * 2. That all file-records have a local file instance
+     * 1. That all file-records have a correct local file instance
+     * 2. That all file-record local file instances actually has their files in place locally
      */
-    static public function ensureLocalFiles()
+    static public function ensureCorrectLocalFiles(stdClass $params)
     {
+        Suggestions::status(__METHOD__);
 
-        $files = \propel\models\FileQuery::create()->find();
-        foreach ($files as $file) {
-            $file->ensureLocalFileInCorrectPath();
+        if (empty($params->limit)) {
+            $params->limit = 10;
+        }
+        $filesQuery = \propel\models\FileQuery::create()
+            ->filterByFilename(null, \Propel\Runtime\ActiveQuery\Criteria::NOT_EQUAL)
+            ->limit($params->limit);
+
+        if (!empty($params->campaignId)) {
+            $filesQuery->filterByRelevantForCampaignId($params->campaignId);
+        }
+
+        foreach ($filesQuery->find() as $file) {
+            $file->ensureCorrectLocalFile();
         }
 
     }
 
     /**
      * Ensures:
-     * 1. That all file-records has a remote file in the correct path
-     * 2. That all file-records have a remote file instance
+     * 1. That all file-records have a correct remote public file instance
+     * 2. That all file-record remote public file instances actually has their files in place
      */
-    static public function ensureRemoteFiles()
+    static public function ensureRemotePublicFiles(stdClass $params)
     {
+        Suggestions::status(__METHOD__);
 
-        $files = \propel\models\FileQuery::create()->find();
-        foreach ($files as $file) {
-            throw new Exception("TODO");
-            $file->ensureRemoteFileInCorrectPath();
+        if (empty($params->limit)) {
+            $params->limit = 10;
+        }
+        $filesQuery = \propel\models\FileQuery::create()
+            ->limit($params->limit);
+
+        if (!empty($params->campaignId)) {
+            $filesQuery->filterByRelevantForCampaignId($params->campaignId);
+        }
+
+        foreach ($filesQuery->find() as $file) {
+            $file->ensureRemotePublicFileInstance();
         }
 
     }
 
-    static public function setFileMetadataWhereMissing()
+    static public function setFileMetadataWhereMissingAndPossibleWithoutAccessingLocalFiles(stdClass $params)
     {
+        Suggestions::status(__METHOD__);
 
-        $files = \propel\models\FileQuery::create()->find();
-        foreach ($files as $file) {
+        if (empty($params->limit)) {
+            $params->limit = 10;
+        }
+        $filesQuery = \propel\models\FileQuery::create()
+            ->filterBySize(null)
+            ->filterByMimetype(null)
+            ->filterByFilename(null)
+            ->filterByOriginalFilename(null)
+            ->filterByFilestackFileInstanceId(null, \Propel\Runtime\ActiveQuery\Criteria::NOT_EQUAL)
+            ->limit($params->limit);
+        foreach ($filesQuery->find() as $file) {
+            // Fill out the necessary metadata in the parent file record
+            $fileInstance = $file->getFileInstanceRelatedByFilestackFileInstanceId();
+            File::setFileMetadataFromFilestackFileInstanceMetadata($destinationFile, $fileInstance);
+        }
+
+    }
+
+    static public function setFileMetadataWhereMissing(stdClass $params)
+    {
+        Suggestions::status(__METHOD__);
+
+        if (empty($params->limit)) {
+            $params->limit = 10;
+        }
+        $filesQuery = \propel\models\FileQuery::create()
+            ->filterByFilestackFileInstanceId(null, \Propel\Runtime\ActiveQuery\Criteria::NOT_EQUAL)
+            ->_or()
+            ->filterByPublicFilesS3FileInstanceId(null, \Propel\Runtime\ActiveQuery\Criteria::NOT_EQUAL)
+            ->limit($params->limit);
+        foreach ($filesQuery->find() as $file) {
             $file->ensureFileMetadata();
         }
 

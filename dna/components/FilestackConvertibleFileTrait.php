@@ -48,6 +48,7 @@ trait FilestackConvertibleFileTrait
         /** @var \propel\models\File $this */
         if (!($fileInstance = $this->getFileInstanceRelatedByFilestackPendingFileInstanceId())) {
             $fileInstance = new FileInstance();
+            $fileInstance->setFileRelatedByFileId($this); // <-- TODO: Remove this column
             $fileInstance->setStorageComponentRef('filestack-pending');
             $this->setFileInstanceRelatedByFilestackPendingFileInstanceId($fileInstance);
         }
@@ -84,15 +85,29 @@ trait FilestackConvertibleFileTrait
 
         try {
             $convertConfig = GuzzleHttp\Utils::jsonDecode($convertConfigJson);
-            File::attemptFilestackMovieConversion($sourceFile, $destinationFile, $convertConfig, $filestackConversionResultAttributeToPromote);
-        } catch (FilestackMovieConversionAttemptException $e) {
-            $exception = $e;
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
-            $exception = $e;
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            $exception = $e;
+
+            try {
+                File::attemptFilestackMovieConversion(
+                    $sourceFile,
+                    $destinationFile,
+                    $convertConfig,
+                    $filestackConversionResultAttributeToPromote
+                );
+            } catch (FilestackMovieConversionAttemptException $e) {
+                $exception = $e;
+            } catch (\GuzzleHttp\Exception\ConnectException $e) {
+                $exception = $e;
+            } catch (\GuzzleHttp\Exception\ClientException $e) {
+                $exception = $e;
+            }
+
         } catch (\InvalidArgumentException $e) {
+
             $exception = $e;
+            $convertConfig = new \stdClass();
+            $convertConfig->error = "Invalid JSON";
+            $convertConfig->json = $convertConfigJson;
+
         }
 
         if (!empty($exception)) {
@@ -145,24 +160,42 @@ trait FilestackConvertibleFileTrait
             throw new FilestackMovieConversionAttemptException("Empty file stack file instance uri");
         }
 
-        // Do not attempt conversion if there is already a finished and promoted
-        // conversion job for the same convert config = job already done and no need to restart it
         $pendingConvertMetadata = $destinationFile->getFilestackPendingFileInstanceConvertMetadata();
+        $handle = File::extractHandleFromFilestackUrl($sourceFilestackUrl);
+        $convertConfig->sourceFilestackHandle = $handle;
+
+        // Do not attempt conversion if ...
+        $thereIsAlreadyAFinishedAndPromotedConversionJobForTheSameConvertConfig = null;
         if (!empty($pendingConvertMetadata)
             && !empty($pendingConvertMetadata->convertConfig)
-            && (json_encode($pendingConvertMetadata->convertConfig) === json_encode($convertConfig))
-            && ($pendingConvertMetadata->convertStatus->status === 'promoted')
+            && !empty($pendingConvertMetadata->convertStatus)
         ) {
-            // Do nothing
+            $thereIsAlreadyAFinishedAndPromotedConversionJobForTheSameConvertConfig =
+                (json_encode($pendingConvertMetadata->convertConfig) === json_encode($convertConfig))
+                && ($pendingConvertMetadata->convertStatus->status === 'promoted');
+        }
+        // ... and ...
+        $theConvertedFileWasConvertedFromTheSameFilestackSourceHandle = null;
+        if (!empty($pendingConvertMetadata)
+            && !empty($pendingConvertMetadata->convertConfig)
+            && !empty($pendingConvertMetadata->convertConfig->sourceFilestackHandle)
+        ) {
+            $theConvertedFileWasConvertedFromTheSameFilestackSourceHandle = $pendingConvertMetadata->convertConfig->sourceFilestackHandle === $handle;
+        }
+
+        if ($thereIsAlreadyAFinishedAndPromotedConversionJobForTheSameConvertConfig
+            && $theConvertedFileWasConvertedFromTheSameFilestackSourceHandle
+        ) {
+            // Job already done and no need to restart it = Do nothing
             return;
         }
 
-        $handle = File::extractHandleFromFilestackUrl($sourceFilestackUrl);
         $convertStatus = File::filestackVideoConvertRequest($handle, $convertConfig);
         //$convertStatus = File::filestackVideoConvertRequestMock($handle, $convertConfig);
 
         // Save the convert metadata in the pending file instance data
         $destinationFile->setFilestackPendingFileInstanceConvertMetadata($convertConfig, $convertStatus);
+        $destinationFile->setFileRelatedByParentFileId($sourceFile);
         $destinationFile->save();
 
         static::promoteCompletedFilestackConvertion($destinationFile, $filestackConversionResultAttributeToPromote);
@@ -177,6 +210,7 @@ trait FilestackConvertibleFileTrait
 
         // Assert arguments
         $convertConfigDecoded = $convertConfig;
+        unset($convertConfigDecoded->sourceFilestackHandle);
         if (empty($convertConfigDecoded)) {
             throw new Exception("filestackVideoConvertRequest() requires a non-empty convertConfig");
         }
@@ -228,8 +262,10 @@ trait FilestackConvertibleFileTrait
      * @param \propel\models\File $destinationFile
      * @throws Exception
      */
-    static public function promoteCompletedFilestackConvertion(\propel\models\File $destinationFile, $filestackConversionResultAttributeToPromote)
-    {
+    static public function promoteCompletedFilestackConvertion(
+        \propel\models\File $destinationFile,
+        $filestackConversionResultAttributeToPromote
+    ) {
 
         $pendingConvertMetadata = $destinationFile->getFilestackPendingFileInstanceConvertMetadata();
 
@@ -251,6 +287,9 @@ trait FilestackConvertibleFileTrait
             $filestackUrl = $pendingConvertMetadata->convertStatus->data->$filestackConversionResultAttributeToPromote;
             $fileInstance = File::createFileInstanceWithMetadataByFilestackUrl($filestackUrl);
             $destinationFile->setFileInstanceRelatedByFilestackFileInstanceId($fileInstance);
+
+            // Fill out the necessary metadata in the parent file record
+            File::setFileMetadataFromFilestackFileInstanceMetadata($destinationFile, $fileInstance);
 
             // Save file and it's file instances
             $destinationFile->save();

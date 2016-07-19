@@ -5,7 +5,7 @@ namespace neam\file_registry;
 trait FilestackSecuredFileTrait
 {
 
-    static public function signFilestackUrl($filestackUrl, $admin = false)
+    static public function signFilestackUrl($filestackUrl, $admin = false, $cache = true)
     {
 
         // Determine correct signature and policy corresponding to the instance's filestack api key
@@ -15,7 +15,10 @@ trait FilestackSecuredFileTrait
 
         // Returned signed url
         $glue = strpos($filestackUrl, '?') === false ? '?' : '&';
-        return $filestackUrl . $glue . "signature=$signature&policy=$policy";
+        return $filestackUrl . $glue
+        . "signature=" . urlencode($signature)
+        . "&policy=" . urlencode($policy)
+        . ($cache ? "&cache=true" : "");
 
     }
 
@@ -27,7 +30,7 @@ trait FilestackSecuredFileTrait
         $now = new \DateTime();
         $oneMonth = new \DateInterval('P1M');
         $oneMonthFromNow = $now->add($oneMonth);
-        $endOfNextMonth = \DateTime::createFromFormat("Y-m-d H:i:s", $oneMonthFromNow->format( 'Y-m-t 23:59:59' ));
+        $endOfNextMonth = \DateTime::createFromFormat("Y-m-d H:i:s", $oneMonthFromNow->format('Y-m-t 23:59:59'));
         $endOfNextMonthExpiry = strval($endOfNextMonth->format("U"));
         return '{"handle": "' . $handle . '","call":["read","convert"],"expiry":' . $endOfNextMonthExpiry . '}';
 
