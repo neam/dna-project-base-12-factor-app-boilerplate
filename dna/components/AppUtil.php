@@ -152,6 +152,7 @@ class AppUtil
             }
             $sql = str_replace(":$key", "'$value'", $sql);
         }
+        $sql = str_replace("SELECT  FROM", "SELECT * FROM", $sql);
         return trim($sql);
 
     }

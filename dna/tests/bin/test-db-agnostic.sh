@@ -18,4 +18,6 @@ time codecept run unit_db_agnostic $CODECEPTION_GROUP_ARGS $CODE_COVERAGE_ARGS -
 
 echo "* Done running tests"
 
-cat codeception/_log/coverage.xml | sed 's#/app/#/Users/motin/Dev/Projects/sq/sq-project/personal-unit/#g' > codeception/_log/coverage.phpstorm.xml
+if [ -f codeception/_log/coverage.xml ]; then
+  cat codeception/_log/coverage.xml | sed 's#/app/#/Users/user/local-path-to-project/#g' > codeception/_log/coverage.phpstorm.xml
+fi
