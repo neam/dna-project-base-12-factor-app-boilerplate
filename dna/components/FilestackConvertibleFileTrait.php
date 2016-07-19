@@ -48,6 +48,7 @@ trait FilestackConvertibleFileTrait
         /** @var \propel\models\File $this */
         if (!($fileInstance = $this->getFileInstanceRelatedByFilestackPendingFileInstanceId())) {
             $fileInstance = new FileInstance();
+            $fileInstance->setStorageComponentRef('filestack-pending');
             $this->setFileInstanceRelatedByFilestackPendingFileInstanceId($fileInstance);
         }
         $data = GuzzleHttp\Utils::jsonDecode($fileInstance->getDataJson());

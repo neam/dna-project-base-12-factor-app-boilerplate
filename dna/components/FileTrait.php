@@ -35,21 +35,6 @@ trait FileTrait
      * @propel
      * @yii
      * @param $url
-     * @param $destination
-     * @return resource
-     */
-    static public function downloadRemoteFileToPath($url, $destination)
-    {
-        $targetFileHandle = fopen($destination, 'w');
-        static::downloadRemoteFile($url, $targetFileHandle);
-        fclose($targetFileHandle);
-        return $targetFileHandle;
-    }
-
-    /**
-     * @propel
-     * @yii
-     * @param $url
      * @param $targetFileHandle
      * @return mixed
      * @throws Exception

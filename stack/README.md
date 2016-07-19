@@ -55,14 +55,32 @@ Then, fire up the stack locally:
 
     docker-compose up -d
 
-To try this stack out-of-the-box after installing it, create the index php files expected by the default configuration:
+Visit the stack-hello pages by visiting the URL returned by:
+
+    docker-stack local url web 80 - /stack-hello/
+
+> Hint: On OSX, you can open the url directly from a terminal session:
+
+    open $(docker-stack local url web 80 - /stack-hello/)
+
+To scale the PHP "ha" service:
+
+    docker-compose scale phpha=3
+    docker-compose stop phphaproxy
+    docker-compose up -d phphaproxy
+    
+(For an explanation why the container needs to be restarted, [read this](https://github.com/tutumcloud/haproxy/issues/82))
+
+## Frontend and backend example
+
+Create the index php files expected by the default configuration:
 
     mkdir -p frontend/www
     mkdir -p backend/www
     echo '<?php phpinfo();' > frontend/www/index.php
     echo '<?php phpinfo();' > backend/www/index.php
 
-Visit the below returned urls in your browser:
+Visit the below returned urls in your browser (frontend and backend respectively):
 
     docker-stack local url
     docker-stack local url web 80 - /backend/
@@ -72,15 +90,11 @@ Visit the below returned urls in your browser:
 >    stack/open-browser.sh
 >    stack/open-browser.sh /backend/
 
-To scale the PHP "ha" service:
-
-    docker-compose scale phpha=3
-
 ## Deployment
 
-For thorough instructions and helpers scripts:
+For thorough instructions and helpers scripts (needs "minimum-stability": "dev" in your composer.json):
  
-    composer install neam/yii-dna-deployment
+    composer require neam/yii-dna-deployment
 
 Then, follow instructions under `vendor/neam/yii-dna-deployment/README.md`
 

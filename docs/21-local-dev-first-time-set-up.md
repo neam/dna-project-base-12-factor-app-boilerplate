@@ -18,6 +18,8 @@ Open up a terminal window and cd into the root directory of your 12-factor app's
 
 #### Docker Machine
 
+If you are using Linux you can skip this step and go to step 4.
+
 Install [Docker Toolbox](https://www.docker.com/toolbox/) and create a docker host to use for local development (switch out `virtualbox` for your vm software of choice):
 
     docker-machine create --driver virtualbox default
@@ -75,7 +77,7 @@ Make sure you have at least the following versions:
 
     docker -v
 
-    Docker version 1.10.3, build 20f81dd
+    Docker version 1.11.1, build 5604cbe
 
     docker-machine -v
 
@@ -84,7 +86,3 @@ Make sure you have at least the following versions:
     docker-cloud -v
 
     docker-cloud 1.0.4
-
-For debugging, you can echo all available linked environment variables related to running containers:
-
-    docker-compose run info printenv

@@ -11,7 +11,7 @@ Then, run the following to update your local environment's dependencies:
 
     stack/src/install-deps.sh
 
-If updates to docker-compose.yml has been made since you last started the docker stack:
+If updates to docker-compose.yml has been made since you last started the docker stack (Also make sure to be running the correct versions of docker, docker-compose etc):
 
     stack/recreate.sh
 
@@ -19,4 +19,4 @@ If updates to the data profiles have been made and you have no unsaved data loca
 
     stack/shell.sh
     export DATA=example
-    bin/reset-db.sh --force-s3-sync
+    bin/ensure-and-reset-db-force-s3-sync.sh

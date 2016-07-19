@@ -82,7 +82,7 @@ redisphpsessionhandler:
 # The single-node php service for interpreting php code with read-write access to user-generated files
 # (to support file uploads and other local file manipulations)
 phpfiles:
-  image: neam/dna-project-base-debian-php:0.6.2
+  image: neam/dna-project-base-debian-php:0.6.0
   links:
     - mailcatcher
     - redisphpsessionhandler
@@ -135,6 +135,7 @@ builder:
   image: neam/php-app-builder:0.6.2
   volumes:
     - .:/app:rw # TODO: Make read-only when Yii is configured properly not to write to anywhere else than under /files
+    - .:/__PROJECT__:rw
     - .files:/files:rw
     - ../.git:/.git
     - ~/.composer:/root/.composer
@@ -158,7 +159,7 @@ tester-hhvm:
   environment:
     RUNNING_LOCALLY: '1'
     HHVM: '1'
-  working_dir: '/app'
+  working_dir: '/app/dna/tests'
   env_file:
    - .current-local-cli-data-profile
   command: "/app/stack/php/shell.sh"
@@ -178,7 +179,7 @@ tester-php5:
   environment:
     RUNNING_LOCALLY: '1'
     HHVM: '0'
-  working_dir: '/app'
+  working_dir: '/app/dna/tests'
   env_file:
    - .current-local-cli-data-profile
   command: "/app/stack/php/shell.sh"
@@ -198,7 +199,7 @@ tester-php7.0:
   environment:
     RUNNING_LOCALLY: '1'
     HHVM: '0'
-  working_dir: '/app'
+  working_dir: '/app/dna/tests'
   env_file:
    - .current-local-cli-data-profile
   command: "/app/stack/php/shell.sh"

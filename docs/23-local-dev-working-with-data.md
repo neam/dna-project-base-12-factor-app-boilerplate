@@ -175,7 +175,7 @@ The "example" data profile is used here. Adapt to the data profile you are inter
     export DATA=example;
     bin/upload-current-user-data.sh
 
-3. If using the Docker Cloud browser-based shell, select the three echo scripts at the bottom, right-click, choose "Copy", paste them into a plain-text editor and remove the extra new-lines, then copy the fixed echo scripts once again before pasting them locally.
+3. If using the Docker Cloud browser-based shell in Classic UI mode, select the three echo scripts at the bottom, right-click, choose "Copy", paste them into a plain-text editor and remove the extra new-lines, then copy the fixed echo scripts once again before pasting them locally.
 
 Tip: The latest new data ref commands can also be checked in the log:
 
