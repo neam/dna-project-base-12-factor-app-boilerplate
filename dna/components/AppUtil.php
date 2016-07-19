@@ -58,7 +58,8 @@ class AppUtil
         $value,
         $partialMatch = false,
         $operator = 'AND',
-        $escape = true
+        $escape = true,
+        $caseInsensitive = true
     ) {
         if (is_array($value)) {
             if ($value === array()) {
@@ -92,7 +93,11 @@ class AppUtil
             $op = '=';
         }
 
-        $query->where($column . $op . '?', $value);
+        if ($caseInsensitive) {
+            $query->where("LOWER($column)" . $op . '?', mb_strtolower($value));
+        } else {
+            $query->where($column . $op . '?', $value);
+        }
 
         if (strtolower($operator) == 'or') {
             $query->_or();
@@ -109,7 +114,8 @@ class AppUtil
         $keyword,
         $escape = true,
         $operator = 'AND',
-        $like = 'LIKE'
+        $like = 'LIKE',
+        $caseInsensitive = true
     ) {
         if ($keyword == '') {
             return $query;
@@ -117,8 +123,14 @@ class AppUtil
         if ($escape) {
             $keyword = '%' . strtr($keyword, array('%' => '\%', '_' => '\_', '\\' => '\\\\')) . '%';
         }
-        $condition = $column . " $like ?";
-        $query->where($condition, $keyword);
+
+        if ($caseInsensitive) {
+            $condition = "LOWER($column)" . " $like ?";
+            $query->where($condition, mb_strtolower($keyword));
+        } else {
+            $condition = $column . " $like ?";
+            $query->where($condition, $keyword);
+        }
 
         if (strtolower($operator) == 'or') {
             $query->_or();
