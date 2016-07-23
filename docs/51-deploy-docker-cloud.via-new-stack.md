@@ -58,7 +58,7 @@ Push the new branch.
 
 #### Prepare deployment variables in a new terminal window
 
-Open up a new terminal window/tab (freshly created so that no old environment variables are hanging around), and run:
+Open a new shell, navigate to `_PROJECT_-product` and run:
 
     export COMMITSHA=""
     export BRANCH_TO_DEPLOY=""
@@ -189,8 +189,7 @@ Run the following locally to echo the commands to run in the production stack:
 
     # Reset db and run migrations
     for DATA in $DATA_PROFILES; do
-      echo "export DATA=$DATA;"
-      echo "bin/safe-migration-via-upload-user-data-and-reset-db.sh"
+      echo "export DATA=$DATA;bin/safe-migration-via-upload-user-data-and-reset-db.sh"
     done
     
 Open a shell in the NEWLY DEPLOYED stack's phpfiles container.

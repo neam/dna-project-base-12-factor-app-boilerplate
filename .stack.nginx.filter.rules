@@ -1,0 +1,41 @@
+# The following will be used to determine what to include in the images deployed to production
+
+include /.stack.nginx.Dockerfile
+
+# Stack configuration
+include /stack/nginx/*
+include /stack/nginx/conf.d/*
+include /stack/nginx/include/*
+
+# Static files
+include *.png
+include *.html
+include *.js
+include *.js.map
+include *.jpg
+include *.svg
+include *.css
+include *.css.map
+include *.scss
+include *.otf
+include *.ttf
+include *.woff
+include *.woff2
+include *.otf
+include *.mov
+include *.mp4
+include *.webm
+include *.ogv
+
+# Include files necessary for processing requests properly
+include index.php
+
+# Include symlinks necessary for processing requests properly
+#include ...
+
+# General filters
+merge .stack.build.filter.rules
+
+# Exclude anything not excliticly included above
+include */
+exclude *

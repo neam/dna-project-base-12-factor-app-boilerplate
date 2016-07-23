@@ -1,0 +1,29 @@
+# The following will be used to determine what to include in the images deployed to production
+
+include /.stack.php.Dockerfile
+
+# General filters
+merge .stack.build.filter.rules
+
+# Include static files necessary for operations
+#include ...
+
+# Static files
+exclude *.png
+exclude *.html
+exclude *.js
+exclude *.js.map
+exclude *.jpg
+exclude *.svg
+exclude *.css
+exclude *.css.map
+exclude *.scss
+exclude *.otf
+exclude *.ttf
+exclude *.woff
+exclude *.woff2
+exclude *.otf
+exclude *.mov
+exclude *.mp4
+exclude *.webm
+exclude *.ogv

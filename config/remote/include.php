@@ -147,7 +147,9 @@ Config::expect("CDN_PATH_HTTP", $default = null, $required = true);
 Config::expect("CDN_PATH_HTTPS", $default = null, $required = true);
 
 // To be able to access files locally
-Config::expect("LOCAL_USER_FILES_PATH", $default = "/files/%DATA%/", $required = false);
+Config::expect("LOCAL_USER_FILES_PATH", $LOCAL_USER_FILES_PATH_default = "/files/%DATA%/", $required = false);
+// To be able to access files locally temporarily (should NOT be confused with the /files volume used by phpfiles)
+Config::expect("LOCAL_TMP_FILES_PATH", $LOCAL_TMP_FILES_PATH_default = "/local-tmp-files/%DATA%/", $required = false);
 
 // SMS Messaging service Twilio
 
@@ -176,9 +178,9 @@ Config::expect("YII2_ENABLE_ERROR_HANDLER", $default = false);
  * Some config is altered on a per-request basis:
  * 1. We use db_%DATA% as the database name
  * 2. We use a DATABASE_NAME-based hash as the database user
- * 3. Some APPVHOST (and consequently PUBLIC_FILES_S3_PATH, CDN_PATH_HTTP and CDN_PATH_HTTPS) includes %DATA%
+ * 3. Some directives (APPVHOST, PUBLIC_FILES_S3_PATH, CDN_PATH_HTTP and CDN_PATH_HTTPS, LOCAL_USER_FILES_PATH) includes %DATA% as a placeholder
  *
- * This makes it feasible to access DATA-specific databases.
+ * This makes it feasible to access DATA-specific databases and resources on a per-request basis.
  * An outside routine/script is responsible for creating the corresponding users and databases.
  */
 $_ENV['DATABASE_NAME'] = 'db_' . str_replace("-", "_", Config::read("DATA"));
@@ -187,4 +189,5 @@ $_ENV['APPVHOST'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("A
 $_ENV['PUBLIC_FILES_S3_PATH'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("PUBLIC_FILES_S3_PATH"));
 $_ENV['CDN_PATH_HTTP'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("CDN_PATH_HTTP"));
 $_ENV['CDN_PATH_HTTPS'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("CDN_PATH_HTTPS"));
-$_ENV['LOCAL_USER_FILES_PATH'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("LOCAL_USER_FILES_PATH"));
+$_ENV['LOCAL_USER_FILES_PATH'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("LOCAL_USER_FILES_PATH", $LOCAL_USER_FILES_PATH_default));
+$_ENV['LOCAL_TMP_FILES_PATH'] = str_ireplace('%DATA%', Config::read("DATA"), Config::read("LOCAL_TMP_FILES_PATH", $LOCAL_TMP_FILES_PATH_default));

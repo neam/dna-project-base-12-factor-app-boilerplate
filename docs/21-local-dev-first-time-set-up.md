@@ -1,6 +1,22 @@
 Local Development: First-time set-up
 ====================================
 
+# Notes about Cross-Platform Support
+
+This has been confirmed to work in Mac OSX and modern Linux distributions, but Windows installation has so far been unsuccessful.
+
+If you still want to try to install on Windows, here some notes:
+* Put the project in your user directory: C:\Users\Username\
+* If you are using Oracle VM VirtualBox and experiencing trouble - try with NDIS5 Bridged Driver. If you don't know what it is -> uninstall Oracle VM Virtual Box,
+install it during Docker installation and choose to install with NDIS5 Bridged Driver instead of NDIS6.
+* For step 2: to create link try mklink Target Link in CMD:
+
+    mklink Docker_Toolbox_dir\docker-stack project_dir\vendor\bin\docker-stack
+
+  If that does not work for you and docker-stack still complaining about not finding path -> just change relative to absolute path in docker-start file
+
+# Instructions
+
 Open up a terminal window and cd into the root directory of your 12-factor app's repository.
 
 ## Step 1 - Install app dependencies
@@ -81,7 +97,7 @@ Make sure you have at least the following versions:
 
     docker-machine -v
 
-    docker-machine version 0.6.0, build e27fb87
+    docker-machine version 0.7.0, build a650a40
 
     docker-cloud -v
 

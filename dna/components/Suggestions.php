@@ -5,7 +5,7 @@ use Propel\Runtime\Exception\PropelException;
 
 class Suggestions
 {
-    // use FooSuggestionsTrait;
+    use DnaProjectBaseSuggestionsTrait;
 
     const CREATE = 'create';
     const UPDATE = 'update';
@@ -19,16 +19,7 @@ class Suggestions
     {
 
         $algorithms = array_merge_recursive(
-            static::getAvailableAlgorithms_Foo(),
-            [
-                "foo" => [
-                    "affected-item-types" => [
-                        "Foo" => [
-                            static::UPDATE,
-                        ],
-                    ],
-                ],
-            ]
+            static::getAvailableAlgorithms_DnaProjectBase()
         );
 
         // TODO: Filter

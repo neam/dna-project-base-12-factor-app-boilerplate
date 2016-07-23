@@ -35,7 +35,7 @@ First, make sure that everything is tested, committed and pushed.
 
 #### Manage [git flow](http://nvie.com/posts/a-successful-git-branching-model/) hotfix routines in your 12-factor-app git repository
 
-The repository that we deploy from is `adoveo-web`. Open it up in SourceTree.
+The repository that we deploy from is `_PROJECT_-product`. Open it up in SourceTree.
 
 Create a hotfix branch (Source Tree -> Git Flow -> Start a New Hotfix). If it already exists, switch to it. 
 
@@ -46,6 +46,8 @@ Commit, cherry-pick and/or merge in the changes to be patched to the existing re
 Push the new branch. 
 
 #### Prepare deployment variables in a new terminal window
+
+Open a new shell and navigate to `_PROJECT_-product`.
 
 Configure the session to patch an existing stack. In this example, the release "16.03.1" is being patched for the 1st time (hotfix 16.03.1b).
 
@@ -77,7 +79,9 @@ At the end of the output from the deploy/build.sh script, the commands to push t
 
 #### Re-deploy the existing stack on docker-cloud for the new images to take effekt
 
-Log in to Docker Cloud, go to the relevant stack and redeploy the services "phpha", "phpfiles" and "web..." in the stack - takes 3-4 minutes.
+Log in to Docker Cloud, go to the relevant stack and redeploy the services "phpfiles", "phpha", and "web..." in the stack - takes 3-4 minutes.
+
+For extra safety, you may redeploy only "phpfiles" first (only used by us devs to run commands within), and when it is done, use the terminal to enter it and double-check whatever needs to be double-checked before deploying "phpha" and "web..." services. 
 
 #### Run database migrations live as necessary
 

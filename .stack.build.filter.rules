@@ -1,0 +1,49 @@
+# Build artifacts
+exclude /src-images-build
+
+# Git metadata
+exclude .git
+
+# Runtime files
+exclude runtime/*
+
+# Tmp files
+exclude /tmp/*
+
+# User data
+exclude /.files
+
+# Locally synced tenant data
+exclude /dna/db/migration-results/*/data.sql
+exclude /dna/db/migration-base/*/data.sql
+exclude /dna/db/migration-base/*/schema.sql
+exclude /dna/db/migration-base/*/media
+include /dna/db/migration-base/clean-db/data.sql
+include /dna/db/migration-base/clean-db/schema.sql
+include /dna/db/migration-base/clean-db/media
+
+# Sensitive information
+exclude /deploy/config/*secrets.php
+exclude /.env
+exclude /.*.env
+exclude /deployments*
+exclude *secrets.php
+
+# Components not deployed via Docker
+exclude /ui/angular-frontend/
+exclude /ui/angular-frontend-dna/
+
+# Components not necessary to deploy
+exclude vendor/yiisoft/yii/docs
+exclude vendor/yiisoft/yii/demos
+exclude vendor/yiisoft/yii/tests
+exclude /dna/vendor/swiftmailer/swiftmailer/test-suite/
+exclude /dna/vendor/phpoffice/phppresentation/samples/
+exclude /dna/vendor/phpoffice/phpexcel/unitTests/
+exclude /dna/vendor/guzzle/guzzle/tests/
+
+# Local components
+exclude .sass-cache
+exclude /.idea
+exclude /tools/code-generator/
+exclude /stack/localdb/.db/

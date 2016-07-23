@@ -2,7 +2,6 @@
 /vendor/
 
 /tests/codeception.yml
-/tests/codeception/_data/dump.sql
 
 /db/*.*path
 /db/*.sql*

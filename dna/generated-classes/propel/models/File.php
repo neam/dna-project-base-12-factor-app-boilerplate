@@ -28,7 +28,27 @@ class File extends BaseFile
      */
     public function getItemLabel()
     {
-        return $this->defaultItemLabel("getFilename");
+        $label = "";
+        if (!empty($this->getFilename())) {
+            $label .= $this->getFilename();
+        } else {
+            $label .= "[missing file name]";
+        }
+        if (!empty($this->getMimetype())) {
+            $label .= " [";
+            $label .= $this->getMimetype();
+            $label .= "]";
+        } else {
+            $label .= " [missing mime type]";
+        }
+        if (!empty($this->absoluteUrl())) {
+            $label .= " " . $this->absoluteUrl();
+        }
+        if (!empty($this->getCreated("Y-m-d H:i:s"))) {
+            $label .= " - Created ";
+            $label .= $this->getCreated("Y-m-d H:i:s");
+        }
+        return $label;
     }
 
 }

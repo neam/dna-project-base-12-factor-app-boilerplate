@@ -1,0 +1,25 @@
+exclude .git
+
+# Use build filters as base
+merge .stack.build.filter.rules
+
+# Exclude vendor directories
+exclude vendor
+
+# Exclude things specifically not shared
+exclude /dna/tests/codeception/_data/time-spending-logs
+exclude /ui/
+exclude /tools
+exclude /dna/generated-classes/propel/models/Clerk*
+exclude /dna/generated-classes/propel/models/Neamtime*
+exclude Clerk*
+exclude Neamtime*
+exclude Sq*
+exclude /dna/product-specific-dna/
+exclude /dna/db/migration*/*/
+
+# Exclude generated base classes
+exclude /dna/generated-classes/propel/models/Base
+exclude /dna/generated-classes/propel/models/Map
+exclude /dna/models/base
+exclude /external-apis/rest-api-dna/app/modules/v0/models/base

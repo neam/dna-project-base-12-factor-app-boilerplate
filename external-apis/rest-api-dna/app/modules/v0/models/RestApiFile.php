@@ -8,13 +8,15 @@ class RestApiFile extends BaseRestApiFile
      */
     public static function getApiAttributes(\propel\models\File $item)
     {
-        $return = parent::getApiAttributes($item);
+        /*
         $return["fileInstances"] = RelatedItems::formatItems(
             "FileInstance",
             $item,
             "FileId",
-            $level = 1 //+1 // Ensure one less level of this relation gets populated
+            $level //+1 // Ensure one less level of this relation gets populated
         );
+        */
+        $return = parent::getApiAttributes($item);
         return $return;
     }
 
@@ -28,6 +30,16 @@ class RestApiFile extends BaseRestApiFile
         $return["filename"] = $item ? $item->getFilename() : null;
         $return["size"] = $item ? $item->getSize() : null;
         $return["created"] = $item ? $item->getCreated("Y-m-d H:i:s") : null;
+        if ($item && $item->remoteFileInstance()) {
+            $return["remote_absolute_url"] = $item ? $item->fileInstanceAbsoluteUrl($item->remoteFileInstance()) : null;
+            $return["remote_created"] = $item->remoteFileInstance()->getCreated("Y-m-d");
+        }
+        if ($item && $item->remotePublicFileInstance()) {
+            $return["remote_public_absolute_url"] = $item ? $item->fileInstanceAbsoluteUrl(
+                $item->remotePublicFileInstance()
+            ) : null;
+            $return["remote_public_created"] = $item->remotePublicFileInstance()->getCreated("Y-m-d");
+        }
         return $return;
     }
 
