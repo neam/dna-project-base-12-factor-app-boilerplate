@@ -96,7 +96,7 @@ class Suggestions
                 throw new Exception("Algorithm does not have rollback support: $ref");
             }
 
-            $algorithms[$ref] = $algorithm;
+            $algorithms[] = $algorithm;
 
         }
 
@@ -114,7 +114,7 @@ class Suggestions
 
         $itemTypesAffectedByAlgorithm = [];
 
-        foreach ($algorithms as $ref => $algorithm) {
+        foreach ($algorithms as $k => $algorithm) {
 
             // config
             $config = $algorithm["config"];
@@ -211,8 +211,13 @@ class Suggestions
 
             try {
 
+                static::status(
+                    'Performing the following algorithms: ' . print_r(\Functional\pluck($algorithms, 'ref'), true)
+                );
+
                 // perform suggested actions
-                foreach ($algorithms as $ref => $algorithm) {
+                foreach ($algorithms as $k => $algorithm) {
+                    $ref = $algorithm["ref"];
                     static::$statusLog[] = "Running algorithm $ref";
                     static::$ref($algorithm["data"]);
                     static::$statusLog[] = "Done running algorithm $ref";

@@ -2,15 +2,11 @@
 
 # fail on any error
 set -o errexit
+set -o pipefail
 
 # always run from project root
 script_path=`dirname $0`
 cd $script_path/..
-
-# add default
-if [ "$connectionID" == "" ]; then
-    connectionID=db
-fi
 
 # uncomment to see all variables used in this script
 #set -x;
@@ -19,6 +15,6 @@ fi
 echo "" > /tmp/reset-db.sh.log
 
 # run actual command
-connectionID=$connectionID vendor/neam/yii-dna-pre-release-testing/shell-scripts/reset-db.sh $@
+vendor/neam/yii-dna-pre-release-testing/shell-scripts/reset-db.sh $@
 
 exit 0

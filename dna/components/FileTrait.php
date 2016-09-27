@@ -61,8 +61,6 @@ trait FileTrait
         return $lfile;
     }
 
-    protected $localFilesystem;
-
     /**
      * @propel
      * @return string

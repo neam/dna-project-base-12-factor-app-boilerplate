@@ -137,7 +137,7 @@ trait LocalFileTrait
             $this->setFileInstanceRelatedByLocalFileInstanceId($localFileInstance);
         }
 
-        // Download the file
+        // Download the file to where it is expected to be found
         $path = $localFileInstance->getUri();
         if (empty($path)) {
             $path = $this->getCorrectPath();
@@ -163,10 +163,10 @@ trait LocalFileTrait
             // Save the downloaded file to specified path
             $this->getLocalFilesystem()->writeStream($path, $tmpStream);
 
-            // Update file instance to reflect the path to where it is currently found
-            $localFileInstance->setUri($path);
-
         }
+
+        // Update file instance to reflect the path to where it is currently found
+        $localFileInstance->setUri($path);
 
         return $localFileInstance;
 
@@ -181,6 +181,14 @@ trait LocalFileTrait
         $path
     ) {
         \Suggestions::status(__METHOD__);
+
+        if (empty($path)) {
+            throw new Exception("Supplied path to move file instance with id '{$fileInstance->getId()}' to is empty");
+        }
+
+        if (empty($fileInstance->getUri())) {
+            throw new Exception("File instance with id '{$fileInstance->getId()}' has an empty uri/path");
+        }
 
         /** @var \propel\models\File $this */
         if ($fileInstance->getUri() !== $path) {

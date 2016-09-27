@@ -4,11 +4,11 @@ To share your work through Ngrok:
 
 2. Run:
 
-    ngrok http 192.168.99.100:80
+    ngrok http 127.0.0.1:80
 
 3. Share the url shown on the Forwarding line, for instance:
 
-    Forwarding                    http://90875954.ngrok.io -> 192.168.99.100:80
+    Forwarding                    http://90875954.ngrok.io -> 127.0.0.1:80
     
 The URL to share in this example is http://90875954.ngrok.io.
 

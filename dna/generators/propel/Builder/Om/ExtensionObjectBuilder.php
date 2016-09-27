@@ -24,9 +24,15 @@ class ExtensionObjectBuilder extends \Propel\Generator\Builder\Om\ExtensionObjec
     protected function addClassBody(&$script)
     {
 
-        $script .= "
+        // TODO: Only include trait if is workflow item (instead of checking class name)
+        if (strpos($this->getUnqualifiedClassName(), "Version") === false) {
+            $script .= "
     use \\" . $this->getUnqualifiedClassName() . "Trait;
 
+    ";
+        }
+
+        $script .= "
     /**
      * Skeleton method for returning the label for a specific item.
      * Customize to return a representable label string.

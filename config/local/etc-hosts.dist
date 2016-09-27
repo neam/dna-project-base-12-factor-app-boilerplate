@@ -1,7 +1,7 @@
-192.168.99.100 docker._PROJECT_.192.168.99.100.xip.io
+127.0.0.1 docker._PROJECT_.127.0.0.1.xip.io
 
-192.168.99.100 clean-db._PROJECT_.192.168.99.100.xip.io
-192.168.99.100 example._PROJECT_.192.168.99.100.xip.io
+127.0.0.1 clean-db._PROJECT_.127.0.0.1.xip.io
+127.0.0.1 example._PROJECT_.127.0.0.1.xip.io
 
 1.2.3.4 clean-db.build._PROJECT_.com
 1.2.3.4 example.build._PROJECT_.com

@@ -8,6 +8,10 @@ cd $script_path/..
 # fail on any error
 set -o errexit
 
+cd $PROJECT_BASEPATH
+source vendor/neam/php-app-config/shell-export.sh
+cd -
+
 source $TESTS_FRAMEWORK_BASEPATH/_set-codeception-group-args.sh
 
 CODE_COVERAGE_ARGS=" --coverage --coverage-xml --coverage-html"

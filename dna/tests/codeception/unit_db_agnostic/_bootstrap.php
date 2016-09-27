@@ -24,9 +24,6 @@ require_once($dnaroot . '/vendor/yiisoft/yii/framework/yiit.php');
 // config file
 $config = require("$approot/config/console.php");
 
-// always use dbTest
-// $config['components']['db'] = $config['components']['dbTest'];
-
 // fix for fcgi (from yiic.php)
 defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
 

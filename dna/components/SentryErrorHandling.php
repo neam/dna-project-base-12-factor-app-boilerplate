@@ -35,13 +35,13 @@ class SentryErrorHandling
 
         // Install error handlers and shutdown function to catch fatal errors
         $error_handler = new \Raven_ErrorHandler(static::$client);
-        $error_handler->registerExceptionHandler();
-        $error_handler->registerErrorHandler();
+        $error_handler->registerExceptionHandler(true);
+        $error_handler->registerErrorHandler(true);
         $error_handler->registerShutdownFunction();
 
     }
 
-    public static function logException(\Exception $e, $previous = false)
+    public static function logException(\Throwable $e, $previous = false)
     {
         error_log(
             sprintf(
@@ -59,7 +59,7 @@ class SentryErrorHandling
         }
     }
 
-    public static function captureException(\Exception $e)
+    public static function captureException(\Throwable $e)
     {
         $event_id = static::$client->getIdent(static::$client->captureException($e));
         if (static::$client->getLastError() !== null) {

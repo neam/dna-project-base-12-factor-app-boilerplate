@@ -86,7 +86,7 @@ The health checks are available on:
 
     stack/open-browser.sh /status/dna-health-checks.php
 
-To check that angular frontend will work as expected, log in locally and use the "$DATA@api._PROJECT_.192.168.99.100.xip.io" (ie "example@api._PROJECT_.192.168.99.100.xip.io") data environment and try out angular frontend features against this api endpoint. (Requires that the relevant //api._PROJECT_.192.168.99.100.xip.io data environments and access are to relevant Auth0-users settings)
+To check that angular frontend will work as expected, log in locally and use the "$DATA@api._PROJECT_.127.0.0.1.xip.io" (ie "example@api._PROJECT_.127.0.0.1.xip.io") data environment and try out angular frontend features against this api endpoint. (Requires that the relevant //api._PROJECT_.127.0.0.1.xip.io data environments and access are to relevant Auth0-users settings)
 
 #### Create docker images with this source code, which is verified to work, tagging it with the current git commit sha
 

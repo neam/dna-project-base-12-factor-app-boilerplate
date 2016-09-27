@@ -93,7 +93,7 @@ class AppUtil
             $op = '=';
         }
 
-        if ($caseInsensitive) {
+        if ($caseInsensitive && !ctype_digit($value)) {
             $query->where("LOWER($column)" . $op . '?', mb_strtolower($value));
         } else {
             $query->where($column . $op . '?', $value);
@@ -145,6 +145,7 @@ class AppUtil
     ) {
 
         $placeholderParams = [];
+        $query = clone $query;
         $sql = static::createSelectSqlAndSetCorrespondingPlaceholderParams($query, $placeholderParams);
         foreach ($placeholderParams as $key => $value) {
             if ($value instanceof DateTime) {
@@ -162,8 +163,44 @@ class AppUtil
         &$placeholderParams
     ) {
 
+        return static::createSqlAndSetCorrespondingPlaceholderParams($query, "createSelectSql", $placeholderParams);
+
+    }
+
+    static public function propelCountSQL(
+        \Propel\Runtime\ActiveQuery\ModelCriteria $query
+    ) {
+
+        $placeholderParams = [];
+        $query = clone $query;
+        $sql = static::createCountSqlAndSetCorrespondingPlaceholderParams($query, $placeholderParams);
+        foreach ($placeholderParams as $key => $value) {
+            if ($value instanceof DateTime) {
+                $value = $value->format("Y-m-d H:i:s");
+            }
+            $sql = str_replace(":$key", "'$value'", $sql);
+        }
+        return trim($sql);
+
+    }
+
+    static public function createCountSqlAndSetCorrespondingPlaceholderParams(
+        \Propel\Runtime\ActiveQuery\ModelCriteria $query,
+        &$placeholderParams
+    ) {
+
+        return static::createSqlAndSetCorrespondingPlaceholderParams($query, "createCountSql", $placeholderParams);
+
+    }
+
+    static public function createSqlAndSetCorrespondingPlaceholderParams(
+        \Propel\Runtime\ActiveQuery\ModelCriteria $query,
+        $method,
+        &$placeholderParams
+    ) {
+
         $params = []; // This will be filled with the parameters
-        $sql = $query->createSelectSql($params);
+        $sql = $query->$method($params);
         $index = 1;
         foreach ($params as $param) {
             $placeholderParams["p" . $index] = $param["value"];

@@ -123,7 +123,7 @@ class URLify extends \URLify
     /**
      * Filters a string, e.g., "Petty theft" to "petty-theft"
      */
-    public static function filter($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true)
+    public static function filter($text, $length = 60, $language = "", $file_name = false, $use_remove_list = true, $lower_case = true, $treat_underscore_as_space = true)
     {
         $text = self::downcode($text, $language);
 

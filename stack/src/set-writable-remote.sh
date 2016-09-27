@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-if [ -d "/files/$DATA/media" ]; then
-  chmod -R 777 /files/$DATA/media
+chmod -R 777 /local-tmp-files
+if [ -d "/files" ]; then
+  chmod -R 777 /files
 fi
 if [ -d "tools/code-generator/" ]; then
   chmod -R 777 tools/code-generator/runtime

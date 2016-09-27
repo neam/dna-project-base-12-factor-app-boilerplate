@@ -13,7 +13,11 @@ Then confirm that the docker-cloud cli works by running
 
     docker-cloud -v
 
-#### Running migartions for data profiles that depend on the /files volume
+And get the following response:
+
+    docker-cloud 1.0.4
+
+#### Running migrations for data profiles that depend on the /files volume
 
 Note: Include only data profiles that depend on the /files volume, ie store local files within the stack. These data profiles first need their possibly modified /files-volumes copied from the old stack to s3, then copied from s3 to the new stack.
 
@@ -115,41 +119,6 @@ To check that things work as expected (TODO - restore this):
 
 To check that campaign manager will work as expected, add //$WEB_FQDN:$WEB_PORT to relevant Auth0-users settings and try out campaign manager features against this api endpoint.
 
-### Build server first time setup (optional)
-
-This section decribes how to set up at shell server to act as a build server. This may be useful if your personal workstation has a slow internet connection and thus not be able to install dependencies fast nor push large docker layers. 
-If you prefer, you can use your own workstation to build the project instead. In that case, skip this section and simply open up a new terminal window locally to run the commands under "Initiating the build directory" locally instead.
-
-First, set up a server with shell access and make sure it has access to relevant source code repositories. 
-
-Set up a new user on a server with docker installed and connect:
-
-    ssh dokku@build.neamlabs.com
-
-Then, run the following in the build server:
-
-    cd ~
-    git clone -b develop git@bitbucket.org:adoveo/adoveo-project.git
-    cd ~/adoveo-project
-    git clone --recursive -b develop git@bitbucket.org:adoveo/adoveo-web.git adoveo-web
-    cd ~/adoveo-project/adoveo-web
-    
-    git clone https://github.com/neam/docker-stack ~/.docker-stack
-    echo 'export PATH=$PATH:~/.docker-stack/cli' >> ~/.bash_profile
-    source ~/.bash_profile
-
-Locally:
-
-    scp deploy/config/deploy-prepare-secrets.php dokku@build.neamlabs.com:/home/dokku/adoveo-project/adoveo-web/deploy/config/deploy-prepare-secrets.php
-
-In build server:
-
-    cd ~/adoveo-project/adoveo-web
-    stack/recreate.se
-    docker-compose run --rm -e PREFER=dist builder stack/src/install-core-deps.sh
-    
-Then, initiate the build directory as described below.
-    
 ### Initiating the build directory
 
 This creates a parallel directory next to the current directory, suffixed with "-build". It will be a clean directory where all components are installed from version control and as described by dependency management files. The practice to build in a clean directory is essential in order to avoid accidentally building project images that include uncommitted or otherwise locally modified files. 
@@ -157,3 +126,9 @@ This creates a parallel directory next to the current directory, suffixed with "
     vendor/bin/docker-stack build-directory-init
 
 After this, add enough proper config to `~/_PROJECT_-project/_PROJECT_-product-build/.env` to be able to run the 12-factor app from the build directory.
+
+Lastly, make sure to be logged in on the docker registry so that pushing is possible:
+
+    source vendor/neam/php-app-config/shell-export.sh
+    docker login --username="$DOCKERCLOUD_USER" --password="$DOCKERCLOUD_PASSWORD"
+
