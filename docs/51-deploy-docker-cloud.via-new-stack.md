@@ -88,21 +88,15 @@ The health checks are available on:
 
 To check that angular frontend will work as expected, log in locally and use the "$DATA@api._PROJECT_.127.0.0.1.xip.io" (ie "example@api._PROJECT_.127.0.0.1.xip.io") data environment and try out angular frontend features against this api endpoint. (Requires that the relevant //api._PROJECT_.127.0.0.1.xip.io data environments and access are to relevant Auth0-users settings)
 
-#### Create docker images with this source code, which is verified to work, tagging it with the current git commit sha
-
-When you have verified that everything works, build docker images from the source code:
-
-    time deploy/build.sh # Takes 3-4 minutes
-
 ### Step 2 - Deploy on Docker Cloud as new stack
 
-#### Push these docker images to our private docker registry
+#### Create docker images with this source code, which is verified to work, tagging it with the current git commit sha + Push these docker images to our private docker registry
 
-At the end of the output from the deploy/build.sh script, the commands to push the images are shown. Run them. 
+When you have verified that everything works, build and push the docker images containing the source code to deploy:
 
-For this to success, you need to be logged in on the docker registry:
+    time deploy/build.sh # Takes 2-10 minutes
 
-    docker login
+At the end of the deploy/build.sh script, the docker images are pushed to the Docker registry.  
 
 Later (skip this for now):
 In order to use the pushed images as base image for future builds, make sure to copy the resulting previously-pushed-tag specifications to the versioned directory and commit them.
@@ -114,12 +108,12 @@ In order to use the pushed images as base image for future builds, make sure to 
 Run:
 
     deploy/generate-config.sh
-    
+
 #### Deploy the stack on docker-cloud, next to any existing stack that is used in production
 
 Follow the instructions printed by the above command under "To deploy to docker-cloud". 
 
-This will start a second, parallel, stack if one was already there before. 
+This will start a new stack next to the ones already launched previously in the project history. 
 
 Wait for the new stack to be fully running (this is seen in the Docker Cloud web interface in the Stacks section)
 
@@ -165,9 +159,32 @@ TODO
 
 ### Step 5 - Use the newly deployed stack for production URLs (Zero-downtime blue/green deployment, switching out the old stack for the new)
 
-#### Run database migrations live as necessary
+#### Initiate new data environments
 
-This step is skipped if no changes to the database is necessary for the release.
+Open a shell locally.
+
+Specify all data profiles that have never been deployed previously:
+
+```
+export DATA_PROFILES="example
+foo-client
+"
+```
+
+Run the following locally to echo the commands to run in the production stack: 
+
+    # Reset db and run migrations
+    for DATA in $DATA_PROFILES; do
+      echo "export DATA=$DATA;bin/ensure-and-reset-db-force-s3-sync.sh"
+    done
+    
+Open a shell in the NEWLY DEPLOYED stack's phpfiles container.
+
+Then run the commands echoed above, line by line, and ensure migrations etc are applied properly. 
+
+#### Upgrade previous data environments = Run database migrations live as necessary
+
+This step is skipped if no changes to the existing database is necessary for the release.
 
 There are two different workflows necessary depending on the profile depends on the /files volume, ie store local files within the stack.
 
@@ -177,11 +194,11 @@ Note: Include only data profiles that do NOT depend on the /files volume, ie sto
 
 Open a shell locally.
 
-Specify all data profiles that are meant to use the NEWLY DEPLOYED stack, eg:
+Specify all data profiles that are to be upgraded, it meant to use the NEWLY DEPLOYED stack, eg:
 
 ```
-export DATA_PROFILES="example
-foo-client
+export DATA_PROFILES="another-example-profile
+another-client
 "
 ```
 
@@ -200,7 +217,7 @@ Reset the log that keeps track:
 
 Then run the commands echoed above, line by line, and ensure migrations etc are applied properly. 
 
-Note that the migrations may affect live traffic, so you want to Make the new stack take over the traffic as soon as possible after running the database migrations. 
+Note that the migrations may affect live traffic, so you want to make the new stack take over the traffic as soon as possible after running the database migrations. 
 
 ##### Data profiles that depend on the /files volume
 
@@ -212,20 +229,20 @@ When the new stack is verified to work as expected, you should link the new stac
 
 1. Open up [http://public._PROJECT__.com:1936]() (credentials - see below) and inspect the current HAProxy router state.
 2. Log in to Docker Cloud, go to:
-    - Stack router-prod
-    - Service routerprod
+    - Stack prod-router
+    - Service prod-router
     - Click "Edit"
-    - Click "Next: environment variables"
+    - Click "Links" in the menu to the right
     - (Here: Check the STATS_AUTH credentials for user/pass to public._PROJECT_.com:1936)
     - Remove previous wildcard stack web service (unless it is locked down to a data profile)
-    - Link new wildcard stack web service
-    - Click "Save"
-Note: No docker-cloud service re-deploy is necessary when changing only a service's links.
+    - Link new wildcard stack web service (choose and press "+")
+    - Click "Save Changes"
+    Note: No docker-cloud service re-deploy is necessary when changing only a service's links.
 3. Verify that the new stack is loaded in the HAProxy router by checking [http://public._PROJECT__.com:1936]() again.
 
 #### Clear Cloudflare cache
 
-If cache busting is not thoroughly implemented, you need to login to Cloudflare, visit the domain name(s) of the updated stacks, choose Cache, and then Purge everything. Also, don't forget to tell every returning visitor to clear their cache... And please enable cache busting everywhere in the project :)
+If your stack serves content behind the Cloudflare cache and cache busting is not thoroughly implemented, you need to login to Cloudflare, visit the domain name(s) of the updated stacks, choose Cache, and then Purge everything. Also, don't forget to tell every returning visitor to clear their cache... And please enable cache busting everywhere in the project :)
 
 The production release is then complete. 
 

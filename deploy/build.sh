@@ -8,7 +8,6 @@ script_path=`dirname $0`
 cd $script_path/..
 
 # run actual command
-vendor/neam/yii-dna-deployment/deploy/copy-src.sh
-vendor/neam/yii-dna-deployment/deploy/build.sh
+vendor/neam/yii-dna-deployment/deploy/build.sh $@
 
 exit 0

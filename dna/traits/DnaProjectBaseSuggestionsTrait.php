@@ -95,7 +95,15 @@ trait DnaProjectBaseSuggestionsTrait
             $params->limit = 10;
         }
         $filesQuery = \propel\models\FileQuery::create()
-            ->limit($params->limit);
+            ->limit($params->limit)
+            ->orderByPublicFilesS3FileInstanceId(
+            // Pick those that have no instance first
+                \Propel\Runtime\ActiveQuery\Criteria::ASC
+            )
+            ->orderByModified(
+            // Pick those that where modified the longest time ago (more likely to need publishing first) TODO: Use a proper public_files_s3_last_ensured_utc_datetime attribute instead so that we always know that subsequent calls to this operation will lead to all files being published and updated continuously
+                \Propel\Runtime\ActiveQuery\Criteria::ASC
+            );
 
         if (!empty($params->campaignId)) {
             $filesQuery->filterByRelevantForCampaignId($params->campaignId);
@@ -142,7 +150,8 @@ trait DnaProjectBaseSuggestionsTrait
             ->filterByPublicFilesS3FileInstanceId(null, \Propel\Runtime\ActiveQuery\Criteria::NOT_EQUAL)
             ->limit($params->limit);
         foreach ($filesQuery->find() as $file) {
-            $file->ensureFileMetadata();
+            $file->determineFileMetadata();
+            $file->save();
         }
 
     }

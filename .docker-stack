@@ -1,3 +1,0 @@
-export LOCAL_STACK_YML=./docker-compose.yml
-export PRODUCTION_STACK_YML=./stack/docker-compose-production.yml
-export DOCKERCLOUD_STACK_YML=./stack/docker-compose-production.docker-cloud.yml

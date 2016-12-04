@@ -83,7 +83,7 @@ The following first creates a backup, syncs it to S3 then resets the database an
 
     bin/safe-migration-via-upload-user-data-and-reset-db.sh
 
-## To create a new DATA profile based on the current data profile
+## To create a new DATA profile based on the "clean-db" data profile
 
 Create a new data profile locally using the helper script, then upload the current current user-generated data to S3, commit the references and profile-related files in dna (anything with <profileref> in it's path) and push.
 
@@ -96,60 +96,40 @@ Create a new data profile locally using the helper script, then upload the curre
     # add the new data profile to .env.dist's listing of LOCAL_OFFLINE_DATA and HOSTED_DATA_PROFILES
     # commit the new files and push
 
-## Adding a new DATA profile to a deployed stack
+Then log in to Auth0 management console, find all developer user accounts and add the data profile to their access metadata, both in the endpoints and permissions sections.
 
-This is done to make a new data profile available in an already deployed stack, which was deployed before the data profile was created and committed locally.
-
-Run the following worker commands in the deployed stack:
-
-    export DATABASE_ROOT_USER="changeme"
-    export DATABASE_ROOT_PASSWORD="changeme"
-    export DATA=newprofile
-    bin/new-data-profile.sh $DATA
-    bin/ensure-db.sh
-    bin/reset-db.sh
-    bin/upload-current-user-data.sh
-
-Don't forget follow the instructions under "To create a new DATA profile based on the current data profile" above in order to keep track of the data profile in git. 
-
-Also, you'll need to add the data profile to the auth0-users that should have access to it, both in the endpoints and permissions sections:
+Examples for giving access to the dataset "newprofile":
 
 ```
     {
-      "slug": "newprofile@local",
-      "DATA": "newprofile"
-    },
-    {
-      "slug": "newprofile@api._PROJECT_.com",
-      "API_BASE_URL": "//api._PROJECT_.com/api",
-      "API_VERSION": "v0",
-      "DATA": "newprofile"
-    },
-```
-
-```
-{
-  "r0": {
-    "permissions": {
-      ... (the other data profiles) ...
-      "newprofile": {
-        "superuser": 1,
-        "groups": []
-      }
+      ... (keep other entries other than "api_endpoints" intact!) ...
+      "api_endpoints": [
+          ... other api_endpoints ...
+        {
+          "slug": "newprofile@local",
+          "DATA": "newprofile"
+        },
+        {
+          "slug": "newprofile@api.adoveo.com",
+          "API_BASE_URL": "//api.adoveo.com/api",
+          "API_VERSION": "v0",
+          "DATA": "newprofile"
+        },
+      ]
     }
-  }
-}
 ```
 
-Note: If the DATA profile should be associated with a subdomain different from the actual data profile, you need to add the new virtual host and associated data profile to the virtual host data profile mapping environment variable `VIRTUAL_HOST_DATA_MAP`. For instance, add `customsubdomain.adoveo.com|foodataprofile`
+## Adding a new client account (DATA profile) live for use by external users
+
+See [61-manage-users.md](./61-manage-users.md).
 
 ## Migrations
 
 ### How are new migrations created?
 
-    bin/migrate.sh create migration_foo
+    bin/create-migration.sh migration_foo
 
-This puts the empty migration files in the common migrations dir. If you need a migration only for clean-db or only for user-generated you'll need to move it.
+This puts the empty migration files in the dna/generated-migrations directory.
 
 ### Removing applied migrations in order to remove clutter
 
@@ -181,7 +161,9 @@ Tip: The latest new data ref commands can also be checked in the log:
 
     cat dna/db/uploaded-user-data.log | less
 
-4. Paste / run these echo scripts LOCALLY or on the build server (depending on where you are testing).
+4. If the data profile does not already exist locally, create a new DATA profile based on the "clean-db" data profile (see above)
+
+5. Paste / run these echo scripts LOCALLY or on the build server (depending on where you are testing).
 
 Example (do not copy paste this example, instead, use the echo scripts copied above):
 
@@ -189,7 +171,7 @@ Example (do not copy paste this example, instead, use the echo scripts copied ab
     echo 'DATA-example/ENV-deployments/release_16.03.1-%DATA%/2016-03-15_154857/data.sql.gz' > dna/db/migration-base/example/data.filepath                          
     echo 'DATA-example/ENV-deployments/release_16.03.1-%DATA%/2016-03-15_154857/media/' > dna/db/migration-base/example/media.folderpath                            
 
-5. Open up a shell locally (`stack/shell.sh`) and run:
+6. Open up a shell locally (`stack/shell.sh`) and run:
 
     export DATA=example
     bin/ensure-and-reset-db-force-s3-sync.sh

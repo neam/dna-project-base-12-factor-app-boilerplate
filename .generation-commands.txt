@@ -1,0 +1,6 @@
+time docker-compose run -e DATA=clean-db phpfiles bin/reset-db.sh
+time docker-compose run -e DATA=clean-db phpfiles bin/generate-content-model-metadata.sh
+time docker-compose run -e DATA=clean-db phpfiles bin/generate-rest-api.sh
+stack/src/install-deps.sh
+time docker-compose run -e DATA=clean-db phpfiles bin/generate-angular-workflow-ui-crud.sh
+cp -r tools/code-generator/modules/wuingcrud/crud/* ui/angular-frontend-dna/app/crud/ && rm -r tools/code-generator/modules/wuingcrud/crud/*

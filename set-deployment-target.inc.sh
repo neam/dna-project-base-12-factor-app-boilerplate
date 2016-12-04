@@ -35,7 +35,6 @@ else
         export DEPLOY_STABILITY_TAG=prod
         export TOPLEVEL_DOMAIN=_PROJECT_.com
         export DEFAULT_COVERAGE=basic
-        export VIRTUAL_HOST_DATA_MAP=foo
         export VIRTUAL_HOST_DATA_MAP="%DATA%._PROJECT_.com@%DATA%,%DATA%.product._PROJECT_.com@%DATA%,foo.whitelabelclient.com@foo-client"
         export MULTI_TENANT_VIRTUAL_HOST='*._PROJECT_.com, *.product._PROJECT_.com'
     fi

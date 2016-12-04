@@ -7,7 +7,7 @@ Yii::import('File.*');
 class File extends MetadataFile
 {
 
-    use \neam\file_registry\FileTrait;
+    use \neam\stateless_file_management\FileTrait;
 
     // Add your model-specific methods here. This file will not be overriden by gtc except you force it.
     public static function model($className = __CLASS__)

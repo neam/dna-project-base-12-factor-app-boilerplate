@@ -28,8 +28,8 @@ class AppUtil
 
     /**
      * U::inspection(__METHOD__, func_get_args());
-     * @param type $method
-     * @param type $args
+     * @param string $method
+     * @param mixed $args
      */
     static public function inspection($method, $args)
     {
@@ -50,7 +50,7 @@ class AppUtil
      * @param bool $partialMatch
      * @param string $operator
      * @param bool $escape
-     * @return $this
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria $query
      */
     static public function compare(
         \Propel\Runtime\ActiveQuery\ModelCriteria &$query,
@@ -65,7 +65,7 @@ class AppUtil
             if ($value === array()) {
                 return $query;
             }
-            throw new CException("TODO");
+            throw new Exception("TODO");
             return $query->addInCondition($column, $value, $operator);
         } else {
             $value = "$value";
@@ -147,7 +147,8 @@ class AppUtil
         $placeholderParams = [];
         $query = clone $query;
         $sql = static::createSelectSqlAndSetCorrespondingPlaceholderParams($query, $placeholderParams);
-        foreach ($placeholderParams as $key => $value) {
+        // array_reverse so that longer placeholders gets replaced before the shorter ones. otherwise ":p10" gets replaced by ":p1" param...
+        foreach (array_reverse($placeholderParams) as $key => $value) {
             if ($value instanceof DateTime) {
                 $value = $value->format("Y-m-d H:i:s");
             }

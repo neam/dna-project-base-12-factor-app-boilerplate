@@ -12,7 +12,7 @@ require("$root/bootstrap.php");
 
 class File
 {
-    use \neam\file_registry\FileTrait;
+    use \neam\stateless_file_management\FileTrait;
 }
 
 //print "== php ==\n";

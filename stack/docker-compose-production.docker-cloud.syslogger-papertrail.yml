@@ -2,7 +2,7 @@
 
 syslogger:
   image: 'gliderlabs/logspout:v3'
-  command: 'syslog://logs2.papertrailapp.com:55555'
+  command: 'syslog://logs.papertrailapp.com:55555'
   deployment_strategy: every_node
   environment:
     - HOSTNAME=$DOCKERCLOUD_NODE_HOSTNAME

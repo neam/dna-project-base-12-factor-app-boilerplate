@@ -1,7 +1,7 @@
 <?php
 
-$approot = dirname(__FILE__);
-$root = dirname(__FILE__) . '/..';
+$approot = realpath(dirname(__FILE__));
+$root = realpath(dirname(__FILE__) . '/..');
 
 // include composer autoloaders
 //require_once("$approot/vendor/autoload.php");

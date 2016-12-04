@@ -35,7 +35,3 @@ Config::expect("CDN_PATH_HTTPS", $default = null, $required = false);
 // To be able to choose password for code-generator (only available locally)
 
 Config::expect("YII_CODE_GENERATION_ADMIN_PASSWORD", $default = "foo", $required = false);
-
-// To be able to connect to our virtual machine when not inside it, we need to know the address
-
-Config::expect("LOCAL_VM_IP", $default = null, $required = !running_inside_docker_container());

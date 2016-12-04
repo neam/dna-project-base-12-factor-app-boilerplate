@@ -10,8 +10,12 @@ if [ "$PREFER" == "" ]; then
   PREFER=source
 fi
 
-cd ui/angular-frontend
-npm install
-cd -
+# install products' deps if available
+DIRECTORY=ui/angular-frontend
+if [ -d "$DIRECTORY" ]; then
+  cd $DIRECTORY
+  npm install
+  cd -
+fi
 
 exit 0

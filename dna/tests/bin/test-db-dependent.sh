@@ -27,22 +27,31 @@ CODE_COVERAGE_ARGS=""
 
 # reset-db or not
 RESET_DB=1
+CLI_ARGS="$@"
 if [ "$1" == "--skip-reset-db" ]; then
   RESET_DB=0
+  CLI_ARGS="${@:2}"
 fi
 if [ "$1" == "--skip-db-reset" ]; then
   RESET_DB=0
+  CLI_ARGS="${@:2}"
+fi
+
+if [ "$2" == "--ignore-fail" ]; then
+  CLI_ARGS="${@:3}"
+else
+  CLI_ARGS=" --fail-fast ${@:2}"
 fi
 
 if [ "$RESET_DB" == 1 ]; then
   time $PROJECT_BASEPATH/bin/reset-db.sh;
-  time test_console mysqldump --dumpPath=dna/tests/codeception/_data/
-  mv $PROJECT_BASEPATH/dna/tests/codeception/_data/dump.sql $PROJECT_BASEPATH/dna/tests/codeception/_data/dump-db-dependent.$DATA.sql
+  time test_console mysqldump --dumpPath=dna/tests/codeception/_data/ --dumpFile=dump-db-dependent.$DATA.sql
   sed -i -e 's/\/\*!50013 DEFINER=`[^`]*`@`[^`]*` SQL SECURITY DEFINER \*\///' $PROJECT_BASEPATH/dna/tests/codeception/_data/dump-db-dependent.$DATA.sql
   echo "* Codeception is set to reload the profile $DATA between tests (codeception/_data/dump-db-dependent.$DATA.sql). Run following test rounds with the --skip-reset-db flag to skip this initialization";
 fi
 
-time codecept run unit_db_dependent $CODECEPTION_GROUP_ARGS --debug --fail-fast
+echo "time codecept run unit_db_dependent $CODECEPTION_GROUP_ARGS --debug $CLI_ARGS"
+time codecept run unit_db_dependent $CODECEPTION_GROUP_ARGS --debug $CLI_ARGS
 #codecept run functional $CODECEPTION_GROUP_ARGS --debug --fail-fast
 
 #if [ "$RESET_DB" == 1 ]; then $PROJECT_BASEPATH/bin/reset-db.sh; fi

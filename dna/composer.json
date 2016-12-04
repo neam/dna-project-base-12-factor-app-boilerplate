@@ -21,6 +21,10 @@
         },
         {
             "type": "vcs",
+            "url": "https://github.com/neam/dna-project-base-stateless-file-management"
+        },
+        {
+            "type": "vcs",
             "url": "https://github.com/neam/yii-permalinkable-items-core"
         },
         {
@@ -33,22 +37,6 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/motin/p3media"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/motin/fluentpdo.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/motin/nested-set-behavior.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/neam/wrest"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/motin/PHP-po-parser"
         }
     ],
@@ -58,9 +46,7 @@
     },
     "require": {
         "php": ">=5.6.0",
-        "phundament/jquery-file-upload": "@dev",
-        "phundament/p3media": "dev-gcms as 0.17.3",
-        "schmunk42/web-user-behavior": "0.1.*",
+        "ralouphie/getallheaders": "^2.0",
         "neam/yii-i18n-columns": "dev-develop",
         "neam/yii-i18n-attribute-messages": "dev-develop",
         "neam/yii-i18n-tools": "dev-develop",
@@ -73,32 +59,22 @@
         "neam/yii-relations-ui-core": "@dev",
         "neam/yii-permalinkable-items-core": "@dev",
         "neam/yii-streamlog": "dev-develop@dev",
-        "motin/yii-owner-behavior": "*@dev",
-        "yiiext/nested-set-behavior": "dev-allow-save-and-delete-option@dev",
-        "lichtner/fluentpdo": "dev-error-handler@dev",
         "propel/propel": "dev-awaiting-pull-requests@dev",
         "monolog/monolog": ">=1.17.1",
         "contextio/php-contextio": "dev-master",
         "guzzlehttp/guzzle": "~5.0",
         "lstrojny/functional-php": "~1.2",
+        "league/csv": "^8.0",
         "ircmaxell/random-lib": "v1.0.0",
-        "phpnode/yiipassword": ">=1.0.3",
-        "league/flysystem": "~1.0.24",
-        "league/flysystem-aws-s3-v3": "~1.0.13",
         "jbroadway/urlify": "~1.0.7",
         "phpoffice/phpexcel": "~1.8.1",
         "phpoffice/phpword": "dev-master",
         "phpoffice/phppresentation": "dev-master",
         "sepia/po-parser": "dev-master",
         "neam/php-po2json": "dev-develop",
-        "weavora/wrest": "dev-set-create-and-update-attributes-in-behavior",
-        "codemix/hybridauthmanager": "dev-master",
+        "neam/dna-project-base-stateless-file-management": "dev-develop@dev",
         "schmunk42/relation": "1.*",
         "mikehaertl/translatable": "~1.1.0",
-        "nordsoftware/yii-emailer": "1.2.*",
-        "nordsoftware/yii-utils": "@dev",
-        "crisu83/yii-formatter": "@dev",
-        "crisu83/yii-sentry": "dev-master as 1.3.0",
         "alchemy/zippy": "*",
         "twilio/sdk": "~3.12.8",
         "yiisoft/yii": "1.1.17 as dev-master"

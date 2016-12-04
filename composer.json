@@ -86,7 +86,8 @@
     "autoload": {
         "psr-4": {
             "__PROJECT__\\": "./"
-        }
+        },
+        "exclude-from-classmap": ["/external-apis/","/dna/","/tmp/","/src-images-build/","/ui/"]
     },
     "scripts": {}
 }

@@ -6,6 +6,9 @@ merge .stack.build.filter.rules
 # Exclude vendor directories
 exclude vendor
 
+# Exclude base-modules
+exclude /external-apis/rest-api/*
+
 # Exclude things specifically not shared
 exclude /ui/
 exclude /tools

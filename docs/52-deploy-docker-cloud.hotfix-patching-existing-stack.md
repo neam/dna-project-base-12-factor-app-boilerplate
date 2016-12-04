@@ -89,7 +89,7 @@ Enter the docker-cloud web shell for phpfiles and apply migrations as necessary 
 
 #### Clear Cloudflare cache
 
-Until cache busting is implemented in `ui/consumer`, we need to login to Cloudflare, visit the domain names of the updated campaigns, choose Cache, and then Purge everything. Also, don't forget to tell every returning visitor to clear their cache...
+If your stack serves content behind the Cloudflare cache and cache busting is not thoroughly implemented, you need to login to Cloudflare, visit the domain name(s) of the updated stacks, choose Cache, and then Purge everything. Also, don't forget to tell every returning visitor to clear their cache... And please enable cache busting everywhere in the project :)
 
 #### Post-release administration
 

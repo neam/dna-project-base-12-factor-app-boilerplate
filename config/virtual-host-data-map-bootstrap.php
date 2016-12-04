@@ -23,9 +23,6 @@ class VirtualHostDataMapBootstrap
     static public function setDataProfile()
     {
 
-        // Load request headers
-        static::$headers = getallheaders();
-
         $virtual_host_data_mappings = static::config();
 
         $DATA = null;

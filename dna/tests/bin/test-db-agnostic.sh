@@ -18,7 +18,7 @@ CODE_COVERAGE_ARGS=" --coverage --coverage-xml --coverage-html"
 # Comment to enable code coverage (xdebug must be enabled locally)
 CODE_COVERAGE_ARGS=""
 
-time codecept run unit_db_agnostic $CODECEPTION_GROUP_ARGS $CODE_COVERAGE_ARGS --debug --fail-fast
+time codecept run unit_db_agnostic $CODECEPTION_GROUP_ARGS $CODE_COVERAGE_ARGS --debug --fail-fast $@
 
 echo "* Done running tests"
 

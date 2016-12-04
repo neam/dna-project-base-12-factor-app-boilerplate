@@ -92,27 +92,12 @@ class DnaConfig
                 'dna-vendor.neam.yii-i18n-tools.helpers.LanguageHelper',
             ),
             'modules' => array(
-                // code generator
-                'gii' => array(
-                    'class' => 'system.gii.GiiModule',
-                    'password' => YII_GII_PASSWORD,
-                    // If removed, Gii defaults to localhost only. Edit carefully to taste.
-                    'ipFilters' => array('127.0.0.1', '::1', '10.0.2.2'),
-                    'generatorPaths' => array(
-                        'dna-vendor.phundament.gii-template-collection', // giix generators
-                        'dna-vendor.mihanentalpo.yii-sql-migration-generator',
-                        'bootstrap.gii', // bootstrap generator
-                    ),
-                ),
             ),
             'params' => array(
                 'languages' => $languages,
                 'languageDirections' => $languageDirections,
             ),
         );
-
-        // Not understood by Yii 1 import due to namespaces
-        require(static::$dnaDirectory . '/components/FileTrait.php');
 
         // Reference the $config variable that other configuration includes expect
         $extensionsConfig = static::extensionConfig();
@@ -142,12 +127,7 @@ class DnaConfig
         require(static::$dnaDirectory . '/vendor/neam/yii-workflow-core/config/yii-workflow-core.php');
         require(static::$dnaDirectory . '/vendor/neam/yii-restricted-access/config/yii-restricted-access.php');
         require(static::$dnaDirectory . '/vendor/neam/yii-workflow-task-list/config/yii-workflow-task-list.php');
-        require(static::$dnaDirectory . '/config/includes/p3media.php');
-        require(static::$dnaDirectory . '/config/includes/p3media-extras.php');
-        require(static::$dnaDirectory . '/config/includes/p3media-presets.php');
-        require(static::$dnaDirectory . '/config/includes/yii-dna-cms.php');
         require(static::$dnaDirectory . '/config/includes/i18n.php');
-        require(static::$dnaDirectory . '/config/includes/wrest.php');
 
         // Make sure dna extensions use the dna-vendor alias
         array_walk_recursive(

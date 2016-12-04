@@ -15,7 +15,7 @@ Then confirm that the docker-cloud cli works by running
 
 And get the following response:
 
-    docker-cloud 1.0.4
+    docker-cloud 1.0.7
 
 #### Running migrations for data profiles that depend on the /files volume
 
@@ -59,17 +59,8 @@ Note: Also paste the new data ref commands locally and test-run the below locall
 Specify all data profiles that are meant to use the NEWLY DEPLOYED stack, eg:
 
 ```
-export DATA_PROFILES="ginger
-laget
-sodastream
-texaslonghorn
-life
-zinfandel
-crown
-sas
-cokecce
-danskebank
-sbs-discovery
+export DATA_PROFILES="foo
+bar
 "
 ```
 
@@ -130,5 +121,5 @@ After this, add enough proper config to `~/_PROJECT_-project/_PROJECT_-product-b
 Lastly, make sure to be logged in on the docker registry so that pushing is possible:
 
     source vendor/neam/php-app-config/shell-export.sh
-    docker login --username="$DOCKERCLOUD_USER" --password="$DOCKERCLOUD_PASSWORD"
+    docker login --username="$DOCKERCLOUD_USER" --password="$DOCKERCLOUD_PASS"
 

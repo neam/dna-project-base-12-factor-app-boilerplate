@@ -140,7 +140,7 @@ Config::expect("WEB_SERVER_POSIX_GROUP", $default = "", $required = false);
 
 Config::expect("PUBLIC_FILES_S3_BUCKET", $default = null, $required = true);
 Config::expect("PUBLIC_FILES_S3_REGION", $default = null, $required = true);
-Config::expect("PUBLIC_FILES_S3_PATH", $default = null, $required = true);
+Config::expect("PUBLIC_FILES_S3_PATH", $default = "", $required = false);
 Config::expect("PUBLIC_FILE_UPLOADERS_ACCESS_KEY", $default = null, $required = true);
 Config::expect("PUBLIC_FILE_UPLOADERS_SECRET", $default = null, $required = true);
 Config::expect("CDN_PATH_HTTP", $default = null, $required = true);
@@ -160,7 +160,6 @@ Config::expect("TWILIO_FROM_NUMBER", $default = null, $required = true);
 // ==== Misc ====
 
 Config::expect("YII_GII_PASSWORD", $default = uniqid(), $required = false);
-Config::expect("LOCAL_SERVICES_IP");
 
 // ==== Debug-related config ====
 

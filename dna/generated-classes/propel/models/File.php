@@ -18,7 +18,7 @@ class File extends BaseFile
 {
 
     use \FileTrait;
-    use \neam\file_registry\FileTrait;
+    use \neam\stateless_file_management\FileTrait;
 
     /**
      * Skeleton method for returning the label for a specific item.

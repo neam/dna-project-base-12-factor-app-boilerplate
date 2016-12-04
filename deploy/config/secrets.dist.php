@@ -20,10 +20,14 @@ $_ENV["USER_DATA_BACKUP_UPLOADERS_ACCESS_KEY"] = "";
 $_ENV["USER_DATA_BACKUP_UPLOADERS_SECRET"] = "";
 $_ENV["PUBLIC_FILE_UPLOADERS_ACCESS_KEY"] = "";
 $_ENV["PUBLIC_FILE_UPLOADERS_SECRET"] = "";
+$_ENV["PUBLIC_FILES_S3_BUCKET"] = "s3://files._PROJECT_.com";
 $_ENV["PUBLIC_FILES_S3_REGION"] = "us-standard";
-$_ENV["PUBLIC_FILES_S3_PATH"] = "/m/" . Config::read("APPVHOST", null, $required = true) . "/";
-$_ENV["CDN_PATH_HTTP"] = "http://static.adoveo.com" . Config::read("PUBLIC_FILES_S3_PATH", null, $required = true);
-$_ENV["CDN_PATH_HTTPS"] = "https://static.adoveo.com" . Config::read("PUBLIC_FILES_S3_PATH", null, $required = true);
+$_ENV["PUBLIC_FILES_S3_PATH"] = "";
+$_ENV["PUBLIC_FILES_HTTP_HOST"] = "files._PROJECT_.com";
+$_ENV["CDN_S3_BUCKET"] = "";
+$_ENV["CDN_S3_PATH"] = "/" . Config::read("APPVHOST", null, $required = true) . "/";
+$_ENV["CDN_PATH_HTTP"] = "http://static._PROJECT_.com" . Config::read("CDN_S3_PATH", null, $required = true);
+$_ENV["CDN_PATH_HTTPS"] = "https://static._PROJECT_.com" . Config::read("CDN_S3_PATH", null, $required = true);
 
 $_ENV["COMPOSER_GITHUB_TOKEN"] = "";
 $_ENV["NEW_RELIC_LICENSE_KEY"] = "";
