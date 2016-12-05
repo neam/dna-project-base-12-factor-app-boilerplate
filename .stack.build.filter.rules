@@ -13,14 +13,16 @@ exclude /tmp/*
 # User data
 exclude /.files
 
+# The clean-db skeleton data profile - necessary for creating new data profiles in production
+include /dna/db/migration-base/clean-db/data.sql
+include /dna/db/migration-base/clean-db/schema.sql
+include /dna/db/migration-base/clean-db/media
+
 # Locally synced tenant data
 exclude /dna/db/migration-results/*/data.sql
 exclude /dna/db/migration-base/*/data.sql
 exclude /dna/db/migration-base/*/schema.sql
 exclude /dna/db/migration-base/*/media
-include /dna/db/migration-base/clean-db/data.sql
-include /dna/db/migration-base/clean-db/schema.sql
-include /dna/db/migration-base/clean-db/media
 
 # Sensitive information
 exclude /deploy/config/*secrets.php

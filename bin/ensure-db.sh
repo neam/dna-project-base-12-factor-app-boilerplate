@@ -23,7 +23,7 @@ source vendor/neam/php-app-config/shell-export.sh
 
 # ensure we have a root db user
 if [ "$DATABASE_ROOT_USER" == "" ]; then
-    echo "The environment variable DATABASE_ROOT_USER needs to be set"
+    echo "The environment variable DATABASE_ROOT_USER needs to be set for a new database to be created"
 #    exit 1
 fi
 

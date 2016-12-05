@@ -10,9 +10,11 @@ exclude vendor
 exclude /external-apis/rest-api/*
 
 # Exclude things specifically not shared
+exclude /dna/tests/codeception/_data/
 exclude /ui/
 exclude /tools
 exclude /dna/product-specific-dna/
+exclude /dna/generated-migrations/PropelMigration_*_foo_*.php
 exclude /dna/db/migration*/*/
 
 # Exclude generated base classes
