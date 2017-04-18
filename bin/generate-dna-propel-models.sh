@@ -15,11 +15,10 @@ DECORATE_PROPEL_SCHEMA=1 ../bin/propel -vvv reverse
 cp generated-reversed-database/schema.xml .
 echo "* Reverse-engineer the database as is -> generated-reversed-database/schema.xml"
 DECORATE_PROPEL_SCHEMA=0 vendor/bin/propel -vvv reverse
-#echo "* Pristine propel schema generated. Revert manual changes to main schema.xml before continuing. Press ENTER to continue"
-#read
 echo "* Generating propel schema..."
 ../bin/propel -vvv sql:build
-echo "* Pristine propel schema generated. Manually revert changes to main schema.xml before continuing. Press ENTER to continue"
+sed -i 's/<table name=/<table allowPkInsert="true" name=/' schema.xml
+echo "* Pristine propel schema generated. Revert manual changes to main schema.xml before continuing. Press ENTER to continue"
 read
 echo "* Generating propel models..."
 rm -r generated-classes/propel/models/Base/*.php || true
