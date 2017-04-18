@@ -3,7 +3,7 @@ Local Development: First-time set-up
 
 # Instructions
 
-Open up a terminal window and cd into the root directory of your 12-factor app's repository.
+Open up a terminal window and cd into the root directory of your 12-factor app's repository (`_PRODUCT_-product`).
 
 ## Step 1 - Install app dependencies
 
@@ -33,7 +33,7 @@ Create your local configuration file for local non-versioned configuration direc
     cp .env.dist .env
     cp .current-local-cli-data-profile.dist .current-local-cli-data-profile
 
-Open it up an make sure that all sensitive directives are correctly entered.
+Open it up an make sure that all sensitive directives are correctly entered. (Get a team-mate to help out with this first time)
 
 ## Step 5 - Initialize and run
 
@@ -69,11 +69,11 @@ Make sure you have at least the following versions:
 
     docker -v
 
-    Docker version 1.12.1, build 6f9534c
+    Docker version 17.03.1-ce-rc1, build 3476dbf
 
     docker-compose -v 
     
-    docker-compose version 1.8.0, build f3628c7
+    docker-compose version 1.11.2, build dfed245
     
 # Notes about Cross-Platform Support
 

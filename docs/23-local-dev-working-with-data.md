@@ -47,14 +47,6 @@ If you have already run this once in the current DATA profile, no data will be r
 
     bin/ensure-and-reset-db-force-s3-sync.sh
 
-Note: If you have trouble with internet connectivity from inside the shell, run the following, then open a new shell.
-
-    docker-machine ssh default 'echo nameserver 8.8.8.8 > /etc/resolv.conf'
-
-Note: If you get a random 403 permission error for no good reason (for instance `ERROR: S3 error: 403 (RequestTimeTooSkewed)`), it could be because the virtual machine clock and your laptop's clock have gone out of sync (this can happen), which S3 gets picky about. To fix, run:
-
-    docker-machine ssh default 'sudo ntpclient -s -h pool.ntp.org'
-
 ## To ensure and reset to a database to the currently referenced user generated data profile:
 
     bin/ensure-and-reset-db-force-s3-sync.sh
@@ -85,16 +77,21 @@ The following first creates a backup, syncs it to S3 then resets the database an
 
 ## To create a new DATA profile based on the "clean-db" data profile
 
-Create a new data profile locally using the helper script, then upload the current current user-generated data to S3, commit the references and profile-related files in dna (anything with <profileref> in it's path) and push.
+Set the DATA variable to the default subdomain it will be accessible through:
 
     export DATA=newprofile
-    bin/new-data-profile.sh $DATA
-    # run the three commands output by the above command
-    bin/ensure-db.sh
-    bin/reset-db.sh
+
+Then, run the following to create the new dataset (Note: There error message regarding database access is misleading and will be removed later, it just says that there was no database before, which is expected, since we are creating it now)
+
+    bin/ensure-new-data-profile.sh $DATA
+
+Upload the current current user-generated data to S3:
+
     bin/upload-current-user-data.sh
-    # add the new data profile to .env.dist's listing of LOCAL_OFFLINE_DATA and HOSTED_DATA_PROFILES
-    # commit the new files and push
+
+Add the new data profile to .env.dist's listing of LOCAL_OFFLINE_DATA and HOSTED_DATA_PROFILES.
+
+Commit the references and profile-related files in dna (anything with <profileref> in it's path) and push.
 
 Then log in to Auth0 management console, find all developer user accounts and add the data profile to their access metadata, both in the endpoints and permissions sections.
 

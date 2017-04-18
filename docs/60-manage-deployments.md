@@ -20,8 +20,8 @@ Also note that output copied from the browser shell will include extra newlines 
 
 #### Cli
 
-If you don't have the corresponding stack metadata (in the deployments/ directory), get it from the build server where the metadata about the deployments is stored:
-    
+If you don't have the corresponding stack metadata (in the deployments/ directory), get it from the commonly shared SFTP server where the metadata about the deployments is stored:
+
     scp -r _PROJECT_@build.neamlabs.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/deployments/* deployments/
 
 Then, run:
@@ -49,7 +49,6 @@ Run it in order to open a shell in the deployed phpfiles container. Cd into the 
 Examples of relevant commands:
 
     export DATA=example
-    bin/upload-current-files-to-cdn.sh # Sync to CDN
     bin/upload-current-user-data.sh # Create a backup of the current files
     
 And even: (but be careful - possibly live files and database! only do this on new deployments to install a database that was locally curated before)

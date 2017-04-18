@@ -21,8 +21,9 @@ Build and deploy
 ------
 
 - [Overview](50-deploy-overview.md)
-- [Docker Cloud](52-deploy-docker-cloud.md)
-- [Docker Cloud Misc](52-deploy-docker-cloud.misc.md)
+- [Docker Cloud - In-depth deployment routine](51-deploy-docker-cloud.in-depth-deployment-routine.md)
+- [Docker Cloud - Hotfix - Patching existing stack](52-deploy-docker-cloud.hotfix-patching-existing-stack.md)
+- [Docker Cloud - Miscellaneous documentation](53-deploy-docker-cloud.misc.md)
 
 Manage
 ------

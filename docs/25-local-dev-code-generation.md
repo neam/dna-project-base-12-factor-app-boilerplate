@@ -18,6 +18,8 @@ The workflow:
 
 ### Get an up to date `dna/content-model-metadata.json` from dna-project-control-panel locally.
 
+Hint: Diff `dna/schema.xml` and `dna/schema-in-sync-with-content-model-metadata.xml` to know what metadata needs to be updated due to schema changes.
+
     cd ~/Dev/Projects/code-generation-alchemists/project/dna-project-control-panel
     time docker-stack local run -e DATA=_PROJECT_ phpfiles tools/code-generator/yii dna-content-model-metadata-json --configId=_ID_,7 | jq '.' > ~/Dev/Projects/_PROJECT_-project/_PROJECT_-product/dna/content-model-metadata.json
 

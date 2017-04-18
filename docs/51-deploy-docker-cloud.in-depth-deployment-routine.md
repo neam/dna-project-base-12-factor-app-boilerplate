@@ -60,6 +60,7 @@ Push the new branch.
 
 Open a new shell, navigate to `_PROJECT_-product` and run:
 
+    export DATA=%DATA%
     export COMMITSHA=""
     export BRANCH_TO_DEPLOY=""
     source deploy/prepare.sh
@@ -74,8 +75,9 @@ Open a new shell, navigate to `_PROJECT_-product` and run:
 
 Start up a docker stack and local database:
 
+    cd ../$(basename ${PWD/-build/})/ # Ensures that we are in the main source code directory
     stack/stop.sh
-    cd ../$(basename $(pwd))-build/
+    cd ../$(basename ${PWD/-build/})-build/ # Ensures that we are in the build directory
     stack/recreate.sh
     export DATA=example # adjust to data profile you want to confirm to work, repeat for multiple profiles if necessary
     vendor/bin/docker-stack local run -e DATA=$DATA worker /bin/bash bin/ensure-and-reset-db-force-s3-sync.sh
@@ -84,7 +86,7 @@ Now we need to test the source code to be built.
 
 The health checks are available on:
 
-    stack/open-browser.sh /status/dna-health-checks.php
+    stack/open-browser.sh /dna-health-checks.php
 
 To check that angular frontend will work as expected, log in locally and use the "$DATA@api._PROJECT_.127.0.0.1.xip.io" (ie "example@api._PROJECT_.127.0.0.1.xip.io") data environment and try out angular frontend features against this api endpoint. (Requires that the relevant //api._PROJECT_.127.0.0.1.xip.io data environments and access are to relevant Auth0-users settings)
 
@@ -94,6 +96,7 @@ To check that angular frontend will work as expected, log in locally and use the
 
 When you have verified that everything works, build and push the docker images containing the source code to deploy:
 
+    cd ../$(basename ${PWD/-build/})-build/ # Ensures that we are in the build directory
     time deploy/build.sh # Takes 2-10 minutes
 
 At the end of the deploy/build.sh script, the docker images are pushed to the Docker registry.  
@@ -107,6 +110,11 @@ In order to use the pushed images as base image for future builds, make sure to 
 
 Run:
 
+    cd ../$(basename ${PWD/-build/})/ # Ensures that we are in the main source code directory where we keep the deploy config
+    export DATA=%DATA%
+    export COMMITSHA=""
+    export BRANCH_TO_DEPLOY=""
+    source deploy/prepare.sh
     deploy/generate-config.sh
 
 #### Deploy the stack on docker-cloud, next to any existing stack that is used in production
@@ -256,6 +264,6 @@ If linking back to the previously working stack, do not forget to restore the da
 
 If everything is ok, then go to source tree and finish the release using git flow + push the master and develop branches.
 
-Also, don't forget to upload the deployment metadata to the build server so that we can all access it:
+Also, don't forget to upload the deployment metadata to a commonly shared SFTP server so that we can all access it:
 
     scp -r deployments/* _PROJECT_@build._PROJECT_.com:/home/_PROJECT_/_PROJECT_-project/_PROJECT_-product/deployments/

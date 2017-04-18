@@ -39,12 +39,9 @@ Set the DATA variable to the default subdomain it will be accessible through:
 
     export DATA=newprofile
 
-Then, run the following to create the new dataset (Note: There error message from bin/ensure-db.sh is misleading and will be removed later, it just says that there was no database before, which is expected, since we are creating it now)
+Then, run the following to create the new dataset (Note: There error message regarding database access is misleading and will be removed later, it just says that there was no database before, which is expected, since we are creating it now)
 
-    bin/new-data-profile.sh $DATA
-    bin/ensure-db.sh
-    bin/reset-db.sh
-    bin/upload-current-user-data.sh
+    bin/ensure-new-data-profile.sh $DATA
 
 The subdomain newprofile._PROJECT_.com will automatically become available for use with the new dataset. 
 
